@@ -8,7 +8,11 @@ The workshop guides teams through the key pillars of Amplitude data governance i
 
 ## How to Use
 
-1. Open `governance-workshop.html` directly in any modern browser
+**Hosted version:** [https://amp-anuj.github.io/Amplitude-Governance-Framework/governance-workshop.html](https://amp-anuj.github.io/Amplitude-Governance-Framework/governance-workshop.html)
+
+Or open `governance-workshop.html` directly in any modern browser.
+
+1. Open the workshop using the link above (or locally)
 2. In **Step 3 — Connect to Live Project**, paste the customer's Amplitude Data tab URL to unlock live links throughout the workshop
 3. Walk through each step with the customer team
 
