@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amplitude — Data Governance Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amp-blue: #0069FF;
+    --amp-blue-dark: #0052CC;
+    --amp-blue-light: #E8F0FE;
+    --amp-black: #0A0B0D;
+    --amp-gray-900: #1A1C1E;
+    --amp-gray-700: #3D4045;
+    --amp-gray-500: #6B7280;
+    --amp-gray-300: #C4C8CC;
+    --amp-gray-100: #F5F6F7;
+    --amp-white: #FFFFFF;
+    --amp-green: #00B85C;
+    --amp-green-light: #E6F7EE;
+    --amp-orange: #FF7800;
+    --amp-orange-light: #FFF3E8;
+    --amp-red: #E53935;
+    --amp-red-light: #FDECEA;
+    --amp-purple: #7B61FF;
+    --amp-purple-light: #F0EDFF;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.1);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,.12);
+    --transition: 180ms ease;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--amp-gray-100);
+    color: var(--amp-gray-900);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* ── Header ───────────────────────────────────── */
+  .header {
+    background: var(--amp-black);
+    color: var(--amp-white);
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .header-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; }
+  .header-logo svg { width: 22px; height: 22px; }
+  .header-divider { width: 1px; height: 20px; background: rgba(255,255,255,.2); }
+  .header-title { font-size: 14px; color: rgba(255,255,255,.7); font-weight: 400; }
+  .header-customer { font-size: 13px; background: rgba(255,255,255,.1); padding: 4px 10px; border-radius: 4px; color: rgba(255,255,255,.85); }
+
+  /* ── Tabs ─────────────────────────────────────── */
+  .tabs-bar {
+    background: var(--amp-white);
+    border-bottom: 1px solid var(--amp-gray-300);
+    display: flex;
+    padding: 0 24px;
+    overflow-x: auto;
+    gap: 0;
+    position: sticky;
+    top: 56px;
+    z-index: 90;
+  }
+  .tabs-bar::-webkit-scrollbar { height: 0; }
+  .tab-btn {
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--amp-gray-500);
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color var(--transition), border-color var(--transition);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab-btn:hover { color: var(--amp-gray-900); }
+  .tab-btn.active { color: var(--amp-blue); border-bottom-color: var(--amp-blue); }
+  .tab-btn .tab-num {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--amp-gray-100); font-size: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; color: var(--amp-gray-500);
+  }
+  .tab-btn.active .tab-num { background: var(--amp-blue-light); color: var(--amp-blue); }
+  .tab-btn.hidden-tab { display: none; }
+
+  /* ── Content ──────────────────────────────────── */
+  .content { max-width: 960px; margin: 0 auto; padding: 32px 24px 80px; }
+  .tab-panel { display: none; animation: fadeIn .2s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Typography ───────────────────────────────── */
+  .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--amp-blue); margin-bottom: 6px; }
+  .section-title { font-size: 26px; font-weight: 700; color: var(--amp-black); line-height: 1.2; margin-bottom: 8px; }
+  .section-subtitle { font-size: 15px; color: var(--amp-gray-500); max-width: 640px; line-height: 1.6; margin-bottom: 28px; }
+
+  /* ── Cards ────────────────────────────────────── */
+  .card {
+    background: var(--amp-white);
+    border: 1px solid var(--amp-gray-300);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--amp-black); margin-bottom: 6px; }
+  .card-body { font-size: 14px; color: var(--amp-gray-500); line-height: 1.6; }
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .card-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+
+  .pillar-card {
+    background: var(--amp-white);
+    border: 1px solid var(--amp-gray-300);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    transition: box-shadow var(--transition);
+  }
+  .pillar-card:hover { box-shadow: var(--shadow-md); }
+  .pillar-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 18px; }
+  .pillar-card h3 { font-size: 14px; font-weight: 600; color: var(--amp-black); margin-bottom: 6px; }
+  .pillar-card p { font-size: 13px; color: var(--amp-gray-500); line-height: 1.5; }
+
+  /* ── Flywheel ─────────────────────────────────── */
+  .flywheel {
+    background: var(--amp-white);
+    border: 1px solid var(--amp-gray-300);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 24px;
+    overflow-x: auto;
+  }
+  .flywheel-step { text-align: center; flex: 1; min-width: 100px; }
+  .flywheel-step-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--amp-blue-light); color: var(--amp-blue); display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; font-size: 18px; }
+  .flywheel-step h4 { font-size: 12px; font-weight: 600; color: var(--amp-black); margin-bottom: 4px; }
+  .flywheel-step p { font-size: 11px; color: var(--amp-gray-500); }
+  .flywheel-arrow { color: var(--amp-gray-300); font-size: 20px; padding: 0 4px; }
+
+  /* ── Quiz / Model Selector ────────────────────── */
+  .quiz-question { margin-bottom: 20px; }
+  .quiz-question label { display: block; font-size: 13px; font-weight: 600; color: var(--amp-gray-700); margin-bottom: 8px; }
+  .quiz-options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .quiz-option {
+    padding: 8px 14px; border: 1.5px solid var(--amp-gray-300); border-radius: 6px;
+    cursor: pointer; font-size: 13px; font-weight: 500; color: var(--amp-gray-700);
+    background: var(--amp-white); transition: all var(--transition);
+  }
+  .quiz-option:hover { border-color: var(--amp-blue); color: var(--amp-blue); background: var(--amp-blue-light); }
+  .quiz-option.selected { border-color: var(--amp-blue); color: var(--amp-blue); background: var(--amp-blue-light); }
+
+  .model-result {
+    background: var(--amp-white);
+    border: 2px solid var(--amp-blue);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-top: 20px;
+    display: none;
+    animation: fadeIn .3s ease;
+  }
+  .model-result.show { display: block; }
+  .model-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--amp-blue); color: var(--amp-white); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+  .model-detail-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px; }
+  .model-detail { background: var(--amp-gray-100); border-radius: 8px; padding: 12px; }
+  .model-detail-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--amp-gray-500); margin-bottom: 4px; }
+  .model-detail-val { font-size: 13px; font-weight: 600; color: var(--amp-gray-900); }
+
+  /* ── Style Guide Builder ──────────────────────── */
+  .style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+  .form-group { margin-bottom: 16px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--amp-gray-700); margin-bottom: 6px; display: block; }
+  .form-select, .form-input {
+    width: 100%; padding: 9px 12px;
+    border: 1.5px solid var(--amp-gray-300); border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--amp-gray-900);
+    background: var(--amp-white); transition: border-color var(--transition);
+  }
+  .form-select:focus, .form-input:focus { outline: none; border-color: var(--amp-blue); }
+
+  .preview-panel {
+    background: var(--amp-gray-900);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+  }
+  .preview-panel h4 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.4); margin-bottom: 12px; }
+  .preview-event { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+  .preview-event-name { color: #7DD3FC; }
+  .preview-pass { color: var(--amp-green); font-size: 12px; }
+  .preview-fail { color: var(--amp-red); font-size: 12px; }
+
+  .validator-input-wrap { display: flex; gap: 8px; margin-bottom: 16px; }
+  .validator-result { padding: 10px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; display: none; }
+  .validator-result.pass { background: var(--amp-green-light); color: var(--amp-green); display: flex; align-items: center; gap: 6px; }
+  .validator-result.fail { background: var(--amp-red-light); color: var(--amp-red); display: flex; align-items: center; gap: 6px; }
+
+  /* ── Tracking Plan / Branches ─────────────────── */
+  .branch-steps { display: flex; flex-direction: column; gap: 0; margin: 16px 0; }
+  .branch-step { display: flex; gap: 16px; position: relative; }
+  .branch-step:not(:last-child)::before {
+    content: ''; position: absolute; left: 15px; top: 32px;
+    width: 2px; height: calc(100% + 0px); background: var(--amp-gray-300);
+  }
+  .branch-step-dot {
+    width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--amp-gray-300);
+    background: var(--amp-white); display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--amp-gray-500); flex-shrink: 0; z-index: 1;
+    transition: all var(--transition);
+  }
+  .branch-step.done .branch-step-dot { background: var(--amp-blue); border-color: var(--amp-blue); color: white; }
+  .branch-step-content { padding: 4px 0 20px; }
+  .branch-step-content h4 { font-size: 13px; font-weight: 600; color: var(--amp-black); margin-bottom: 3px; }
+  .branch-step-content p { font-size: 13px; color: var(--amp-gray-500); }
+
+  .schema-decision { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .schema-option {
+    border: 1.5px solid var(--amp-gray-300); border-radius: var(--radius-lg); padding: 16px;
+    cursor: pointer; transition: all var(--transition);
+  }
+  .schema-option:hover { border-color: var(--amp-blue); box-shadow: var(--shadow-sm); }
+  .schema-option.selected-option { border-color: var(--amp-blue); background: var(--amp-blue-light); }
+  .schema-option h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .schema-consequence { margin-top: 10px; font-size: 12px; background: var(--amp-gray-100); padding: 8px 10px; border-radius: 6px; color: var(--amp-gray-700); display: none; }
+  .schema-consequence.show { display: block; }
+
+  /* ── DAC / Controls ───────────────────────────── */
+  .dac-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .dac-table th { background: var(--amp-gray-100); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--amp-gray-500); padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--amp-gray-300); }
+  .dac-table td { padding: 10px 12px; border-bottom: 1px solid var(--amp-gray-100); vertical-align: top; }
+  .dac-table tr:last-child td { border-bottom: none; }
+  .tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tag-pii { background: var(--amp-red-light); color: var(--amp-red); }
+  .tag-sensitive { background: var(--amp-orange-light); color: var(--amp-orange); }
+  .tag-ok { background: var(--amp-green-light); color: var(--amp-green); }
+  .tag-purple { background: var(--amp-purple-light); color: var(--amp-purple); }
+
+  .delete-compare { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px; }
+  .delete-card { border: 1.5px solid var(--amp-gray-300); border-radius: var(--radius-lg); padding: 16px; }
+  .delete-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .delete-card ul { padding-left: 16px; font-size: 12px; color: var(--amp-gray-500); line-height: 1.7; }
+  .delete-card.danger { border-color: var(--amp-red); }
+  .delete-card.danger h4 { color: var(--amp-red); }
+  .delete-card.warn { border-color: var(--amp-orange); }
+  .delete-card.warn h4 { color: var(--amp-orange); }
+  .delete-card.safe h4 { color: var(--amp-blue); }
+
+  /* ── Taxonomy Agent ───────────────────────────── */
+  .agent-event-row {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--amp-gray-100); font-size: 13px;
+  }
+  .agent-event-row:last-child { border-bottom: none; }
+  .agent-event-name { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--amp-gray-900); flex: 1; min-width: 160px; }
+  .agent-suggestion { font-size: 12px; background: var(--amp-blue-light); color: var(--amp-blue); padding: 3px 8px; border-radius: 4px; }
+  .agent-apply { padding: 4px 10px; background: var(--amp-blue); color: white; border: none; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background var(--transition); }
+  .agent-apply:hover { background: var(--amp-blue-dark); }
+  .agent-applied { font-size: 12px; color: var(--amp-green); display: none; }
+  .agent-stale { font-size: 11px; color: var(--amp-orange); background: var(--amp-orange-light); padding: 2px 6px; border-radius: 4px; }
+  .agent-duplicate { font-size: 11px; color: var(--amp-red); background: var(--amp-red-light); padding: 2px 6px; border-radius: 4px; }
+  .agent-untagged { font-size: 11px; color: var(--amp-purple); background: var(--amp-purple-light); padding: 2px 6px; border-radius: 4px; }
+
+  .health-score-ring {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: conic-gradient(var(--amp-green) 0% 62%, var(--amp-gray-100) 62% 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; flex-shrink: 0;
+  }
+  .health-score-inner {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: white; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; color: var(--amp-gray-900);
+  }
+
+  /* ── Workshop Activity ─────────────────────────── */
+  .activity-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .activity-table th {
+    background: var(--amp-gray-900); color: white;
+    padding: 10px 14px; text-align: left; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .activity-table td { padding: 8px; border-bottom: 1px solid var(--amp-gray-100); vertical-align: top; }
+  .activity-table tr:last-child td { border-bottom: none; }
+  .activity-row-label { font-weight: 600; color: var(--amp-gray-900); padding: 8px 14px !important; white-space: nowrap; background: var(--amp-gray-100); }
+  .activity-input {
+    width: 100%; border: 1.5px solid var(--amp-gray-300); border-radius: 5px;
+    padding: 6px 10px; font-family: 'DM Sans', sans-serif; font-size: 13px;
+    color: var(--amp-gray-900); background: var(--amp-white); resize: none;
+    min-height: 58px; transition: border-color var(--transition);
+  }
+  .activity-input:focus { outline: none; border-color: var(--amp-blue); }
+
+  /* ── Buttons ──────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px; border-radius: 6px; font-size: 13px;
+    font-weight: 600; cursor: pointer; border: none;
+    font-family: 'DM Sans', sans-serif; transition: all var(--transition);
+  }
+  .btn-primary { background: var(--amp-blue); color: white; }
+  .btn-primary:hover { background: var(--amp-blue-dark); }
+  .btn-secondary { background: var(--amp-white); color: var(--amp-gray-900); border: 1.5px solid var(--amp-gray-300); }
+  .btn-secondary:hover { border-color: var(--amp-gray-500); background: var(--amp-gray-100); }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+  /* ── Checklist ────────────────────────────────── */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 10px; padding: 8px 0;
+    border-bottom: 1px solid var(--amp-gray-100); font-size: 13px; color: var(--amp-gray-700);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px; border: 1.5px solid var(--amp-gray-300); border-radius: 4px;
+    cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition); margin-top: 2px;
+  }
+  .check-box.checked { background: var(--amp-blue); border-color: var(--amp-blue); color: white; font-size: 11px; }
+  .checklist li.done span { text-decoration: line-through; color: var(--amp-gray-300); }
+
+  /* ── Abstraction Slider ───────────────────────── */
+  .slider-wrap { margin: 16px 0; }
+  .slider-track {
+    width: 100%; height: 6px; background: var(--amp-gray-100);
+    border-radius: 3px; position: relative; margin: 12px 0;
+  }
+  .range-input { width: 100%; cursor: pointer; }
+  .slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--amp-gray-500); margin-top: 4px; }
+  .slider-example { margin-top: 12px; padding: 12px; background: var(--amp-gray-100); border-radius: 8px; font-size: 13px; }
+
+  /* ── Callout ──────────────────────────────────── */
+  .callout {
+    display: flex; gap: 12px; padding: 14px 16px;
+    border-radius: var(--radius); border: 1px solid;
+    margin-bottom: 16px; font-size: 13px; line-height: 1.5;
+  }
+  .callout-blue { background: var(--amp-blue-light); border-color: rgba(0,105,255,.2); color: var(--amp-blue-dark); }
+  .callout-green { background: var(--amp-green-light); border-color: rgba(0,184,92,.2); color: #00854B; }
+  .callout-orange { background: var(--amp-orange-light); border-color: rgba(255,120,0,.2); color: #CC5500; }
+  .callout-icon { font-size: 16px; flex-shrink: 0; }
+
+  /* ── Sub-tabs (within a panel) ───────────────── */
+  .sub-tabs-bar {
+    display: flex; gap: 4px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--amp-gray-100); padding-bottom: 0;
+  }
+  .sub-tab-btn {
+    padding: 8px 14px; font-size: 13px; font-weight: 500;
+    color: var(--amp-gray-500); background: none; border: none;
+    border-bottom: 2px solid transparent; cursor: pointer;
+    white-space: nowrap; font-family: 'DM Sans', sans-serif;
+    transition: color var(--transition), border-color var(--transition);
+    margin-bottom: -1px;
+  }
+  .sub-tab-btn:hover { color: var(--amp-gray-900); }
+  .sub-tab-btn.active { color: var(--amp-blue); border-bottom-color: var(--amp-blue); font-weight: 600; }
+  .sub-panel { display: none; }
+  .sub-panel.active { display: block; }
+
+  /* ── Nav progress strip ───────────────────────── */
+  .nav-progress-wrap {
+    background: var(--amp-gray-100); height: 3px;
+    position: sticky; top: 99px; z-index: 89;
+  }
+  .nav-progress-bar {
+    height: 100%; background: var(--amp-blue);
+    transition: width .35s ease; width: 0%;
+  }
+
+  /* ── Progress bar (inline) ────────────────────── */
+  .progress-bar-outer { background: var(--amp-gray-100); border-radius: 4px; height: 6px; overflow: hidden; }
+  .progress-bar-inner { background: var(--amp-blue); border-radius: 4px; height: 100%; transition: width .4s ease; }
+
+  /* ── Divider ──────────────────────────────────── */
+  .divider { border: none; border-top: 1px solid var(--amp-gray-100); margin: 24px 0; }
+  .section-break { margin-top: 28px; margin-bottom: 8px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--amp-gray-400); }
+
+  /* ── Connect options ─────────────────────────────────────────── */
+  .connect-option { padding: 14px 0 4px; }
+  .connect-option-label {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--amp-gray-500); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .connect-badge {
+    font-size: 11px; font-weight: 600; text-transform: none; letter-spacing: 0;
+    background: var(--amp-green-light); color: #00854B;
+    padding: 2px 8px; border-radius: 10px;
+  }
+  .connect-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 4px 0; color: var(--amp-gray-300); font-size: 12px;
+  }
+  .connect-divider::before, .connect-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--amp-gray-100);
+  }
+  .bookmarklet-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .bm-step {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 13px; color: var(--amp-gray-700); line-height: 1.5;
+  }
+  .bm-step-num {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--amp-blue-light);
+    color: var(--amp-blue); font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .bm-drag-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--amp-blue); color: white; padding: 5px 14px;
+    border-radius: 6px; font-size: 13px; font-weight: 600;
+    text-decoration: none; cursor: grab; white-space: nowrap;
+    box-shadow: var(--shadow-sm); transition: background var(--transition);
+    margin-left: 8px;
+  }
+  .bm-drag-link:hover { background: var(--amp-blue-dark); }
+  .bm-drag-link:active { cursor: grabbing; }
+  .bm-open-link { color: var(--amp-gray-400); font-weight: 600; text-decoration: none; cursor: default; }
+  .bm-open-link.active { color: var(--amp-blue); text-decoration: underline; cursor: pointer; }
+  .bm-open-link.active:hover { color: var(--amp-blue-dark); }
+
+  .api-status-msg {
+    font-size: 13px; padding: 8px 12px; border-radius: var(--radius); margin-top: 8px;
+  }
+  .api-status-msg.loading { background: var(--amp-blue-light); color: var(--amp-blue-dark); }
+  .api-status-msg.success { background: var(--amp-green-light); color: #00854B; }
+  .api-status-msg.error   { background: var(--amp-red-light);   color: var(--amp-red); }
+  .api-status-msg.cors    { background: var(--amp-orange-light); color: #CC5500; }
+  .detection-banner {
+    display: none; margin-top: 14px;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e8f5ef 100%);
+    border: 1px solid #b3d9ff; border-radius: var(--radius-lg); padding: 16px 20px;
+  }
+  .detection-banner.show { display: block; }
+  .detection-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 12px; }
+  .detection-chip {
+    background: white; border: 1px solid #c4d9f5; border-radius: 20px;
+    padding: 4px 12px; font-size: 12px; font-weight: 500; color: var(--amp-gray-700);
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .chip-label { color: var(--amp-gray-500); font-weight: 400; }
+  .chip-value { color: var(--amp-blue-dark); font-weight: 700; font-family: 'DM Mono', monospace; }
+  .chip-pct   { color: var(--amp-gray-400); font-size: 11px; }
+  .events-loaded-badge {
+    display: none; align-items: center; gap: 5px;
+    background: var(--amp-green-light); color: #00854B;
+    font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 12px;
+  }
+  .events-loaded-badge.show { display: inline-flex; }
+
+  /* ── Print ────────────────────────────────────── */
+  @media print {
+    .header, .tabs-bar, .btn, .quiz-options { display: none !important; }
+    .tab-panel { display: block !important; page-break-after: always; }
+    .activity-input { border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ──────────────────────────────────────────────────────────── CUSTOMER CONFIG -->
+<script>
+const CUSTOMER_CONFIG = {
+  customer: "",              // shown in header — e.g. "Acme Corp"
+  governanceModel: "",       // "team" | "centralized" | "decentralized" | "organizational"
+  hasDataAccessControls: true,
+  hasAmplitudeData: true,
+  hasTaxonomyAgent: true,
+  hasCDP: false,
+};
+</script>
+
+<!-- ──────────────────────────────────────────────────────────── HEADER -->
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Amplitude
+    </div>
+    <div class="header-divider"></div>
+    <span class="header-title">Data Governance Workshop</span>
+  </div>
+  <div id="header-customer" class="header-customer" style="display:none"></div>
+</header>
+
+<!-- ──────────────────────────────────────────────────────────── TABS -->
+<nav class="tabs-bar" id="tabs-bar">
+  <button class="tab-btn active" onclick="switchTab(0)" data-index="0">
+    <span class="tab-num">1</span> Overview
+  </button>
+  <button class="tab-btn" onclick="switchTab(1)" data-index="1">
+    <span class="tab-num">2</span> Governance Model
+  </button>
+  <button class="tab-btn" onclick="switchTab(2)" data-index="2">
+    <span class="tab-num">3</span> Taxonomy Design
+  </button>
+  <button class="tab-btn" id="tab-data" onclick="switchTab(3)" data-index="3">
+    <span class="tab-num">4</span> Tracking Plan
+  </button>
+  <button class="tab-btn" id="tab-dac" onclick="switchTab(4)" data-index="4">
+    <span class="tab-num">5</span> Governance Controls
+  </button>
+  <button class="tab-btn" id="tab-agent" onclick="switchTab(5)" data-index="5">
+    <span class="tab-num">6</span> Data Assistant Agent
+  </button>
+  <button class="tab-btn" onclick="switchTab(6)" data-index="6">
+    <span class="tab-num">7</span> Workshop Activity
+  </button>
+</nav>
+<div class="nav-progress-wrap" id="nav-progress-wrap" style="display:none">
+  <div class="nav-progress-bar" id="nav-progress-bar"></div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────────── CONTENT -->
+<main class="content">
+
+<!-- ████  TAB 1 — OVERVIEW  ████ -->
+<section class="tab-panel active" id="panel-0">
+  <div class="section-eyebrow">Getting Started</div>
+  <h1 class="section-title">What is Data Governance?</h1>
+  <p class="section-subtitle">Data governance is the set of standards, processes, and ownership that ensures your analytics data stays accurate, trustworthy, and actionable over time.</p>
+
+  <div class="card-grid">
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#E8F0FE">📘</div>
+      <h3>Education</h3>
+      <p>Align teams on what to measure, why it matters, and how to name and classify events consistently across the org.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#E6F7EE">🔧</div>
+      <h3>Instrumentation</h3>
+      <p>Build the right tracking from the start — correct event schemas, property standards, and validation so data arrives clean.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#FFF3E8">🔄</div>
+      <h3>Maintenance</h3>
+      <p>Continuously review and clean your taxonomy — remove stale events, resolve duplicates, enforce ownership over time.</p>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">The Quality Flywheel</div>
+  <div class="flywheel">
+    <div class="flywheel-step">
+      <div class="flywheel-step-icon">🏗️</div>
+      <h4>Define standards</h4>
+      <p>Style guides & tracking plan</p>
+    </div>
+    <div class="flywheel-arrow">→</div>
+    <div class="flywheel-step">
+      <div class="flywheel-step-icon">🚀</div>
+      <h4>Instrument cleanly</h4>
+      <p>Branches & schema enforcement</p>
+    </div>
+    <div class="flywheel-arrow">→</div>
+    <div class="flywheel-step">
+      <div class="flywheel-step-icon">🔍</div>
+      <h4>Review & approve</h4>
+      <p>Observe QA, merge requests</p>
+    </div>
+    <div class="flywheel-arrow">→</div>
+    <div class="flywheel-step">
+      <div class="flywheel-step-icon">🧹</div>
+      <h4>Maintain & prune</h4>
+      <p>Taxonomy Agent, deprecation</p>
+    </div>
+    <div class="flywheel-arrow">→</div>
+    <div class="flywheel-step">
+      <div class="flywheel-step-icon">📊</div>
+      <h4>Trust the data</h4>
+      <p>Better analysis outcomes</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Workshop Structure — What You'll Build Today</div>
+    <div class="card-body">
+      <p style="margin-bottom:10px">By the end of this session, you'll walk away with three concrete artifacts:</p>
+      <ul style="padding-left:18px;line-height:1.9;font-size:14px;color:var(--amp-gray-700)">
+        <li><strong>Your governance model</strong> — a recommended process framework matched to your team size and maturity</li>
+        <li><strong>Your naming conventions</strong> — a style guide you build live, with a live validator</li>
+        <li><strong>Your governance process table</strong> — who owns what, how they do it, and when — ready to share with your team</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;margin-top:8px">
+    <button class="btn btn-primary" onclick="switchTab(1)">Next: Governance Model →</button>
+  </div>
+
+</section>
+
+<!-- ████  TAB 2 — GOVERNANCE MODEL  ████ -->
+<section class="tab-panel" id="panel-1">
+  <div class="section-eyebrow">Step 2 of 7</div>
+  <h1 class="section-title">Choose Your Governance Model</h1>
+  <p class="section-subtitle">Answer four quick questions to get a recommended model — or select one directly below.</p>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:16px">🎯 Model Configurator</div>
+
+    <div class="quiz-question">
+      <label>How many product teams actively instrument in Amplitude?</label>
+      <div class="quiz-options" id="q1">
+        <div class="quiz-option" onclick="selectQuiz('q1',this,'1team')">1 team</div>
+        <div class="quiz-option" onclick="selectQuiz('q1',this,'2-5teams')">2–5 teams</div>
+        <div class="quiz-option" onclick="selectQuiz('q1',this,'5plus')">5+ teams</div>
+      </div>
+    </div>
+
+    <div class="quiz-question">
+      <label>Who owns the tracking plan and event naming today?</label>
+      <div class="quiz-options" id="q2">
+        <div class="quiz-option" onclick="selectQuiz('q2',this,'nobody')">Nobody owns it formally</div>
+        <div class="quiz-option" onclick="selectQuiz('q2',this,'central')">A central data/analytics team</div>
+        <div class="quiz-option" onclick="selectQuiz('q2',this,'each-team')">Each team manages their own</div>
+        <div class="quiz-option" onclick="selectQuiz('q2',this,'council')">A cross-functional governance council</div>
+      </div>
+    </div>
+
+    <div class="quiz-question">
+      <label>How mature is your current governance practice?</label>
+      <div class="quiz-options" id="q3">
+        <div class="quiz-option" onclick="selectQuiz('q3',this,'starting')">Just starting — no formal process</div>
+        <div class="quiz-option" onclick="selectQuiz('q3',this,'partial')">Some standards, inconsistently applied</div>
+        <div class="quiz-option" onclick="selectQuiz('q3',this,'established')">Established process, needs scaling</div>
+      </div>
+    </div>
+
+    <div class="quiz-question">
+      <label>How do tracking changes get approved today?</label>
+      <div class="quiz-options" id="q4">
+        <div class="quiz-option" onclick="selectQuiz('q4',this,'anyone')">Anyone can add events</div>
+        <div class="quiz-option" onclick="selectQuiz('q4',this,'single')">One person reviews all changes</div>
+        <div class="quiz-option" onclick="selectQuiz('q4',this,'team-lead')">Team lead approves for each squad</div>
+        <div class="quiz-option" onclick="selectQuiz('q4',this,'committee')">Cross-team committee reviews</div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-sm" onclick="computeModel()" style="margin-top:8px">See My Recommended Model →</button>
+  </div>
+
+  <div class="model-result" id="model-result">
+    <div class="model-badge" id="model-badge">🏆 Recommended Model</div>
+    <h2 id="model-name" style="font-size:20px;font-weight:700;margin-bottom:6px;color:var(--amp-black)">—</h2>
+    <p id="model-description" style="font-size:14px;color:var(--amp-gray-500);line-height:1.6;margin-bottom:12px"></p>
+    <div class="model-detail-grid">
+      <div class="model-detail">
+        <div class="model-detail-label">Program Owner</div>
+        <div class="model-detail-val" id="model-owner">—</div>
+      </div>
+      <div class="model-detail">
+        <div class="model-detail-label">Approval Process</div>
+        <div class="model-detail-val" id="model-approval">—</div>
+      </div>
+      <div class="model-detail">
+        <div class="model-detail-label">Effort Level</div>
+        <div class="model-detail-val" id="model-effort">—</div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="card-title" style="margin-bottom:10px">Resource Checklist for this Model</div>
+    <ul class="checklist" id="model-checklist"></ul>
+  </div>
+
+  <hr class="divider">
+  <div class="callout callout-blue">
+    <span class="callout-icon">💡</span>
+    <div>These models aren't rigid — most teams blend elements. The goal is to match governance overhead to your team's capacity and data maturity.</div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:8px">
+    <button class="btn btn-secondary" onclick="switchTab(0)">← Back: Overview</button>
+    <button class="btn btn-primary" onclick="switchTab(2)">Next: Taxonomy Design →</button>
+  </div>
+</section>
+
+<!-- ████  TAB 3 — TAXONOMY DESIGN  ████ -->
+<section class="tab-panel" id="panel-2">
+  <div class="section-eyebrow">Step 3 of 7</div>
+  <h1 class="section-title">Build Your Style Guide</h1>
+  <p class="section-subtitle">Define your naming conventions once — the preview updates live as you configure your rules.</p>
+
+  <!-- ── Connect to Live Project ─────────────────────────────── -->
+  <div class="card" style="margin-bottom:20px">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+      <div>
+        <div class="card-title" style="margin-bottom:4px">
+          🔗 Connect to Live Project
+          <span style="font-size:11px;font-weight:400;color:var(--amp-gray-400);margin-left:6px">optional</span>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500)">Pull real events from your Amplitude project to auto-detect their naming conventions.</p>
+      </div>
+      <div class="events-loaded-badge" id="events-loaded-badge">✓ <span id="loaded-count-badge">0</span> custom events loaded</div>
+    </div>
+
+    <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:14px">
+      Enter your Data tab URL for the project of interest to generate a direct link and a pre-configured bookmarklet.
+    </p>
+
+    <div style="display:flex;gap:10px;align-items:flex-end;margin-bottom:4px;flex-wrap:wrap">
+      <div class="form-group" style="margin-bottom:0;flex:1;min-width:200px">
+        <label class="form-label">Data tab URL</label>
+        <input class="form-input" id="bm-data-url" type="url"
+          placeholder="https://app.amplitude.com/data/yourorg/Your Project/events/…"
+          oninput="updateDataTabLink()" spellcheck="false">
+      </div>
+    </div>
+    <div id="bm-url-error" style="font-size:12px;color:var(--amp-red);margin-bottom:12px;display:none">
+      ⚠️ Please enter a valid Amplitude Data tab URL (must start with https://app.amplitude.com/data/)
+    </div>
+
+    <div class="bookmarklet-steps" style="margin-top:10px">
+      <div class="bm-step">
+        <div class="bm-step-num">1</div>
+        <div>Drag this to your bookmarks bar <span style="color:var(--amp-gray-400)">(one-time setup)</span>:</div>
+        <a id="bookmarklet-link" class="bm-drag-link" title="Drag me to your bookmarks bar">📊 Get Amplitude Events</a>
+      </div>
+      <div class="bm-step">
+        <div class="bm-step-num">2</div>
+        <div>Paste your Data tab URL above, then open your <a id="amp-data-link" href="#" target="_blank" class="bm-open-link" style="pointer-events:none">Data Tab</a></div>
+      </div>
+      <div class="bm-step">
+        <div class="bm-step-num">3</div>
+        <div>Once Amplitude loads, click the <strong>📊 Get Amplitude Events</strong> bookmark — your style guide will be configured automatically</div>
+      </div>
+    </div>
+    <div id="bm-status-area"></div>
+
+    <!-- Detection banner ──────────────────────────────────────── -->
+    <div class="detection-banner" id="detection-banner">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--amp-gray-900);margin-bottom:2px">
+          📊 Style guide configured from <span id="detection-count">0</span> events
+        </div>
+        <div style="font-size:12px;color:var(--amp-gray-500)">Amplitude default &amp; system events excluded · applied to style rules and live preview</div>
+      </div>
+      <div class="detection-chips" id="detection-chips"></div>
+      <div id="sample-events-row" style="font-size:12px;color:var(--amp-gray-500);line-height:1.8"></div>
+    </div>
+  </div>
+
+  <div class="style-grid">
+    <div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">🎨 Style Rules</div>
+
+        <div class="form-group">
+          <label class="form-label">Event name casing</label>
+          <select class="form-select" id="sg-case" onchange="updatePreview()">
+            <option value="title">Title Case (Button Clicked)</option>
+            <option value="snake">snake_case (button_clicked)</option>
+            <option value="camel">camelCase (buttonClicked)</option>
+            <option value="upper">UPPER_SNAKE (BUTTON_CLICKED)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Verb tense for action events</label>
+          <select class="form-select" id="sg-tense" onchange="updatePreview()">
+            <option value="past">Past tense (Button Clicked)</option>
+            <option value="present">Present tense (Click Button)</option>
+            <option value="noun">Noun phrase (Button Click)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Object–Action or Action–Object?</label>
+          <select class="form-select" id="sg-order" onchange="updatePreview()">
+            <option value="object-action">Object → Action (Button Clicked)</option>
+            <option value="action-object">Action → Object (Clicked Button)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Property name casing</label>
+          <select class="form-select" id="sg-prop-case" onchange="updatePreview()">
+            <option value="snake">snake_case (user_id, plan_type)</option>
+            <option value="camel">camelCase (userId, planType)</option>
+            <option value="lower">lowercase (userid, plantype)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Screen / page prefix</label>
+          <select class="form-select" id="sg-screen" onchange="updatePreview()">
+            <option value="none">None (Dashboard Viewed)</option>
+            <option value="page">Page: prefix (Page: Dashboard Viewed)</option>
+            <option value="screen">Screen: prefix (Screen: Dashboard Viewed)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="preview-panel">
+        <h4>Live Preview</h4>
+        <div id="preview-events"></div>
+        <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px">
+          <div style="color:rgba(255,255,255,.4);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Properties on button_clicked</div>
+          <div id="preview-props" style="font-size:12px;line-height:1.8"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="card-title" style="margin-bottom:10px">🔍 Naming Validator</div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">Type an event name to check it against your style guide rules.</p>
+        <div class="validator-input-wrap">
+          <input class="form-input" id="validator-input" type="text" placeholder="e.g. button_Clicked" oninput="validateEvent()">
+        </div>
+        <div id="validator-result" class="validator-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-eyebrow">Abstraction Spectrum</div>
+  <h3 style="font-size:16px;font-weight:600;margin-bottom:6px">Finding the right granularity</h3>
+  <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:16px">Drag the slider to see examples of overly granular vs overly consolidated event naming.</p>
+
+  <div class="card">
+    <div class="slider-wrap">
+      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--amp-gray-500)">
+        <span>⚡ Too Granular</span>
+        <span>⚖️ Just Right</span>
+        <span>📦 Too Consolidated</span>
+      </div>
+      <input type="range" class="range-input" id="abstraction-slider" min="0" max="100" value="50" oninput="updateAbstraction()">
+      <div id="abstraction-example" class="slider-example"></div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:8px">
+    <button class="btn btn-secondary" onclick="switchTab(1)">← Back: Governance Model</button>
+    <button class="btn btn-primary" onclick="switchTab(3)" id="next-from-taxonomy">Next: Tracking Plan →</button>
+  </div>
+</section>
+
+<!-- ████  TAB 4 — TRACKING PLAN (with sub-tabs 4.1 / 4.2 / 4.3)  ████ -->
+<section class="tab-panel" id="panel-3">
+  <div class="section-eyebrow" id="panel-3-eyebrow">Step 3 of 8</div>
+  <h1 class="section-title" id="panel-3-title">Tracking Plan & Branches</h1>
+
+  <!-- Sub-tab nav -->
+  <nav class="sub-tabs-bar">
+    <button class="sub-tab-btn active" id="stab-3-0" onclick="switchSubTab(3,0)">4.1 Tracking Plan & Branches</button>
+    <button class="sub-tab-btn" id="stab-3-1" onclick="switchSubTab(3,1)">4.2 Schema Settings</button>
+    <button class="sub-tab-btn" id="stab-3-2" onclick="switchSubTab(3,2)">4.3 Virtual Data Extensions</button>
+    <button class="sub-tab-btn" id="stab-3-3" onclick="switchSubTab(3,3)">4.4 Transformations</button>
+  </nav>
+
+  <!-- ── Sub-panel 4.1 ── -->
+  <div class="sub-panel active" id="subpanel-3-0">
+    <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">The tracking plan is your source of truth. Branches let teams propose changes without breaking production data.</p>
+    <div class="card-grid-2">
+      <div class="card">
+        <div class="card-title">📋 What Goes in the Tracking Plan</div>
+
+        <p style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px">Events</p>
+        <ul class="checklist">
+          <li><div class="check-box checked">✓</div><span>Event name, description, and expected event properties</span></li>
+          <li><div class="check-box checked">✓</div><span>Event ownership — who is responsible for each event</span></li>
+          <li><div class="check-box checked">✓</div><span>Event status: <code style="font-size:11px;font-family:'DM Mono',monospace">Planned → Live → Unexpected</code></span></li>
+          <li><div class="check-box checked">✓</div><span>Schema enforcement rules per source</span></li>
+        </ul>
+
+        <p style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px">User Properties</p>
+        <ul class="checklist">
+          <li><div class="check-box checked">✓</div><span>User traits set via <code style="font-size:11px;font-family:'DM Mono',monospace">identify()</code> calls — e.g. <code style="font-size:11px;font-family:'DM Mono',monospace">plan_type</code>, <code style="font-size:11px;font-family:'DM Mono',monospace">country</code></span></li>
+          <li><div class="check-box checked">✓</div><span>Group properties for account-level analysis (company, org)</span></li>
+          <li><div class="check-box">✓</div><span>Persist across sessions — unlike event properties which are per-event</span></li>
+        </ul>
+
+        <p style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px">Shared Resources</p>
+        <ul class="checklist">
+          <li><div class="check-box checked">✓</div><span>Property groups — reusable property sets applied across multiple events</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">⎇ Branch Workflow</div>
+        <div class="branch-steps" style="margin-top:12px">
+          <div class="branch-step done">
+            <div class="branch-step-dot">1</div>
+            <div class="branch-step-content">
+              <h4>Create a branch</h4>
+              <p>Engineer proposes new events or property changes in an isolated branch</p>
+            </div>
+          </div>
+          <div class="branch-step done">
+            <div class="branch-step-dot">2</div>
+            <div class="branch-step-content">
+              <h4>Instrument against branch</h4>
+              <p>SDK validation runs against branch schema — catches issues before prod</p>
+            </div>
+          </div>
+          <div class="branch-step done">
+            <div class="branch-step-dot">3</div>
+            <div class="branch-step-content">
+              <h4>Submit merge request</h4>
+              <p>Auto-notifies reviewers in Slack — shows diff of what changed</p>
+            </div>
+          </div>
+          <div class="branch-step">
+            <div class="branch-step-dot">4</div>
+            <div class="branch-step-content">
+              <h4>Review & merge</h4>
+              <p>Approver accepts or requests changes — clean merge into main</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:24px">
+      <button class="btn btn-secondary" onclick="switchTab(2)">← Back: Taxonomy Design</button>
+      <button class="btn btn-primary" onclick="switchSubTab(3,1)">Next: Schema Settings →</button>
+    </div>
+  </div>
+
+  <!-- ── Sub-panel 4.2 ── -->
+  <div class="sub-panel" id="subpanel-3-1">
+    <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Schema enforcement is configured <strong>per source</strong> — you can be strict with your production SDK and lenient with a staging source. These settings are the rules engine that powers <strong>Amplitude Observe</strong>.</p>
+
+    <!-- Observe connection callout -->
+    <div class="callout callout-blue" style="margin-bottom:24px">
+      <span class="callout-icon">👁️</span>
+      <div>
+        <strong>How this connects to Observe:</strong> Your schema settings define what "good data" looks like. <strong>Amplitude Observe</strong> (found at <em>Data → Events</em>) continuously compares your live event stream against those rules — surfacing unexpected events, missing required properties, type mismatches, and volume anomalies in real time. No code needed.
+      </div>
+    </div>
+
+    <p style="font-size:12px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Unexpected Events</p>
+    <div class="schema-decision">
+      <div class="schema-option" onclick="selectSchema('unexpected')">
+        <h4>Mark as Unexpected</h4>
+        <p style="font-size:12px;color:var(--amp-gray-500)">Event is ingested but flagged in Observe for review</p>
+        <div class="schema-consequence show" id="con-unexpected">
+          <strong>What Observe shows:</strong> Events appear in Amplitude tagged "Unexpected" with a distinct status indicator. They're queryable but clearly signal the event isn't in the approved tracking plan. Great for discovery without data loss — your team can review and add to plan directly from the Observe view.
+        </div>
+      </div>
+      <div class="schema-option" onclick="selectSchema('reject')">
+        <h4>Reject at Ingestion</h4>
+        <p style="font-size:12px;color:var(--amp-gray-500)">Unplanned events are dropped at the edge — never ingested</p>
+        <div class="schema-consequence show" id="con-reject">
+          <strong>⚠️ Caution:</strong> Data is permanently lost — Observe will not see it. Best for teams with mature tracking plans where any unapproved event is genuinely invalid. Requires high confidence in your tracking plan completeness.
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:12px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px">Unexpected Properties</p>
+    <div class="schema-decision" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="schema-option" onclick="selectPropSchema('allow')">
+        <h4>Allow</h4>
+        <p style="font-size:12px;color:var(--amp-gray-500)">Unexpected properties are ingested and visible</p>
+        <div class="schema-consequence show" id="con-prop-allow">
+          Best for discovery phases. New properties sent from the SDK appear in Amplitude and can be retroactively added to the tracking plan. Observe will show them as part of the event stream.
+        </div>
+      </div>
+      <div class="schema-option" onclick="selectPropSchema('mark')">
+        <h4>Mark as Unexpected</h4>
+        <p style="font-size:12px;color:var(--amp-gray-500)">Property is ingested but flagged for review</p>
+        <div class="schema-consequence show" id="con-prop-mark">
+          Ingested and queryable, but tagged in Observe so data governors can review and approve or block. Good balance of control and data safety.
+        </div>
+      </div>
+      <div class="schema-option" onclick="selectPropSchema('reject')">
+        <h4>Reject</h4>
+        <p style="font-size:12px;color:var(--amp-gray-500)">Unexpected property values are dropped</p>
+        <div class="schema-consequence show" id="con-prop-reject">
+          <strong>⚠️ Caution:</strong> Property values are permanently lost and won't appear in Observe. Best for properties with strict PII or compliance requirements.
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:12px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px">Property Type Validation</p>
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <p style="font-size:13px;font-weight:600;margin-bottom:6px">Required Properties</p>
+          <p style="font-size:12px;color:var(--amp-gray-500)">Mark properties as required in the tracking plan. Observe surfaces events where required properties are missing — the <strong>"% Seen"</strong> column turns red when a required field is absent, making gaps immediately visible.</p>
+        </div>
+        <div>
+          <p style="font-size:13px;font-weight:600;margin-bottom:6px">Type Enforcement</p>
+          <p style="font-size:12px;color:var(--amp-gray-500)">Define expected type (<code style="font-family:'DM Mono',monospace">string</code>, <code style="font-family:'DM Mono',monospace">number</code>, <code style="font-family:'DM Mono',monospace">boolean</code>, <code style="font-family:'DM Mono',monospace">array</code>) per property. Observe flags type mismatches in red — preventing silent bugs where <code style="font-family:'DM Mono',monospace">revenue</code> arrives as a string.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Observe status legend -->
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title" style="margin-bottom:12px">👁️ What Observe Surfaces (Data → Events)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="font-size:12px;padding:8px 10px;background:var(--amp-gray-50);border-radius:6px;border-left:3px solid #22c55e">
+          <strong>Valid</strong><br><span style="color:var(--amp-gray-500)">Event matches your current schema exactly</span>
+        </div>
+        <div style="font-size:12px;padding:8px 10px;background:var(--amp-gray-50);border-radius:6px;border-left:3px solid #f59e0b">
+          <strong>Unexpected</strong><br><span style="color:var(--amp-gray-500)">Event not yet in the tracking plan — review and add, or reject</span>
+        </div>
+        <div style="font-size:12px;padding:8px 10px;background:var(--amp-gray-50);border-radius:6px;border-left:3px solid #ef4444">
+          <strong>Invalid</strong><br><span style="color:var(--amp-gray-500)">Event deviates from schema — missing required props or wrong types</span>
+        </div>
+        <div style="font-size:12px;padding:8px 10px;background:var(--amp-gray-50);border-radius:6px;border-left:3px solid var(--amp-gray-300)">
+          <strong>Out of Date</strong><br><span style="color:var(--amp-gray-500)">Event matches a previous version of the schema — SDK not yet updated</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;margin-top:24px">
+      <button class="btn btn-secondary" onclick="switchSubTab(3,0)">← Back: Tracking Plan</button>
+      <button class="btn btn-primary" onclick="switchSubTab(3,2)">Next: Virtual Data Extensions →</button>
+    </div>
+  </div>
+
+  <!-- ── Sub-panel 4.3 ── -->
+  <div class="sub-panel" id="subpanel-3-2">
+    <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Enrich your taxonomy without re-instrumentation — these three features create new data dimensions retroactively, no SDK changes required.</p>
+
+    <div class="card-grid" style="margin-bottom:24px">
+      <div class="pillar-card">
+        <div class="pillar-icon" style="background:var(--amp-blue-light)">⚡</div>
+        <h3>Custom Events</h3>
+        <p>Combine multiple existing events with an <code style="font-size:11px;font-family:'DM Mono',monospace">OR</code> clause into a single reusable metric. Useful when multiple actions represent the same user intent — e.g. <em>"Play Song" OR "Search Song"</em> as a unified engagement event.</p>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--amp-gray-100)">
+          <p style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;margin-bottom:4px">Key constraints</p>
+          <ul style="font-size:12px;color:var(--amp-gray-500);padding-left:14px;line-height:1.7">
+            <li>Appear with a <code style="font-family:'DM Mono',monospace">[Custom]</code> prefix in charts</li>
+            <li>Editing breaks charts that reference them</li>
+            <li>Event property queries only work if the property exists on <em>all</em> component events</li>
+            <li>Not supported in Redshift queries</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon" style="background:var(--amp-green-light)">🧮</div>
+        <h3>Derived Properties</h3>
+        <p>Compute new properties on the fly from existing event or user properties using formulas — no new data required. Calculated retroactively, so they update historical charts automatically.</p>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--amp-gray-100)">
+          <p style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;margin-bottom:4px">Supported functions</p>
+          <ul style="font-size:12px;color:var(--amp-gray-500);padding-left:14px;line-height:1.7">
+            <li><strong>String:</strong> REGEXEXTRACT, CONCAT, SPLIT, LOWERCASE</li>
+            <li><strong>Math:</strong> SUM, MULTIPLY, DIVIDE, MIN, MAX</li>
+            <li><strong>Date:</strong> EVENT_HOUR_OF_DAY, DATE_TIME_FORMATTER</li>
+            <li><strong>Conditional:</strong> IF, SWITCH, COALESCE</li>
+            <li>Max 10 property references per derived property</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon" style="background:var(--amp-purple-light)">📡</div>
+        <h3>Channel Classifiers</h3>
+        <p>Categorize traffic by UTM parameters and referrer data into named marketing channels — computed on the fly, aligned to GA4's 29-category model by default. Retroactive definitions update all existing charts.</p>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--amp-gray-100)">
+          <p style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;margin-bottom:4px">Key details</p>
+          <ul style="font-size:12px;color:var(--amp-gray-500);padding-left:14px;line-height:1.7">
+            <li>Default classifier includes Paid/Organic Search, Social, Email, Display, LLM Search, and more</li>
+            <li>Define custom channels by building row-based rules (all conditions in a row must be true)</li>
+            <li>Use OR logic by adding separate rows with the same channel name</li>
+            <li>Max 149 rows and 1,000 total cells per classifier</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px">
+      <button class="btn btn-secondary" onclick="switchSubTab(3,1)">← Back: Schema Settings</button>
+      <button class="btn btn-primary" onclick="switchSubTab(3,3)">Next: Transformations →</button>
+    </div>
+  </div>
+
+  <!-- ── Sub-panel 4.4 ── -->
+  <div class="sub-panel" id="subpanel-3-3">
+    <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Fix common instrumentation mistakes retroactively — no code changes, no re-deployment. Transformations apply at query time and leave your raw data untouched.</p>
+
+    <div class="callout callout-blue" style="margin-bottom:24px">
+      <span class="callout-icon">💡</span>
+      <div><strong>When to use:</strong> Transformations are ideal for correcting data quality issues that are too costly or slow to fix in code — renaming inconsistent events, merging duplicates, or standardizing property values across historical data.</div>
+    </div>
+
+    <!-- Four transformation types -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+
+      <div class="card">
+        <div class="card-title" style="border-top:3px solid var(--amp-blue);padding-top:12px">🔀 Merge Events</div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin:8px 0 10px">Consolidate multiple events that represent the same action into a single event name.</p>
+        <div style="font-size:12px;background:var(--amp-gray-50);border-radius:6px;padding:10px;font-family:monospace;color:var(--amp-gray-700)">
+          <div style="color:var(--amp-gray-400);margin-bottom:4px">// Before</div>
+          <div>comment_reply_like</div>
+          <div>comment_share</div>
+          <div style="color:var(--amp-gray-400);margin:6px 0 4px">// After merge</div>
+          <div>comment <span style="color:var(--amp-blue)">(comment_type: "like" | "share")</span></div>
+        </div>
+        <p style="font-size:12px;color:var(--amp-gray-400);margin-top:8px">Optionally add a distinguishing property to preserve the original intent.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="border-top:3px solid var(--amp-teal);padding-top:12px">🏷️ Merge Properties</div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin:8px 0 10px">Combine properties with different names that represent the same dimension.</p>
+        <div style="font-size:12px;background:var(--amp-gray-50);border-radius:6px;padding:10px;font-family:monospace;color:var(--amp-gray-700)">
+          <div style="color:var(--amp-gray-400);margin-bottom:4px">// Before</div>
+          <div>title</div>
+          <div>TITLE</div>
+          <div>item_title</div>
+          <div style="color:var(--amp-gray-400);margin:6px 0 4px">// After merge</div>
+          <div>Title</div>
+        </div>
+        <p style="font-size:12px;color:var(--amp-gray-400);margin-top:8px">Works for both event properties and user properties.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="border-top:3px solid #f59e0b;padding-top:12px">✏️ Rename Property Values</div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin:8px 0 10px">Correct misspellings or standardize inconsistent casing in property values.</p>
+        <div style="font-size:12px;background:var(--amp-gray-50);border-radius:6px;padding:10px;font-family:monospace;color:var(--amp-gray-700)">
+          <div style="color:var(--amp-gray-400);margin-bottom:4px">// Before</div>
+          <div>paid_subscription: "true"</div>
+          <div>paid_subscription: "TRUE"</div>
+          <div style="color:var(--amp-gray-400);margin:6px 0 4px">// After rename</div>
+          <div>paid_subscription: "True"</div>
+        </div>
+        <p style="font-size:12px;color:var(--amp-gray-400);margin-top:8px">Reassigns specific values — does not affect all values of the property.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="border-top:3px solid var(--amp-gray-300);padding-top:12px">🙈 Hide Property Values</div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin:8px 0 10px">Remove unwanted or noisy values from charts and dropdowns without deleting raw data.</p>
+        <div style="font-size:12px;background:var(--amp-gray-50);border-radius:6px;padding:10px;font-family:monospace;color:var(--amp-gray-700)">
+          <div style="color:var(--amp-gray-400);margin-bottom:4px">// Hide test/internal values</div>
+          <div>user_type: "(none)"</div>
+          <div>user_type: "test_user"</div>
+          <div style="color:var(--amp-gray-400);margin:6px 0 4px">// Hidden from charts,</div>
+          <div style="color:var(--amp-gray-400)">// visible in event stream</div>
+        </div>
+        <p style="font-size:12px;color:var(--amp-gray-400);margin-top:8px">Raw data preserved — reversible at any time.</p>
+      </div>
+
+    </div>
+
+    <!-- Key constraints -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">⚠️ Important Constraints</div>
+      <ul style="font-size:13px;color:var(--amp-gray-600);margin:8px 0 0;padding-left:18px;line-height:1.8">
+        <li>Only available on the <strong>main branch</strong> — not on feature branches</li>
+        <li>Default Amplitude user properties (e.g. <code>platform</code>, <code>country</code>) <strong>cannot</strong> be transformed</li>
+        <li>Transformed properties are <strong>not</strong> available for block/drop filters in Data Management</li>
+        <li>Transformations apply at <strong>query time</strong> — raw data in connected warehouses is unchanged</li>
+        <li>All transformations are <strong>non-permanent</strong> and can be edited or deleted anytime</li>
+      </ul>
+    </div>
+
+    <div class="callout callout-blue" style="margin-bottom:24px">
+      <span class="callout-icon">🔗</span>
+      <div>Find transformations in Amplitude under <strong>Data → Transformations</strong>. Requires Manager or Admin role to create.</div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;margin-top:8px">
+      <button class="btn btn-secondary" onclick="switchSubTab(3,2)">← Back: Virtual Data Extensions</button>
+      <button class="btn btn-primary" onclick="switchTab(4)" id="next-from-tracking">Next: Governance Controls →</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ████  TAB 5 — GOVERNANCE CONTROLS (DAC)  ████ -->
+<section class="tab-panel" id="panel-4">
+  <div class="section-eyebrow">Step 5 of 7</div>
+  <h1 class="section-title">Governance Controls</h1>
+  <p class="section-subtitle">Classify your properties, control who sees sensitive data, and manage event lifecycle.</p>
+
+  <div class="section-eyebrow">Property Classification</div>
+  <div class="card" style="margin-bottom:24px">
+    <table class="dac-table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Example Values</th>
+          <th>Classification</th>
+          <th>What Restricted Users See</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code style="font-family:'DM Mono',monospace;font-size:12px">user_email</code></td>
+          <td style="color:var(--amp-gray-500);font-size:12px">alice@company.com</td>
+          <td><span class="tag tag-pii">PII</span></td>
+          <td style="font-size:12px;color:var(--amp-gray-500)">Property hidden from charts and user streams</td>
+        </tr>
+        <tr>
+          <td><code style="font-family:'DM Mono',monospace;font-size:12px">plan_mrr</code></td>
+          <td style="color:var(--amp-gray-500);font-size:12px">$1,200</td>
+          <td><span class="tag tag-sensitive">Revenue</span></td>
+          <td style="font-size:12px;color:var(--amp-gray-500)">Values masked — "Restricted" shown in place of value</td>
+        </tr>
+        <tr>
+          <td><code style="font-family:'DM Mono',monospace;font-size:12px">device_id</code></td>
+          <td style="color:var(--amp-gray-500);font-size:12px">a1b2c3d4…</td>
+          <td><span class="tag tag-sensitive">Sensitive</span></td>
+          <td style="font-size:12px;color:var(--amp-gray-500)">Not available in group-by or filters</td>
+        </tr>
+        <tr>
+          <td><code style="font-family:'DM Mono',monospace;font-size:12px">plan_type</code></td>
+          <td style="color:var(--amp-gray-500);font-size:12px">Pro, Growth, Enterprise</td>
+          <td><span class="tag tag-ok">Standard</span></td>
+          <td style="font-size:12px;color:var(--amp-gray-500)">Fully visible to all users</td>
+        </tr>
+        <tr>
+          <td><code style="font-family:'DM Mono',monospace;font-size:12px">experiment_variant</code></td>
+          <td style="color:var(--amp-gray-500);font-size:12px">control, treatment_a</td>
+          <td><span class="tag tag-purple">Internal</span></td>
+          <td style="font-size:12px;color:var(--amp-gray-500)">Visible only to Admin and Manager roles</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-eyebrow">Event Lifecycle</div>
+  <h3 style="font-size:16px;font-weight:600;margin-bottom:6px">Hide vs Block vs Delete</h3>
+  <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:8px">These are <strong>not</strong> the same operation — understand the consequences before acting.</p>
+
+  <div class="delete-compare">
+    <div class="delete-card safe">
+      <h4>🙈 Hide</h4>
+      <ul>
+        <li>Event is removed from the event picker UI</li>
+        <li>Data is still ingested and stored</li>
+        <li>Existing charts still work</li>
+        <li>Reversible — unhide anytime</li>
+        <li>Best for: decluttering noise</li>
+      </ul>
+    </div>
+    <div class="delete-card warn">
+      <h4>🚫 Block</h4>
+      <ul>
+        <li>New incoming data is dropped at edge</li>
+        <li>Historical data is preserved</li>
+        <li>Old charts using this event still render</li>
+        <li>Partially reversible (unblock re-enables)</li>
+        <li>Best for: stopping bad instrumentation</li>
+      </ul>
+    </div>
+    <div class="delete-card danger">
+      <h4>🗑️ Delete</h4>
+      <ul>
+        <li>All historical data is permanently erased</li>
+        <li>New data is also dropped</li>
+        <li>All charts referencing event break</li>
+        <li><strong>Irreversible</strong></li>
+        <li>Best for: compliance / data minimization only</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-eyebrow">Data Deprecation</div>
+  <h3 style="font-size:16px;font-weight:600;margin-bottom:4px">Automated Cleanup with Data Assistant</h3>
+  <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:12px">Automated tasks run daily across your workspace — surfacing stale events so data governors can act without manual audits. Requires Admin/Manager permissions and must be enabled by Amplitude Support.</p>
+
+  <div class="card-grid-2" style="margin-bottom:16px">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">🕐 Stale Events (90-day default)</div>
+      <p style="font-size:12px;color:var(--amp-gray-500);margin-top:6px">Events not queried in any chart for 90+ days are flagged as candidates. The threshold is configurable. Includes a mandatory <strong>30-day notification window</strong> before deletion — event owners are notified via email and Slack so they can save events they still need.</p>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title">📅 Single-Day Events (test data)</div>
+      <p style="font-size:12px;color:var(--amp-gray-500);margin-top:6px">Events that fired only on a single calendar day (typically test instrumentation) are automatically identified and scheduled for deletion after the 30-day window. Threshold is configurable.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-bottom:16px">
+    <span class="callout-icon">⚠️</span>
+    <div><strong>Recovery:</strong> Deleted events are restorable anytime via <em>Data → Events → Deleted Events → Restore</em> — this does not recover the data sent to Amplitude while the event was deleted.</div>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:600;margin-bottom:12px">4-Step Deprecation Workflow</h3>
+  <div class="card">
+    <div style="display:flex;gap:0;align-items:flex-start;overflow-x:auto">
+      <div style="flex:1;text-align:center;padding:12px;min-width:120px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">1</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Identify</div>
+        <div style="font-size:11px;color:var(--amp-gray-500)">Data Assistant surfaces events unused for 90+ days or fired on a single day</div>
+      </div>
+      <div style="color:var(--amp-gray-300);font-size:20px;padding-top:20px">→</div>
+      <div style="flex:1;text-align:center;padding:12px;min-width:120px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">2</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Notify</div>
+        <div style="font-size:11px;color:var(--amp-gray-500)">Owners notified via email + Slack 30 days before deletion — they can save the event</div>
+      </div>
+      <div style="color:var(--amp-gray-300);font-size:20px;padding-top:20px">→</div>
+      <div style="flex:1;text-align:center;padding:12px;min-width:120px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">3</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Hide</div>
+        <div style="font-size:11px;color:var(--amp-gray-500)">Remove from picker, confirm no active charts depend on the event</div>
+      </div>
+      <div style="color:var(--amp-gray-300);font-size:20px;padding-top:20px">→</div>
+      <div style="flex:1;text-align:center;padding:12px;min-width:120px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-red);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">4</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Delete</div>
+        <div style="font-size:11px;color:var(--amp-gray-500)">Permanent removal — only for compliance or data minimization requirements</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:8px">
+    <button class="btn btn-secondary" onclick="navigatePrev(4)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(5)" id="next-from-controls">Next: Data Assistant Agent →</button>
+  </div>
+</section>
+
+<!-- ████  TAB 6 — TAXONOMY AGENT  ████ -->
+<section class="tab-panel" id="panel-5">
+  <div class="section-eyebrow">Step 6 of 7</div>
+  <h1 class="section-title">AI-Powered Data Governance</h1>
+  <p class="section-subtitle">Amplitude's AI agents help you build, maintain, and scale your taxonomy — from first instrumentation through ongoing governance.</p>
+
+  <div class="section-eyebrow">Today — Data Assistant</div>
+  <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:16px">Available now. Continuously analyzes your event stream and surfaces issues for review.</p>
+
+  <div class="card-grid">
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#E8F0FE">🔍</div>
+      <h3>Auto-Detect Issues</h3>
+      <p>Surfaces stale events (90+ days without a query), duplicates, and events missing descriptions or owners.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#E6F7EE">✨</div>
+      <h3>Bulk Actions</h3>
+      <p>Accept or reject suggested changes in bulk — categorize, tag, and clean your taxonomy in minutes, not days.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon" style="background:#FFF3E8">📊</div>
+      <h3>Taxonomy Health Score</h3>
+      <p>Proactive health scoring shows your taxonomy quality over time — trend it in your quarterly review.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:8px">
+    <div class="card-title" style="margin-bottom:8px">🤖 Review Suggestions in Data Assistant</div>
+    <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:16px">Data Assistant analyzes your live event stream and surfaces the most impactful recommendations — stale events, missing metadata, duplicates, and more — directly in your project.</p>
+
+    <div id="data-assistant-link-wrap">
+      <a id="data-assistant-link" href="#" target="_blank" class="btn btn-primary" style="display:none">
+        Open Data Assistant ↗
+      </a>
+      <div id="data-assistant-no-url" class="callout callout-blue" style="display:none">
+        <span class="callout-icon">💡</span>
+        <div>Add your Data tab URL in <strong>Step 3 — Connect to Live Project</strong> to get a direct link to your Data Assistant.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:8px">
+    <div class="card-title" style="margin-bottom:8px">🚀 Try the Data Assistant Agent</div>
+    <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:16px">The Data Assistant Agent analyzes your taxonomy and creates a prioritized action plan — surfacing stale events, missing metadata, duplicates, and AI readiness improvements. Launch it directly in your project.</p>
+    <div id="agent-link-wrap">
+      <a id="agent-create-link" href="#" target="_blank" class="btn btn-primary" style="display:none">
+        Open Data Assistant Agent ↗
+      </a>
+      <div id="agent-no-url" class="callout callout-blue" style="display:none">
+        <span class="callout-icon">💡</span>
+        <div>Add your Data tab URL in <strong>Step 3 — Connect to Live Project</strong> to get a direct link to the Data Assistant Agent.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-eyebrow">Coming in 2026 — AI Governance Agents</div>
+  <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:16px">Three new agents that automate the full governance lifecycle — from initial setup through continuous self-maintenance.</p>
+
+  <div class="card-grid">
+    <div class="pillar-card" style="border-top:3px solid var(--amp-blue)">
+      <div class="pillar-icon" style="background:var(--amp-blue-light)">🚀</div>
+      <h3>Quickstart Agent</h3>
+      <p>Scans your product or website during initial setup and suggests a complete tracking plan, then helps you instrument it — getting teams to clean data from day one without starting from a blank slate.</p>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--amp-gray-100)">
+        <span style="font-size:11px;font-weight:700;color:var(--amp-blue);text-transform:uppercase;letter-spacing:.05em">Setup & Instrumentation</span>
+      </div>
+    </div>
+    <div class="pillar-card" style="border-top:3px solid var(--amp-green)">
+      <div class="pillar-icon" style="background:var(--amp-green-light)">🤖</div>
+      <h3>Data Assistant Agent</h3>
+      <p>Surfaces the top recommended actions to improve data quality on an ongoing basis. Goes beyond today's Data Assistant with richer AI-driven prioritization across four areas:</p>
+      <ul style="font-size:12px;color:var(--amp-gray-500);padding-left:16px;margin-top:8px;line-height:1.8">
+        <li>Updating descriptions and other missing metadata</li>
+        <li>Deleting unused and test events</li>
+        <li>Reducing duplicate events</li>
+        <li>Improving AI readiness of your taxonomy</li>
+      </ul>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--amp-gray-100)">
+        <span style="font-size:11px;font-weight:700;color:var(--amp-green);text-transform:uppercase;letter-spacing:.05em">Ongoing Maintenance</span>
+      </div>
+    </div>
+    <div class="pillar-card" style="border-top:3px solid var(--amp-purple)">
+      <div class="pillar-icon" style="background:var(--amp-purple-light)">🔮</div>
+      <h3>Self-Building Agent</h3>
+      <p>Identifies new user paths and funnels in your product on a regular cadence, then proactively suggests new events and properties for your review — so your tracking plan evolves as your product does.</p>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--amp-gray-100)">
+        <span style="font-size:11px;font-weight:700;color:var(--amp-purple);text-transform:uppercase;letter-spacing:.05em">Proactive Discovery</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:8px">
+    <button class="btn btn-secondary" onclick="navigatePrev(5)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(6)">Next: Workshop Activity →</button>
+  </div>
+</section>
+
+<!-- ████  TAB 7 — WORKSHOP ACTIVITY  ████ -->
+<section class="tab-panel" id="panel-6">
+  <div class="section-eyebrow">Step 7 of 7</div>
+  <h1 class="section-title">Your Governance Process Table</h1>
+  <p class="section-subtitle">Fill in this table live during the workshop. This becomes your team's governance runbook — who does what, how, and when.</p>
+
+  <div class="callout callout-blue">
+    <span class="callout-icon">📝</span>
+    <div>Complete this table with your team now. When you're done, print or screenshot it — this is your governance process document.</div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="activity-table">
+      <thead>
+        <tr>
+          <th style="width:160px">Process Area</th>
+          <th>WHO is responsible?</th>
+          <th>HOW does it work?</th>
+          <th>WHEN does it happen?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="activity-row-label">📐 Taxonomy Schema</td>
+          <td><textarea class="activity-input" placeholder="e.g. Data team lead reviews all new schema proposals"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. PR review process + tracking plan branch"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Before every sprint that includes new events"></textarea></td>
+        </tr>
+        <tr>
+          <td class="activity-row-label">➕ New Events</td>
+          <td><textarea class="activity-input" placeholder="e.g. Engineer submits, PM approves, data team merges"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Branch in Amplitude Data, Slack notification for review"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Per release — merged 2 days before code ships"></textarea></td>
+        </tr>
+        <tr>
+          <td class="activity-row-label">🗑️ Event Removal</td>
+          <td><textarea class="activity-input" placeholder="e.g. Governance owner makes final call on deletions"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Deprecation workflow: identify → notify → hide → delete"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Quarterly cleanup cycle, 30-day notice required"></textarea></td>
+        </tr>
+        <tr>
+          <td class="activity-row-label">🔧 Maintenance Issues</td>
+          <td><textarea class="activity-input" placeholder="e.g. Data steward triages, event owner resolves"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Taxonomy Agent review, bulk fix accepted in UI"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Quarterly Agent review + weekly Observe check"></textarea></td>
+        </tr>
+        <tr>
+          <td class="activity-row-label">🏷️ Style Guide</td>
+          <td><textarea class="activity-input" placeholder="e.g. Central data team owns — engineers follow"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Published in Notion, Amplitude Data schema enforces"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Annual review, exceptions approved by data council"></textarea></td>
+        </tr>
+        <tr>
+          <td class="activity-row-label">🔐 Access Control</td>
+          <td><textarea class="activity-input" placeholder="e.g. Security / compliance team classifies properties"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. DAC settings in Amplitude Data — PII/Sensitive/Revenue tags"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Set at onboarding, reviewed quarterly with legal"></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-eyebrow">Review Cadence</div>
+  <div class="card">
+    <table class="dac-table">
+      <thead>
+        <tr><th>Frequency</th><th>Activity</th><th>Owner</th><th>Tool</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Weekly</td><td>Review Observe for unexpected events from recent releases</td><td>Engineer / PM</td><td>Observe</td></tr>
+        <tr><td>Bi-weekly</td><td>Process branch merge request queue</td><td>Data Steward</td><td>Branches</td></tr>
+        <tr><td>Quarterly</td><td>Full taxonomy health review — accept/reject Agent suggestions</td><td>Governance Owner</td><td>Data Assistant Agent</td></tr>
+        <tr><td>Annually</td><td>Style guide review + bulk event cleanup</td><td>Data Council</td><td>Bulk Edit + Agent</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-eyebrow">Next Steps</div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:12px">✅ Your Post-Workshop Checklist</div>
+    <ul class="checklist" id="next-steps-checklist">
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Share the completed governance process table with your team</span></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Document your naming conventions from the style guide builder</span></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Assign a governance owner or program lead</span></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Set up your first branch in Amplitude Data</span></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Enable schema settings on your primary source</span></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Schedule a quarterly Data Assistant Agent review in your calendar</span></li>
+      <li onclick="toggleCheck(this)" id="dac-check" style="display:none"><div class="check-box">✓</div><span>Classify PII and sensitive properties in Data Access Controls</span></li>
+      <li onclick="toggleCheck(this)" id="agent-check" style="display:none"><div class="check-box">✓</div><span>Run your first Data Assistant Agent review and accept/reject suggestions</span></li>
+    </ul>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:8px">
+    <button class="btn btn-secondary" onclick="navigatePrev(6)">← Back</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-secondary" onclick="window.print()">🖨️ Print / Export</button>
+      <button class="btn btn-primary" onclick="copyTableToClipboard()">📋 Copy Table</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ──────────────────────────────────────────────────────────── SCRIPTS -->
+<script>
+// ── Config boot ────────────────────────────────────────────
+(function applyConfig() {
+  const cfg = CUSTOMER_CONFIG;
+  if (cfg.customer) {
+    const el = document.getElementById('header-customer');
+    el.textContent = cfg.customer;
+    el.style.display = '';
+  }
+  if (!cfg.hasAmplitudeData)  document.getElementById('tab-data').classList.add('hidden-tab');
+  if (!cfg.hasDataAccessControls) document.getElementById('tab-dac').classList.add('hidden-tab');
+  if (!cfg.hasTaxonomyAgent)  document.getElementById('tab-agent').classList.add('hidden-tab');
+  if (cfg.hasDataAccessControls) document.getElementById('dac-check').style.display = '';
+  if (cfg.hasTaxonomyAgent) document.getElementById('agent-check').style.display = '';
+
+  // Pre-select governance model if configured
+  if (cfg.governanceModel) {
+    setTimeout(() => { applyModel(cfg.governanceModel); }, 100);
+  }
+})();
+
+// ── Tab switching ────────────────────────────────────────────
+// Step numbers mirror the nav tab numbers (1=Overview has no step, 2-7 = steps 2-7)
+// Sub-tabs within tab 4 use decimal notation: 4.1, 4.2, 4.3
+const TAB_PROGRESS = { 0: null, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7 };
+const SUB_PROGRESS = { '3-0': 4, '3-1': 4 + 1/4, '3-2': 4 + 2/4, '3-3': 4 + 3/4 };
+const TOTAL_STEPS  = 7;
+
+const SUB_TITLES   = { '3-0': 'Tracking Plan & Branches', '3-1': 'Schema Settings', '3-2': 'Virtual Data Extensions', '3-3': 'Transformations' };
+const SUB_EYEBROWS = { '3-0': 'Step 4.1 of 7', '3-1': 'Step 4.2 of 7', '3-2': 'Step 4.3 of 7', '3-3': 'Step 4.4 of 7' };
+
+function updateProgressBar(step) {
+  const wrap = document.getElementById('nav-progress-wrap');
+  const bar  = document.getElementById('nav-progress-bar');
+  if (step === null || step === undefined) {
+    wrap.style.display = 'none';
+  } else {
+    wrap.style.display = 'block';
+    bar.style.width = Math.round((step / TOTAL_STEPS) * 100) + '%';
+  }
+}
+
+function switchTab(idx) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + idx).classList.add('active');
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+
+  // For tab 3, restore whichever sub-tab was last active (default 0)
+  if (idx === 3) {
+    const active = document.querySelector('#panel-3 .sub-panel.active');
+    const subIdx = active ? parseInt(active.id.split('-')[2]) : 0;
+    _updateSubTabProgress(3, subIdx);
+  } else {
+    updateProgressBar(TAB_PROGRESS[idx]);
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function _updateSubTabProgress(tabIdx, subIdx) {
+  const key = tabIdx + '-' + subIdx;
+  updateProgressBar(SUB_PROGRESS[key]);
+  if (tabIdx === 3) {
+    document.getElementById('panel-3-eyebrow').textContent = SUB_EYEBROWS[key];
+    document.getElementById('panel-3-title').textContent   = SUB_TITLES[key];
+  }
+}
+
+function switchSubTab(tabIdx, subIdx) {
+  // Hide all sub-panels and deactivate sub-tab buttons in this panel
+  const panel = document.getElementById('panel-' + tabIdx);
+  panel.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+  panel.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('subpanel-' + tabIdx + '-' + subIdx).classList.add('active');
+  document.getElementById('stab-' + tabIdx + '-' + subIdx).classList.add('active');
+  _updateSubTabProgress(tabIdx, subIdx);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Navigate to the nearest previous visible tab
+function navigatePrev(currentIdx) {
+  const tabs = document.querySelectorAll('.tab-btn');
+  for (let i = currentIdx - 1; i >= 0; i--) {
+    if (!tabs[i].classList.contains('hidden-tab')) {
+      switchTab(i);
+      return;
+    }
+  }
+}
+
+// ── Quiz / model selection ────────────────────────────────────
+const quizAnswers = {};
+function selectQuiz(qid, el, val) {
+  document.querySelectorAll('#' + qid + ' .quiz-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  quizAnswers[qid] = val;
+}
+
+const MODELS = {
+  team: {
+    name: 'Team Model',
+    badge: '👥 Team Model',
+    description: 'One team manages all data governance. Ideal for small orgs (1–2 product teams) or early-stage governance. Low overhead, fast decisions, but scales poorly beyond 2–3 teams.',
+    owner: 'Analytics Lead or single PM', approval: 'Single approver', effort: 'Low',
+    checklist: ['Define one shared style guide','Assign a single tracking plan owner','Monthly branch review cadence','Lightweight Observe monitoring']
+  },
+  centralized: {
+    name: 'Centralized Model',
+    badge: '🏢 Centralized Model',
+    description: 'A central data team owns the taxonomy and approves all changes. Best for orgs with a mature data team that can serve as a center of excellence.',
+    owner: 'Central Data / Analytics Team', approval: 'Data team reviews all branches', effort: 'Medium',
+    checklist: ['Create a data governance SLA (e.g. 2-day review turnaround)','Publish naming conventions in your internal wiki','Build branch templates for common event patterns','Set up Slack approvals for merge requests','Monthly taxonomy agent review sessions']
+  },
+  decentralized: {
+    name: 'Decentralized Model',
+    badge: '🌐 Decentralized Model',
+    description: 'Each product team owns their own taxonomy within shared guardrails. Best for orgs with 5+ autonomous teams. High velocity but requires strong shared standards.',
+    owner: 'One governance owner per product team', approval: 'Team-level approval + central review for shared events', effort: 'Medium–High',
+    checklist: ['Publish master style guide all teams must follow','Designate a governance lead per team','Define cross-team event ownership for shared events','Quarterly governance council sync','Taxonomy Agent alerts routed by team ownership']
+  },
+  organizational: {
+    name: 'Organizational Model',
+    badge: '🏛️ Organizational Model',
+    description: 'A cross-functional governance council sets standards and reviews major changes. Best for large enterprises with multiple BUs and compliance requirements.',
+    owner: 'Data Governance Council (data, eng, legal, product)', approval: 'Council review for schema changes, team leads for routine events', effort: 'High',
+    checklist: ['Form a formal data governance council with charter','Establish tiered approval process by event risk level','Integrate governance into SDLC / ticket workflow','Annual style guide review and ratification','Compliance-aligned data retention and deprecation policy','DAC classification standards documented and enforced']
+  }
+};
+
+function computeModel() {
+  const { q1, q2, q3, q4 } = quizAnswers;
+  let model = 'team';
+  const teamCount = q1 === '5plus' ? 3 : q1 === '2-5teams' ? 2 : 1;
+  const maturity = q3 === 'established' ? 3 : q3 === 'partial' ? 2 : 1;
+  const ownership = q2;
+  const score = teamCount + maturity;
+  if (score >= 5 || ownership === 'council') model = 'organizational';
+  else if (score >= 4 || ownership === 'each-team') model = 'decentralized';
+  else if (score >= 3 || ownership === 'central') model = 'centralized';
+  else model = 'team';
+  applyModel(model);
+}
+
+function applyModel(model) {
+  const m = MODELS[model] || MODELS.team;
+  document.getElementById('model-badge').textContent = m.badge;
+  document.getElementById('model-name').textContent = m.name;
+  document.getElementById('model-description').textContent = m.description;
+  document.getElementById('model-owner').textContent = m.owner;
+  document.getElementById('model-approval').textContent = m.approval;
+  document.getElementById('model-effort').textContent = m.effort;
+  const cl = document.getElementById('model-checklist');
+  cl.innerHTML = m.checklist.map(item => `<li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>${item}</span></li>`).join('');
+  document.getElementById('model-result').classList.add('show');
+}
+
+// ── Style guide preview ────────────────────────────────────────
+const EXAMPLE_EVENTS_RAW = [
+  { obj: 'Button', action: 'Clicked', page: 'Dashboard' },
+  { obj: 'Checkout', action: 'Started', page: null },
+  { obj: 'Report', action: 'Exported', page: 'Analytics' },
+];
+const EXAMPLE_PROPS_RAW = ['user_id', 'plan_type', 'button_label'];
+
+function applyCase(str, caseType) {
+  if (caseType === 'snake') return str.toLowerCase().replace(/ /g,'_');
+  if (caseType === 'camel') { const w = str.split(' '); return w[0].toLowerCase() + w.slice(1).map(s=>s[0].toUpperCase()+s.slice(1)).join(''); }
+  if (caseType === 'upper') return str.toUpperCase().replace(/ /g,'_');
+  return str; // title
+}
+
+function applyPropCase(str, pc) {
+  if (pc === 'snake') return str.toLowerCase().replace(/ /g,'_');
+  if (pc === 'camel') { const w = str.split('_'); return w[0] + w.slice(1).map(s=>s[0].toUpperCase()+s.slice(1)).join(''); }
+  return str.toLowerCase();
+}
+
+function buildEventName(ev, cfg) {
+  const { evCase, tense, order, screen } = cfg;
+  let obj = ev.obj, action = ev.action;
+  if (tense === 'past') { /* as-is */ }
+  else if (tense === 'present') action = action.replace(/ed$/,'');
+  else action = action.replace(/ed$/,'') + 'ing';
+  let name = order === 'action-object' ? `${action} ${obj}` : `${obj} ${action}`;
+  if (screen !== 'none' && ev.page) name = (screen === 'page' ? 'Page: ' : 'Screen: ') + name;
+  return applyCase(name, evCase);
+}
+
+// ══════════════════════════════════════════════════════════════
+// BOOKMARKLET — session-based event fetch (no credentials needed)
+// ══════════════════════════════════════════════════════════════
+
+const AMP_DATA_URL_PREFIX = 'https://app.amplitude.com/data/';
+
+function isValidAmplitudeDataUrl(url) {
+  try {
+    const u = new URL(url);
+    return u.hostname === 'app.amplitude.com' && u.pathname.startsWith('/data/');
+  } catch { return false; }
+}
+
+function updateDataTabLink() {
+  const raw      = document.getElementById('bm-data-url').value.trim();
+  const link     = document.getElementById('amp-data-link');
+  const errorEl  = document.getElementById('bm-url-error');
+
+  if (!raw) {
+    errorEl.style.display = 'none';
+    link.removeAttribute('href');
+    link.classList.remove('active');
+    link.style.pointerEvents = 'none';
+    buildBookmarklet(null);
+    return;
+  }
+
+  if (!isValidAmplitudeDataUrl(raw)) {
+    errorEl.style.display = 'block';
+    link.removeAttribute('href');
+    link.classList.remove('active');
+    link.style.pointerEvents = 'none';
+    buildBookmarklet(null);
+    return;
+  }
+
+  errorEl.style.display = 'none';
+  link.href = raw;
+  link.classList.add('active');
+  link.style.pointerEvents = '';
+  buildBookmarklet(raw);
+  updateAssistantLink(raw);
+  updateAgentLink(raw);
+}
+
+function initBookmarklet() {
+  buildBookmarklet(null);
+}
+
+function buildBookmarklet(dataTabUrl) {
+  const workshopUrl   = location.href.replace(/#.*$/, '');
+  const dataTabUrlStr = dataTabUrl || '';
+
+  // Runs on app.amplitude.com. Strategy:
+  // 1. Patch window.fetch to intercept all /graphql responses
+  // 2. Try Apollo InMemoryCache — no new requests if data already loaded
+  // 3. Trigger SPA re-navigation (history.pushState + popstate) so React Router
+  //    re-mounts the Events view and re-fires GraphQL — fetch patch survives
+  //    because we stay in the same JS context (no full page reload)
+  // 4. Send events back via window.opener.postMessage (focuses existing workshop
+  //    tab) or URL hash fallback if opener is unavailable
+  const code = `(function(){
+var W=${JSON.stringify(workshopUrl)};
+var D=${JSON.stringify(dataTabUrlStr)};
+var finished=false,collected=[],seen={};
+
+var T=document.createElement('div');
+T.setAttribute('style','position:fixed;top:16px;right:16px;z-index:2147483647;background:#0069FF;color:#fff;padding:14px 20px;border-radius:10px;font:600 13px/1.5 sans-serif;box-shadow:0 4px 24px rgba(0,0,0,.3);max-width:320px;transition:background .3s');
+T.innerHTML='\u23f3 Reading your Amplitude events\u2026<br><span style="font-weight:400;font-size:11px;opacity:.8">Intercepting GraphQL responses</span>';
+document.body.appendChild(T);
+function toast(bg,html){T.style.background=bg;T.innerHTML=html;}
+function remove(){setTimeout(function(){if(T.parentNode)T.parentNode.removeChild(T);},2800);}
+
+function finish(names){
+  if(finished)return;
+  finished=true;
+  window.fetch=originalFetch;
+  clearTimeout(giveUpTimer);
+  if(!names||!names.length){
+    toast('#E53935','\u274c No events found.<br><span style="font-weight:400;font-size:11px">Make sure the Data tab is open and events have loaded.</span>');
+    setTimeout(function(){if(T.parentNode)T.parentNode.removeChild(T);},4000);
+    return;
+  }
+  toast('#00B85C','\u2705 Got '+names.length+' events \u2014 returning to workshop\u2026');
+  // Prefer postMessage so we focus the existing workshop tab without opening a new one
+  if(window.opener&&!window.opener.closed){
+    try{
+      window.opener.postMessage({type:'amp_gov_events',names:names},W);
+      window.opener.focus();
+      remove();
+      return;
+    }catch(e){}
+  }
+  // Fallback: open/focus workshop tab via named window + URL hash
+  var enc=btoa(unescape(encodeURIComponent(JSON.stringify(names))));
+  var w=window.open(W+'#amp-events='+enc,'amplitude_gov_workshop');
+  if(w)w.focus();
+  remove();
+}
+
+function extract(data){
+  if(!data||typeof data!=='object')return;
+  (function scan(v,depth){
+    if(!v||typeof v!=='object'||depth>4)return;
+    if(Array.isArray(v)){
+      if(v.length>2&&v[0]&&typeof v[0]==='object'){
+        var n0=v[0].name||v[0].event_type||v[0].eventType||v[0].outputEventName||v[0].displayName;
+        if(n0&&typeof n0==='string'&&n0.length>0&&n0.length<200){
+          v.forEach(function(item){
+            var n=item&&(item.name||item.event_type||item.eventType||item.outputEventName||item.displayName);
+            if(n&&typeof n==='string'&&!seen[n]){seen[n]=true;collected.push(n);}
+          });
+          return;
+        }
+      }
+      v.forEach(function(i){scan(i,depth+1);});
+    }else{Object.values(v).forEach(function(i){scan(i,depth+1);});}
+  })(data,0);
+}
+
+// 1. Apollo InMemoryCache
+try{
+  var ac=window.__APOLLO_CLIENT__;
+  if(ac){
+    var cache=ac.cache.extract();
+    Object.values(cache).forEach(function(v){
+      if(!v||typeof v!=='object')return;
+      var n=v.name||v.eventType;
+      var t=v.__typename||'';
+      if(n&&typeof n==='string'&&t.toLowerCase().includes('event')&&!seen[n]){seen[n]=true;collected.push(n);}
+    });
+    if(collected.length>5){finish(collected);return;}
+    collected=[];seen={};
+  }
+}catch(e){}
+
+// 2. Patch fetch to capture GraphQL responses
+var originalFetch=window.fetch;
+window.fetch=function(url,opts){
+  var result=originalFetch.apply(this,arguments);
+  var urlStr=typeof url==='string'?url:(url&&url.url)||'';
+  if(!finished&&urlStr.indexOf('/graphql')!==-1){
+    result.then(function(resp){
+      if(finished)return;
+      resp.clone().json().then(function(body){
+        if(finished)return;
+        extract(body.data||body);
+        if(collected.length>0)finish(collected);
+      }).catch(function(){});
+    }).catch(function(){});
+  }
+  return result;
+};
+
+var giveUpTimer=setTimeout(function(){
+  if(!finished){if(collected.length>0)finish(collected);else finish([]);}
+},12000);
+
+// 3. SPA re-navigation — stay in same JS context so fetch patch survives
+if(D){
+  try{
+    var path=D.replace('https://app.amplitude.com','');
+    history.pushState(null,'','/');
+    window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
+    setTimeout(function(){
+      history.pushState(null,'',path);
+      window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
+    },80);
+  }catch(e){window.location.href=D;}
+}else{
+  toast('#0069FF','\u23f3 Waiting for GraphQL responses\u2026<br><span style="font-weight:400;font-size:11px;opacity:.8">Navigate to your Data tab now</span>');
+}
+})()`;
+
+  const link = document.getElementById('bookmarklet-link');
+  if (link) link.href = 'javascript:' + encodeURIComponent(code);
+}
+
+// Reads events passed back from the bookmarklet via URL hash
+function checkHashForEvents() {
+  if (!location.hash.startsWith('#amp-events=')) return;
+  const encoded = location.hash.slice('#amp-events='.length);
+  history.replaceState(null, '', location.pathname + location.search);
+  try {
+    const names = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    if (Array.isArray(names) && names.length > 0) processLoadedNames(names, 'bookmarklet');
+  } catch (e) { console.warn('Could not parse events from URL hash:', e); }
+}
+
+// Shared entry point once we have a list of event name strings
+function processLoadedNames(names, source) {
+  const customNames = names.filter(n => !isDefaultEvent(n));
+  const statusEl = document.getElementById(source === 'bookmarklet' ? 'bm-status-area' : 'api-status-area');
+
+  if (customNames.length === 0) {
+    statusEl.innerHTML = '<div class="api-status-msg error">⚠️ No custom events found — all appear to be Amplitude defaults.</div>';
+    return;
+  }
+
+  _detectedConvention = detectConventions(customNames);
+  document.getElementById('loaded-count-badge').textContent = customNames.length;
+  document.getElementById('events-loaded-badge').classList.add('show');
+
+  const excluded = names.length - customNames.length;
+  statusEl.innerHTML = `<div class="api-status-msg success">✅ Loaded <strong>${customNames.length} custom events</strong>${excluded > 0 ? ` — ${excluded} Amplitude defaults excluded` : ''}.</div>`;
+
+  renderDetectionBanner(_detectedConvention, customNames);
+
+  // Parse customer events into preview components
+  window._previewEvents = customNames.slice(0, 10).map(parseEventToComponents);
+
+  // Auto-apply detected convention and switch to Taxonomy Design tab
+  applyDetectedConvention();
+  switchTab(2);
+}
+
+// ══════════════════════════════════════════════════════════════
+// TAXONOMY API — live project connect
+// ══════════════════════════════════════════════════════════════
+
+// Amplitude default/system event prefixes & exact names to exclude
+const AMP_DEFAULT_PREFIXES = ['[Amplitude]', 'amplitude_', '[Experiment]'];
+const AMP_DEFAULT_EXACT = new Set([
+  'session_start','session_end','revenue','page_view','identify',
+  'group_identify','revenue_amount','app_open','app_close',
+  'first_open','notification_open','in_app_purchase',
+]);
+
+function isDefaultEvent(name) {
+  if (!name || typeof name !== 'string') return true;
+  const lower = name.toLowerCase();
+  for (const p of AMP_DEFAULT_PREFIXES) {
+    if (name.startsWith(p)) return true;
+  }
+  return AMP_DEFAULT_EXACT.has(lower);
+}
+
+// Action verbs used for order + tense detection
+const ACTION_VERBS = new Set([
+  'view','viewed','click','clicked','tap','tapped','open','opened','close','closed',
+  'start','started','end','ended','complete','completed','submit','submitted',
+  'create','created','delete','deleted','update','updated','select','selected',
+  'add','added','remove','removed','change','changed','load','loaded',
+  'download','downloaded','upload','uploaded','share','shared','play','played',
+  'pause','paused','stop','stopped','skip','skipped','like','liked',
+  'follow','followed','subscribe','subscribed','cancel','cancelled',
+  'confirm','confirmed','dismiss','dismissed','sign','signed',
+  'login','logout','signup','register','registered','search','searched',
+  'filter','filtered','sort','sorted','expand','expanded','collapse','collapsed',
+  'export','exported','import','imported','save','saved','edit','edited',
+  'send','sent','purchase','purchased','upgrade','upgraded','downgrade','downgraded',
+  'launch','launched','navigate','navigated','scroll','scrolled',
+  'checkout','onboard','onboarded','activate','activated','enter','entered',
+  'exit','exited','press','pressed','drag','dragged','drop','dropped',
+  'visit','visited','track','tracked','trigger','triggered',
+]);
+
+function splitWords(name) {
+  if (!name) return [];
+  // strip Page:/Screen: prefixes before splitting
+  const stripped = name.replace(/^(page|screen)[: _]/i, '');
+  if (stripped.includes('_')) return stripped.split('_').filter(Boolean);
+  if (/[a-z][A-Z]/.test(stripped)) {
+    return stripped
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+      .split(' ').filter(Boolean);
+  }
+  if (stripped.includes(' ')) return stripped.split(/\s+/).filter(Boolean);
+  return [stripped];
+}
+
+function detectConventions(names) {
+  const n = names.length;
+  if (n === 0) return null;
+
+  // ── Casing ────────────────────────────────────────────────
+  const caseCounts = { snake: 0, title: 0, camel: 0, upper: 0 };
+  for (const name of names) {
+    const s = name.replace(/^(page|screen)[: _]/i, '');
+    if (/^[A-Z][A-Z0-9_]+$/.test(s) && s.includes('_'))   caseCounts.upper++;
+    else if (/^[a-z][a-z0-9_]+$/.test(s) && s.includes('_')) caseCounts.snake++;
+    else if (/^[a-z]/.test(s) && /[A-Z]/.test(s) && !s.includes(' ') && !s.includes('_')) caseCounts.camel++;
+    else caseCounts.title++;
+  }
+  const casingEntry = Object.entries(caseCounts).sort((a, b) => b[1] - a[1])[0];
+  const casing = casingEntry[0];
+  const casingPct = Math.round(casingEntry[1] / n * 100);
+
+  // ── Word order ────────────────────────────────────────────
+  let firstIsAction = 0, lastIsAction = 0;
+  for (const name of names) {
+    const words = splitWords(name);
+    if (words.length < 2) continue;
+    if (ACTION_VERBS.has(words[0].toLowerCase()))                    firstIsAction++;
+    if (ACTION_VERBS.has(words[words.length - 1].toLowerCase()))     lastIsAction++;
+  }
+  const orderTotal = firstIsAction + lastIsAction;
+  const order = (orderTotal === 0 || lastIsAction >= firstIsAction) ? 'object-action' : 'action-object';
+  const orderPct = orderTotal > 0 ? Math.round(Math.max(firstIsAction, lastIsAction) / orderTotal * 100) : null;
+
+  // ── Tense ─────────────────────────────────────────────────
+  let pastCount = 0, presentCount = 0, nounCount = 0, actionTotal = 0;
+  for (const name of names) {
+    for (const w of splitWords(name)) {
+      const low = w.toLowerCase();
+      if (!ACTION_VERBS.has(low)) continue;
+      actionTotal++;
+      if (low.endsWith('ed'))  pastCount++;
+      else if (low.endsWith('ing')) nounCount++;
+      else presentCount++;
+    }
+  }
+  let tense = 'past', tensePct = null;
+  if (actionTotal > 0) {
+    const max = Math.max(pastCount, presentCount, nounCount);
+    tensePct = Math.round(max / actionTotal * 100);
+    tense = max === presentCount ? 'present' : max === nounCount ? 'noun' : 'past';
+  }
+
+  // ── Screen/page prefix ────────────────────────────────────
+  const pagePfxCount   = names.filter(n => /^page[: _]/i.test(n)).length;
+  const screenPfxCount = names.filter(n => /^screen[: _]/i.test(n)).length;
+  let prefix = 'none';
+  if (pagePfxCount   > n * 0.15) prefix = 'page';
+  else if (screenPfxCount > n * 0.15) prefix = 'screen';
+
+  // ── Property casing (infer from event casing) ─────────────
+  const propCase = casing === 'camel' ? 'camel' : 'snake';
+
+  return { casing, casingPct, order, orderPct, tense, tensePct, prefix, propCase, total: n, actionTotal };
+}
+
+let _detectedConvention = null;
+
+function renderDetectionBanner(conv, names) {
+  document.getElementById('detection-count').textContent = conv.total;
+
+  const casingLabel = { snake: 'snake_case', title: 'Title Case', camel: 'camelCase', upper: 'UPPER_SNAKE' };
+  const orderLabel  = { 'object-action': 'Object → Action', 'action-object': 'Action → Object' };
+  const tenseLabel  = { past: 'Past tense (-ed)', present: 'Present tense', noun: 'Noun phrase' };
+  const propLabel   = { snake: 'snake_case', camel: 'camelCase', lower: 'lowercase' };
+
+  const chips = [
+    { label: 'Event casing',  value: casingLabel[conv.casing],  pct: conv.casingPct },
+    conv.actionTotal > 4 ? { label: 'Verb tense',   value: tenseLabel[conv.tense],    pct: conv.tensePct } : null,
+    conv.actionTotal > 4 ? { label: 'Word order',   value: orderLabel[conv.order],    pct: conv.orderPct } : null,
+    { label: 'Properties',   value: propLabel[conv.propCase],   pct: null },
+    conv.prefix !== 'none' ? { label: 'Prefix',     value: conv.prefix === 'page' ? 'Page: prefix' : 'Screen: prefix', pct: null } : null,
+  ].filter(Boolean);
+
+  document.getElementById('detection-chips').innerHTML = chips.map(c => `
+    <div class="detection-chip">
+      <span class="chip-label">${c.label}:</span>
+      <span class="chip-value">${c.value}</span>
+      ${c.pct != null ? `<span class="chip-pct">(${c.pct}%)</span>` : ''}
+    </div>`).join('');
+
+  // Sample event chips — pick a diverse spread
+  const sample = names.slice(0, 8);
+  document.getElementById('sample-events-row').innerHTML =
+    `<strong style="color:var(--amp-gray-700)">Sample events:</strong> ` +
+    sample.map(e =>
+      `<code style="background:white;padding:1px 7px;border-radius:4px;font-size:11px;font-family:'DM Mono',monospace;border:1px solid #dde4ef">${e}</code>`
+    ).join(' ') +
+    (names.length > 8 ? `<span style="color:var(--amp-gray-400)"> + ${names.length - 8} more</span>` : '');
+
+  document.getElementById('detection-banner').classList.add('show');
+}
+
+// Split a raw event name into {obj, action, page} components for preview rendering
+function parseEventToComponents(name) {
+  const words = splitWords(name);
+  if (words.length === 0) return { obj: name, action: 'Triggered', page: null };
+  const ACTION_VERBS_SET = new Set([
+    'clicked','tapped','viewed','opened','closed','started','completed','submitted',
+    'created','updated','deleted','removed','added','selected','changed','toggled',
+    'loaded','failed','succeeded','cancelled','confirmed','dismissed','shared',
+    'searched','filtered','sorted','downloaded','uploaded','exported','imported',
+    'played','paused','stopped','skipped','liked','saved','purchased','checkout',
+    'signed','logged','registered','invited','joined','left','sent','received',
+  ]);
+  // Find first action-word index
+  const aIdx = words.findIndex(w => ACTION_VERBS_SET.has(w.toLowerCase()));
+  if (aIdx > 0) {
+    const obj    = words.slice(0, aIdx).join(' ');
+    const action = words[aIdx];
+    const page   = words.length > aIdx + 1 ? words.slice(aIdx + 1).join(' ') : null;
+    return { obj, action, page };
+  }
+  // Fallback: first word is obj, second is action
+  return {
+    obj:    words[0],
+    action: words[1] || 'Triggered',
+    page:   words.length > 2 ? words.slice(2).join(' ') : null,
+  };
+}
+
+function updateDropdownExamples(ev) {
+  const obj  = ev.obj    || 'Object';
+  const act  = ev.action || 'Action';
+  const page = ev.page   || null;
+
+  const objAct = `${obj} ${act}`;
+  const actObj = `${act} ${obj}`;
+
+  const toSnake = s => s.toLowerCase().replace(/\s+/g, '_');
+  const toCamel = s => { const w = s.split(/\s+/); return w[0].toLowerCase() + w.slice(1).map(x => x[0].toUpperCase() + x.slice(1).toLowerCase()).join(''); };
+  const toUpper = s => s.toUpperCase().replace(/\s+/g, '_');
+  // Derive a rough noun/present stem from a past-tense action word
+  const toStem  = w => w.replace(/ied$/i, 'y').replace(/([^aeiou])ed$/i, '$1').replace(/ing$/i, '') || w;
+
+  const caseEl = document.getElementById('sg-case');
+  caseEl.options[0].text = `Title Case (${objAct})`;
+  caseEl.options[1].text = `snake_case (${toSnake(objAct)})`;
+  caseEl.options[2].text = `camelCase (${toCamel(objAct)})`;
+  caseEl.options[3].text = `UPPER_SNAKE (${toUpper(objAct)})`;
+
+  const stem = toStem(act);
+  const tenseEl = document.getElementById('sg-tense');
+  tenseEl.options[0].text = `Past tense (${objAct})`;
+  tenseEl.options[1].text = `Present tense (${act.replace(/ed$/i, '')} ${obj})`;
+  tenseEl.options[2].text = `Noun phrase (${obj} ${stem})`;
+
+  const orderEl = document.getElementById('sg-order');
+  orderEl.options[0].text = `Object → Action (${objAct})`;
+  orderEl.options[1].text = `Action → Object (${actObj})`;
+
+  const screenEl = document.getElementById('sg-screen');
+  const base = page ? `${objAct} ${page}` : objAct;
+  screenEl.options[0].text = `None (${base})`;
+  screenEl.options[1].text = `Page: prefix (Page: ${base})`;
+  screenEl.options[2].text = `Screen: prefix (Screen: ${base})`;
+}
+
+function applyDetectedConvention() {
+  if (!_detectedConvention) return;
+  const c = _detectedConvention;
+
+  // Update dropdown option labels with a real customer event if available
+  if (window._previewEvents && window._previewEvents.length) {
+    updateDropdownExamples(window._previewEvents[0]);
+  }
+
+  document.getElementById('sg-case').value      = c.casing;
+  document.getElementById('sg-tense').value     = c.tense;
+  document.getElementById('sg-order').value     = c.order;
+  document.getElementById('sg-prop-case').value = c.propCase;
+  document.getElementById('sg-screen').value    = c.prefix;
+
+  updatePreview();
+
+  // Flash the style rules card to draw attention
+  const card = document.getElementById('sg-case').closest('.card');
+  card.style.transition = 'box-shadow 0.4s ease';
+  card.style.boxShadow  = '0 0 0 3px var(--amp-blue)';
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  setTimeout(() => { card.style.boxShadow = ''; }, 1800);
+}
+
+function updatePreview() {
+  const cfg = {
+    evCase: document.getElementById('sg-case').value,
+    tense: document.getElementById('sg-tense').value,
+    order: document.getElementById('sg-order').value,
+    propCase: document.getElementById('sg-prop-case').value,
+    screen: document.getElementById('sg-screen').value,
+  };
+  const evSrc = (window._previewEvents && window._previewEvents.length) ? window._previewEvents : EXAMPLE_EVENTS_RAW;
+  const evHtml = evSrc.map(ev =>
+    `<div class="preview-event"><span class="preview-event-name">${buildEventName(ev, cfg)}</span></div>`
+  ).join('');
+  document.getElementById('preview-events').innerHTML = evHtml;
+  const propHtml = EXAMPLE_PROPS_RAW.map(p =>
+    `<div style="color:#86EFAC;font-family:'DM Mono',monospace">${applyPropCase(p, cfg.propCase)}</div>`
+  ).join('');
+  document.getElementById('preview-props').innerHTML = propHtml;
+  validateEvent();
+  window._styleCfg = cfg;
+}
+
+function validateEvent() {
+  const cfg = window._styleCfg;
+  if (!cfg) return;
+  const input = document.getElementById('validator-input').value.trim();
+  const result = document.getElementById('validator-result');
+  if (!input) { result.className = 'validator-result'; result.innerHTML = ''; return; }
+
+  const issues = [];
+  const evCase = cfg.evCase;
+  if (evCase === 'snake' && !/^[a-z][a-z0-9_]*$/.test(input)) issues.push('Should be snake_case (lowercase with underscores)');
+  if (evCase === 'title' && !/^[A-Z][a-zA-Z]*(?: [A-Z][a-zA-Z]*)*$/.test(input)) issues.push('Should be Title Case (each word capitalized)');
+  if (evCase === 'camel' && !/^[a-z][a-zA-Z0-9]*$/.test(input)) issues.push('Should be camelCase (starts lowercase, no spaces)');
+  if (evCase === 'upper' && !/^[A-Z][A-Z0-9_]*$/.test(input)) issues.push('Should be UPPER_SNAKE_CASE');
+
+  if (issues.length === 0) {
+    result.className = 'validator-result pass'; result.innerHTML = '✅ Passes your style guide';
+  } else {
+    result.className = 'validator-result fail'; result.innerHTML = '❌ ' + issues.join(' · ');
+  }
+  result.style.display = 'flex';
+}
+
+// ── Abstraction slider ─────────────────────────────────────────
+const ABSTRACTION_EXAMPLES = [
+  { label: '⚡ Too Granular', events: ['Homepage_Hero_CTA_Button_1_Clicked','Checkout_Step_1_Email_Field_Focused','Nav_Top_Right_Avatar_Dropdown_Opened'], note: 'Hard to analyze — too many one-off events, no patterns.' },
+  { label: '⚠️ Slightly Granular', events: ['Homepage CTA Clicked','Checkout Field Focused','Avatar Menu Opened'], note: 'Better, but still very screen-specific. Funnel analysis is harder.' },
+  { label: '⚖️ Just Right', events: ['CTA Clicked','Form Field Focused','Navigation Opened'], note: 'Object-Action pattern. Queryable across contexts with properties for context.' },
+  { label: '📦 Slightly Consolidated', events: ['Button Clicked','Input Interacted','Menu Opened'], note: 'Usable but properties need to carry all context. Risk of ambiguity.' },
+  { label: '📦 Too Consolidated', events: ['UI Interacted','User Action','Interaction'], note: 'Meaningless at scale. Impossible to differentiate without extreme property filtering.' },
+];
+
+function updateAbstraction() {
+  const v = parseInt(document.getElementById('abstraction-slider').value);
+  const idx = Math.min(4, Math.floor(v / 21));
+  const ex = ABSTRACTION_EXAMPLES[idx];
+  document.getElementById('abstraction-example').innerHTML = `
+    <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--amp-gray-700)">${ex.label}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">${ex.events.map(e=>`<code style="font-family:'DM Mono',monospace;font-size:12px;background:white;padding:2px 8px;border-radius:4px;border:1px solid var(--amp-gray-300)">${e}</code>`).join('')}</div>
+    <div style="font-size:12px;color:var(--amp-gray-500)">${ex.note}</div>
+  `;
+}
+
+// ── Schema options ─────────────────────────────────────────────
+function selectSchema(type) {
+  document.querySelectorAll('.schema-option').forEach(o => { o.classList.remove('selected-option'); });
+  document.querySelectorAll('.schema-consequence').forEach(c => c.classList.remove('show'));
+  event.currentTarget.classList.add('selected-option');
+  document.getElementById('con-' + type).classList.add('show');
+}
+
+function selectPropSchema(type) {
+  event.currentTarget.closest('.schema-decision').querySelectorAll('.schema-option').forEach(o => o.classList.remove('selected-option'));
+  event.currentTarget.closest('.schema-decision').querySelectorAll('.schema-consequence').forEach(c => c.classList.remove('show'));
+  event.currentTarget.classList.add('selected-option');
+  document.getElementById('con-prop-' + type).classList.add('show');
+}
+
+// ── Data Assistant link ─────────────────────────────────────────
+function getAssistantUrl(dataTabUrl) {
+  if (!dataTabUrl) return null;
+  try {
+    const u = new URL(dataTabUrl);
+    const parts = u.pathname.split('/').filter(Boolean); // ['data', org, project, ...]
+    if (parts.length < 3 || parts[0] !== 'data') return null;
+    return `${u.origin}/data/${parts[1]}/${parts[2]}/assistant/main/latest/suggestions`;
+  } catch { return null; }
+}
+
+function updateAssistantLink(dataTabUrl) {
+  const link  = document.getElementById('data-assistant-link');
+  const noUrl = document.getElementById('data-assistant-no-url');
+  if (!link || !noUrl) return;
+  const url = getAssistantUrl(dataTabUrl);
+  if (url) {
+    link.href           = url;
+    link.style.display  = 'inline-flex';
+    noUrl.style.display = 'none';
+  } else {
+    link.style.display  = 'none';
+    noUrl.style.display = 'flex';
+  }
+}
+
+// ── Data Assistant Agent link ───────────────────────────────────
+function getAgentUrl(dataTabUrl) {
+  if (!dataTabUrl) return null;
+  try {
+    const u = new URL(dataTabUrl);
+    const parts = u.pathname.split('/').filter(Boolean); // ['data', org, project, ...]
+    if (parts.length < 2 || parts[0] !== 'data') return null;
+    return `${u.origin}/analytics/${parts[1]}/agents/create?template=taxonomy%2Fdata_assistant_agent.yaml`;
+  } catch { return null; }
+}
+
+function updateAgentLink(dataTabUrl) {
+  const link  = document.getElementById('agent-create-link');
+  const noUrl = document.getElementById('agent-no-url');
+  if (!link || !noUrl) return;
+  const url = getAgentUrl(dataTabUrl);
+  if (url) {
+    link.href           = url;
+    link.style.display  = 'inline-flex';
+    noUrl.style.display = 'none';
+  } else {
+    link.style.display  = 'none';
+    noUrl.style.display = 'flex';
+  }
+}
+
+// ── Checklist toggle ───────────────────────────────────────────
+function toggleCheck(li) {
+  const box = li.querySelector('.check-box');
+  box.classList.toggle('checked');
+  li.classList.toggle('done');
+}
+
+// ── Copy table ─────────────────────────────────────────────────
+function copyTableToClipboard() {
+  const rows = document.querySelectorAll('.activity-table tbody tr');
+  let text = 'AMPLITUDE DATA GOVERNANCE PROCESS TABLE\n\n';
+  rows.forEach(row => {
+    const label = row.querySelector('.activity-row-label').textContent.trim();
+    const inputs = row.querySelectorAll('.activity-input');
+    text += `${label}\n`;
+    const headers = ['WHO', 'HOW', 'WHEN'];
+    inputs.forEach((inp, i) => { text += `  ${headers[i]}: ${inp.value || '(not filled)'}\n`; });
+    text += '\n';
+  });
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target; btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy Table'; }, 2000);
+  });
+}
+
+// ── Boot ───────────────────────────────────────────────────────
+updatePreview();
+updateAbstraction();
+initBookmarklet();
+updateAssistantLink(document.getElementById('bm-data-url').value.trim());
+updateAgentLink(document.getElementById('bm-data-url').value.trim());
+checkHashForEvents();
+window.addEventListener('hashchange', checkHashForEvents);
+
+// Receive events posted back from the bookmarklet via postMessage
+window.addEventListener('message', (e) => {
+  if (!e.data || e.data.type !== 'amp_gov_events') return;
+  const names = e.data.names;
+  if (Array.isArray(names) && names.length > 0) processLoadedNames(names, 'bookmarklet');
+});
+</script>
+</body>
+</html>
