@@ -1809,16 +1809,15 @@ function finish(names){
   // Prefer postMessage so we focus the existing workshop tab without opening a new one
   if(window.opener&&!window.opener.closed){
     try{
-      window.opener.postMessage({type:'amp_gov_events',names:names},W);
+      window.opener.postMessage({type:'amp_gov_events',names:names},'*');
       window.opener.focus();
       remove();
       return;
     }catch(e){}
   }
-  // Fallback: open/focus workshop tab via named window + URL hash
+  // Fallback: navigate current tab back to workshop with events in hash
   var enc=btoa(unescape(encodeURIComponent(JSON.stringify(names))));
-  var w=window.open(W+'#amp-events='+enc,'amplitude_gov_workshop');
-  if(w)w.focus();
+  window.location.href=W+'#amp-events='+enc;
   remove();
 }
 
