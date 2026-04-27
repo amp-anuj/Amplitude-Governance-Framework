@@ -333,6 +333,12 @@
     border-bottom: 1px solid var(--amp-gray-100); font-size: 13px; color: var(--amp-gray-700);
   }
   .checklist li:last-child { border-bottom: none; }
+  .remove-item-btn {
+    margin-left: auto; flex-shrink: 0; background: none; border: none;
+    color: var(--amp-gray-300); cursor: pointer; font-size: 13px; line-height: 1;
+    padding: 2px 5px; border-radius: 4px; transition: all var(--transition);
+  }
+  .remove-item-btn:hover { color: var(--amp-red); background: var(--amp-red-light); }
   .check-box {
     width: 18px; height: 18px; border: 1.5px solid var(--amp-gray-300); border-radius: 4px;
     cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
@@ -528,6 +534,9 @@ const CUSTOMER_CONFIG = {
   <button class="tab-btn" onclick="switchTab(6)" data-index="6">
     <span class="tab-num">7</span> Workshop Activity
   </button>
+  <button class="tab-btn" onclick="switchTab(7)" data-index="7">
+    <span class="tab-num">8</span> Next Steps
+  </button>
 </nav>
 <div class="nav-progress-wrap" id="nav-progress-wrap" style="display:none">
   <div class="nav-progress-bar" id="nav-progress-bar"></div>
@@ -613,7 +622,7 @@ const CUSTOMER_CONFIG = {
 
 <!-- ████  TAB 2 — GOVERNANCE MODEL  ████ -->
 <section class="tab-panel" id="panel-1">
-  <div class="section-eyebrow">Step 2 of 7</div>
+  <div class="section-eyebrow">Step 2 of 8</div>
   <h1 class="section-title">Choose Your Governance Model</h1>
   <p class="section-subtitle">Answer four quick questions to get a recommended model — or select one directly below.</p>
 
@@ -698,7 +707,7 @@ const CUSTOMER_CONFIG = {
 
 <!-- ████  TAB 3 — TAXONOMY DESIGN  ████ -->
 <section class="tab-panel" id="panel-2">
-  <div class="section-eyebrow">Step 3 of 7</div>
+  <div class="section-eyebrow">Step 3 of 8</div>
   <h1 class="section-title">Build Your Style Guide</h1>
   <p class="section-subtitle">Define your naming conventions once — the preview updates live as you configure your rules.</p>
 
@@ -1181,7 +1190,7 @@ const CUSTOMER_CONFIG = {
 
 <!-- ████  TAB 5 — GOVERNANCE CONTROLS (DAC)  ████ -->
 <section class="tab-panel" id="panel-4">
-  <div class="section-eyebrow">Step 5 of 7</div>
+  <div class="section-eyebrow">Step 5 of 8</div>
   <h1 class="section-title">Governance Controls</h1>
   <p class="section-subtitle">Classify your properties, control who sees sensitive data, and manage event lifecycle.</p>
 
@@ -1327,7 +1336,7 @@ const CUSTOMER_CONFIG = {
 
 <!-- ████  TAB 6 — TAXONOMY AGENT  ████ -->
 <section class="tab-panel" id="panel-5">
-  <div class="section-eyebrow">Step 6 of 7</div>
+  <div class="section-eyebrow">Step 6 of 8</div>
   <h1 class="section-title">AI-Powered Data Governance</h1>
   <p class="section-subtitle">Amplitude's AI agents help you build, maintain, and scale your taxonomy — from first instrumentation through ongoing governance.</p>
 
@@ -1427,7 +1436,7 @@ const CUSTOMER_CONFIG = {
 
 <!-- ████  TAB 7 — WORKSHOP ACTIVITY  ████ -->
 <section class="tab-panel" id="panel-6">
-  <div class="section-eyebrow">Step 7 of 7</div>
+  <div class="section-eyebrow">Step 7 of 8</div>
   <h1 class="section-title">Your Governance Process Table</h1>
   <p class="section-subtitle">Fill in this table live during the workshop. This becomes your team's governance runbook — who does what, how, and when.</p>
 
@@ -1486,6 +1495,9 @@ const CUSTOMER_CONFIG = {
       </tbody>
     </table>
   </div>
+  <div style="display:flex;justify-content:flex-end;margin-top:8px">
+    <button class="btn btn-secondary" onclick="copyTableToClipboard()">📋 Copy Table</button>
+  </div>
 
   <hr class="divider">
 
@@ -1504,29 +1516,34 @@ const CUSTOMER_CONFIG = {
     </table>
   </div>
 
-  <hr class="divider">
+  <div style="display:flex;justify-content:space-between;margin-top:8px">
+    <button class="btn btn-secondary" onclick="navigatePrev(6)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(7)">Next: Next Steps →</button>
+  </div>
+</section>
 
-  <div class="section-eyebrow">Next Steps</div>
+<!-- ████  TAB 8 — NEXT STEPS  ████ -->
+<section class="tab-panel" id="panel-7">
+  <div class="section-eyebrow">Step 8 of 8</div>
+  <h1 class="section-title">Next Steps</h1>
+  <p class="section-subtitle">Your post-workshop action plan. Remove any items that aren't relevant to your team, then share or print this list.</p>
+
   <div class="card">
     <div class="card-title" style="margin-bottom:12px">✅ Your Post-Workshop Checklist</div>
     <ul class="checklist" id="next-steps-checklist">
-      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Share the completed governance process table with your team</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Document your naming conventions from the style guide builder</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Assign a governance owner or program lead</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Set up your first branch in Amplitude Data</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Enable schema settings on your primary source</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Schedule a quarterly Data Assistant Agent review in your calendar</span></li>
-      <li onclick="toggleCheck(this)" id="dac-check" style="display:none"><div class="check-box">✓</div><span>Classify PII and sensitive properties in Data Access Controls</span></li>
-      <li onclick="toggleCheck(this)" id="agent-check" style="display:none"><div class="check-box">✓</div><span>Run your first Data Assistant Agent review and accept/reject suggestions</span></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Share the completed governance process table with your team</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Document your naming conventions from the style guide builder</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Assign a governance owner or program lead</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Set up your first branch in Amplitude Data</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Enable schema settings on your primary source</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Schedule a quarterly Data Assistant Agent review in your calendar</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
+      <li onclick="toggleCheck(this)" id="dac-check" style="display:none"><div class="check-box">✓</div><span>Classify PII and sensitive properties in Data Access Controls</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
+      <li onclick="toggleCheck(this)" id="agent-check" style="display:none"><div class="check-box">✓</div><span>Run your first Data Assistant Agent review and accept/reject suggestions</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
     </ul>
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(6)">← Back</button>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-secondary" onclick="window.print()">🖨️ Print / Export</button>
-      <button class="btn btn-primary" onclick="copyTableToClipboard()">📋 Copy Table</button>
-    </div>
+    <button class="btn btn-secondary" onclick="navigatePrev(7)">← Back</button>
   </div>
 </section>
 
@@ -1557,12 +1574,12 @@ const CUSTOMER_CONFIG = {
 // ── Tab switching ────────────────────────────────────────────
 // Step numbers mirror the nav tab numbers (1=Overview has no step, 2-7 = steps 2-7)
 // Sub-tabs within tab 4 use decimal notation: 4.1, 4.2, 4.3
-const TAB_PROGRESS = { 0: null, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7 };
+const TAB_PROGRESS = { 0: null, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8 };
 const SUB_PROGRESS = { '3-0': 4, '3-1': 4 + 1/4, '3-2': 4 + 2/4, '3-3': 4 + 3/4 };
-const TOTAL_STEPS  = 7;
+const TOTAL_STEPS  = 8;
 
 const SUB_TITLES   = { '3-0': 'Tracking Plan & Branches', '3-1': 'Schema Settings', '3-2': 'Virtual Data Extensions', '3-3': 'Transformations' };
-const SUB_EYEBROWS = { '3-0': 'Step 4.1 of 7', '3-1': 'Step 4.2 of 7', '3-2': 'Step 4.3 of 7', '3-3': 'Step 4.4 of 7' };
+const SUB_EYEBROWS = { '3-0': 'Step 4.1 of 8', '3-1': 'Step 4.2 of 8', '3-2': 'Step 4.3 of 8', '3-3': 'Step 4.4 of 8' };
 
 function updateProgressBar(step) {
   const wrap = document.getElementById('nav-progress-wrap');
