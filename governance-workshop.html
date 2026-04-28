@@ -267,16 +267,7 @@
   .delete-card.warn h4 { color: var(--amp-orange); }
   .delete-card.safe h4 { color: var(--amp-blue); }
 
-  /* ── Taxonomy Agent ───────────────────────────── */
-  .agent-event-row {
-    display: flex; align-items: center; gap: 12px; padding: 10px 0;
-    border-bottom: 1px solid var(--amp-gray-100); font-size: 13px;
-  }
-  .agent-event-row:last-child { border-bottom: none; }
-  .agent-event-name { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--amp-gray-900); flex: 1; min-width: 160px; }
-  .agent-suggestion { font-size: 12px; background: var(--amp-blue-light); color: var(--amp-blue); padding: 3px 8px; border-radius: 4px; }
-  .agent-apply { padding: 4px 10px; background: var(--amp-blue); color: white; border: none; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background var(--transition); }
-  .agent-apply:hover { background: var(--amp-blue-dark); }
+  /* ── Data Assistant Agent ──────────────────────── */
   .agent-applied { font-size: 12px; color: var(--amp-green); display: none; }
   .agent-stale { font-size: 11px; color: var(--amp-orange); background: var(--amp-orange-light); padding: 2px 6px; border-radius: 4px; }
   .agent-duplicate { font-size: 11px; color: var(--amp-red); background: var(--amp-red-light); padding: 2px 6px; border-radius: 4px; }
@@ -494,7 +485,6 @@ const CUSTOMER_CONFIG = {
   hasDataAccessControls: true,
   hasAmplitudeData: true,
   hasTaxonomyAgent: true,
-  hasCDP: false,
 };
 </script>
 
@@ -892,7 +882,7 @@ const CUSTOMER_CONFIG = {
           <li><div class="check-box checked">✓</div><span>Event name, description, and expected event properties</span></li>
           <li><div class="check-box checked">✓</div><span>Event ownership — who is responsible for each event</span></li>
           <li><div class="check-box checked">✓</div><span>Event status: <code style="font-size:11px;font-family:'DM Mono',monospace">Planned → Live → Unexpected</code></span></li>
-          <li><div class="check-box checked">✓</div><span>Schema enforcement rules per source</span></li>
+          <li><div class="check-box checked">✓</div><span>Schema enforcement rules (project-wide)</span></li>
         </ul>
 
         <p style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px">User Properties</p>
@@ -949,7 +939,7 @@ const CUSTOMER_CONFIG = {
 
   <!-- ── Sub-panel 4.2 ── -->
   <div class="sub-panel" id="subpanel-3-1">
-    <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Schema enforcement is configured <strong>per source</strong> — you can be strict with your production SDK and lenient with a staging source. These settings are the rules engine that powers <strong>Amplitude Observe</strong>.</p>
+    <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Schema enforcement is configured <strong>project-wide</strong> — the same rules apply across all your sources. Observe then lets you filter violations by source to pinpoint which SDK or integration is sending bad data. These settings are the rules engine that powers <strong>Amplitude Observe</strong>.</p>
 
     <!-- Observe connection callout -->
     <div class="callout callout-blue" style="margin-bottom:24px">
@@ -1233,8 +1223,8 @@ const CUSTOMER_CONFIG = {
         <tr>
           <td><code style="font-family:'DM Mono',monospace;font-size:12px">experiment_variant</code></td>
           <td style="color:var(--amp-gray-500);font-size:12px">control, treatment_a</td>
-          <td><span class="tag tag-purple">Internal</span></td>
-          <td style="font-size:12px;color:var(--amp-gray-500)">Visible only to Admin and Manager roles</td>
+          <td><span class="tag tag-ok">Standard</span></td>
+          <td style="font-size:12px;color:var(--amp-gray-500)">Fully visible to all users</td>
         </tr>
       </tbody>
     </table>
@@ -1509,7 +1499,7 @@ const CUSTOMER_CONFIG = {
       </thead>
       <tbody>
         <tr><td>Weekly</td><td>Review Observe for unexpected events from recent releases</td><td>Engineer / PM</td><td>Observe</td></tr>
-        <tr><td>Bi-weekly</td><td>Process branch merge request queue</td><td>Data Steward</td><td>Branches</td></tr>
+        <tr><td>Bi-weekly</td><td>Review and approve pending branch merge requests</td><td>Data Steward</td><td>Branches</td></tr>
         <tr><td>Quarterly</td><td>Full taxonomy health review — accept/reject Agent suggestions</td><td>Governance Owner</td><td>Data Assistant Agent</td></tr>
         <tr><td>Annually</td><td>Style guide review + bulk event cleanup</td><td>Data Council</td><td>Bulk Edit + Agent</td></tr>
       </tbody>
@@ -1535,7 +1525,7 @@ const CUSTOMER_CONFIG = {
       <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Document your naming conventions from the style guide builder</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
       <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Assign a governance owner or program lead</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
       <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Set up your first branch in Amplitude Data</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
-      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Enable schema settings on your primary source</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
+      <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Configure schema enforcement settings for your project</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
       <li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>Schedule a quarterly Data Assistant Agent review in your calendar</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
       <li onclick="toggleCheck(this)" id="dac-check" style="display:none"><div class="check-box">✓</div><span>Classify PII and sensitive properties in Data Access Controls</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
       <li onclick="toggleCheck(this)" id="agent-check" style="display:none"><div class="check-box">✓</div><span>Run your first Data Assistant Agent review and accept/reject suggestions</span><button class="remove-item-btn" onclick="event.stopPropagation();this.closest('li').remove()" title="Remove">✕</button></li>
@@ -1930,7 +1920,7 @@ function checkHashForEvents() {
 // Shared entry point once we have a list of event name strings
 function processLoadedNames(names, source) {
   const customNames = names.filter(n => !isDefaultEvent(n));
-  const statusEl = document.getElementById(source === 'bookmarklet' ? 'bm-status-area' : 'api-status-area');
+  const statusEl = document.getElementById('bm-status-area');
 
   if (customNames.length === 0) {
     statusEl.innerHTML = '<div class="api-status-msg error">⚠️ No custom events found — all appear to be Amplitude defaults.</div>';
@@ -2364,6 +2354,7 @@ window.addEventListener('hashchange', checkHashForEvents);
 
 // Receive events posted back from the bookmarklet via postMessage
 window.addEventListener('message', (e) => {
+  if (!e.origin.includes('amplitude.com')) return;
   if (!e.data || e.data.type !== 'amp_gov_events') return;
   const names = e.data.names;
   if (Array.isArray(names) && names.length > 0) processLoadedNames(names, 'bookmarklet');
