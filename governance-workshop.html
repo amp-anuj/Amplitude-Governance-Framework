@@ -359,7 +359,7 @@
   }
   .range-input { width: 100%; cursor: pointer; }
   .slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--amp-gray-500); margin-top: 4px; }
-  .slider-example { margin-top: 12px; padding: 12px; background: var(--amp-gray-100); border-radius: 8px; font-size: 13px; }
+  .slider-example { margin-top: 12px; padding: 16px; background: var(--amp-white); border: 1px solid var(--amp-gray-300); border-radius: var(--radius-lg); font-size: 13px; }
 
   /* ── Callout ──────────────────────────────────── */
   .callout {
@@ -2622,6 +2622,8 @@ function updatePreview() {
   document.getElementById('preview-props').innerHTML = propHtml;
   validateEvent();
   window._styleCfg = cfg;
+  // Keep abstraction spectrum in sync with style guide settings
+  updateAbstraction();
 }
 
 function validateEvent() {
@@ -2647,22 +2649,136 @@ function validateEvent() {
 }
 
 // ── Abstraction slider ─────────────────────────────────────────
-const ABSTRACTION_EXAMPLES = [
-  { label: '⚡ Too Granular', events: ['Homepage_Hero_CTA_Button_1_Clicked','Checkout_Step_1_Email_Field_Focused','Nav_Top_Right_Avatar_Dropdown_Opened'], note: 'Hard to analyze — too many one-off events, no patterns.' },
-  { label: '⚠️ Slightly Granular', events: ['Homepage CTA Clicked','Checkout Field Focused','Avatar Menu Opened'], note: 'Better, but still very screen-specific. Funnel analysis is harder.' },
-  { label: '⚖️ Just Right', events: ['CTA Clicked','Form Field Focused','Navigation Opened'], note: 'Object-Action pattern. Queryable across contexts with properties for context.' },
-  { label: '📦 Slightly Consolidated', events: ['Button Clicked','Input Interacted','Menu Opened'], note: 'Usable but properties need to carry all context. Risk of ambiguity.' },
-  { label: '📦 Too Consolidated', events: ['UI Interacted','User Action','Interaction'], note: 'Meaningless at scale. Impossible to differentiate without extreme property filtering.' },
+
+// Per-level metadata: label, event-name transform, properties needed, and callout
+const ABSTRACTION_META = [
+  {
+    label: '⚡ Too Granular',
+    borderColor: 'var(--amp-red)',
+    bgColor: 'var(--amp-red-light)',
+    calloutIcon: '⚠️',
+    calloutColor: 'var(--amp-red)',
+    callout: 'Context is baked into the event name — properties stay light. But you need a unique event for every screen, section, and variant. Funnels across surfaces require listing every single event name.',
+    propNote: 'Minimal properties — context already lives in the name.',
+    propBaseKeys: ['user_id', 'timestamp'],
+  },
+  {
+    label: '⚠️ Slightly Granular',
+    borderColor: 'var(--amp-orange)',
+    bgColor: 'var(--amp-orange-light)',
+    calloutIcon: '⚠️',
+    calloutColor: 'var(--amp-orange)',
+    callout: 'Screen is encoded in the name so you save a page property — but now you need to enumerate every screen variant in every chart. Cross-surface analysis becomes tedious fast.',
+    propNote: 'A few properties, but the screen in the name duplicates logic you could put in a property.',
+    propBaseKeys: ['user_id', 'plan_type', 'element_id'],
+  },
+  {
+    label: '⚖️ Just Right',
+    borderColor: 'var(--amp-green)',
+    bgColor: 'var(--amp-green-light)',
+    calloutIcon: '✅',
+    calloutColor: 'var(--amp-green)',
+    callout: 'One event name covers every surface. Properties do the heavy lifting — filter by page, section, or element_type to answer any question without touching the taxonomy.',
+    propNote: 'Properties carry all the context you need for segmentation and filtering.',
+    propBaseKeys: ['user_id', 'plan_type', 'page', 'section', 'element_type', 'button_label'],
+  },
+  {
+    label: '📦 Slightly Consolidated',
+    borderColor: 'var(--amp-orange)',
+    bgColor: 'var(--amp-orange-light)',
+    calloutIcon: '⚠️',
+    calloutColor: 'var(--amp-orange)',
+    callout: 'More generic names mean properties must distinguish what actually happened. Analysis requires stacking multiple filters — charts get fragile when the property is missing or inconsistent.',
+    propNote: 'More properties required to separate what happened from where and how it happened.',
+    propBaseKeys: ['user_id', 'plan_type', 'page', 'section', 'element_type', 'action_type', 'target_text', 'component_id'],
+  },
+  {
+    label: '📦 Too Consolidated',
+    borderColor: 'var(--amp-red)',
+    bgColor: 'var(--amp-red-light)',
+    calloutIcon: '🚨',
+    calloutColor: 'var(--amp-red)',
+    callout: 'Properties become your entire data model. Every chart needs 5–8 filters just to isolate a single action. Any missing or inconsistent property value breaks analysis — and trust in the data.',
+    propNote: 'Properties are critical load-bearing infrastructure. Miss one and your analysis falls apart.',
+    propBaseKeys: ['user_id', 'plan_type', 'page', 'section', 'element_type', 'action_type', 'target_text', 'component_id', 'interaction_subtype', 'context_key', 'context_value', 'source_surface'],
+  },
 ];
+
+// Build an event name at a given abstraction level (0=too granular … 4=too consolidated)
+// Uses the user's configured case/tense/order from window._styleCfg
+function buildAbstractionEventName(ev, level) {
+  const cfg = window._styleCfg || { evCase: 'title', tense: 'past', order: 'object-action' };
+  const { evCase, tense, order } = cfg;
+
+  let obj = ev.obj || 'Button';
+  let action = ev.action || 'Clicked';
+  let page = ev.page || 'App';
+
+  // Apply tense transform
+  if (tense === 'present') action = action.replace(/ed$/, '');
+  else if (tense === 'progressive') action = action.replace(/(?:ed)?$/, 'ing').replace(/inging$/, 'ing');
+
+  if (level === 0) {
+    // Too Granular: embed page + simulated subsection in name
+    const section = ['Main', 'Primary', 'Top', 'Detail'][obj.charCodeAt(0) % 4];
+    return applyCase(`${page} ${section} ${obj} ${action}`, evCase);
+  }
+  if (level === 1) {
+    // Slightly Granular: include page but drop subsection
+    return applyCase(`${page} ${obj} ${action}`, evCase);
+  }
+  if (level === 2) {
+    // Just Right: use configured order, no screen
+    const name = order === 'action-object' ? `${action} ${obj}` : `${obj} ${action}`;
+    return applyCase(name, evCase);
+  }
+  if (level === 3) {
+    // Slightly Consolidated: genericise the object
+    const genericMap = { Button:'Element', Checkout:'Flow', Report:'Content', Form:'Input', Modal:'Dialog', Menu:'Navigation', Card:'Item' };
+    const genObj = genericMap[obj] || 'Element';
+    const name = order === 'action-object' ? `${action} ${genObj}` : `${genObj} ${action}`;
+    return applyCase(name, evCase);
+  }
+  // Level 4 — Too Consolidated: ultra-generic
+  const ultraGeneric = ['UI Interacted', 'User Action', 'Interaction'][obj.charCodeAt(0) % 3];
+  return applyCase(ultraGeneric, evCase);
+}
 
 function updateAbstraction() {
   const v = parseInt(document.getElementById('abstraction-slider').value);
   const idx = Math.min(4, Math.floor(v / 21));
-  const ex = ABSTRACTION_EXAMPLES[idx];
+  const meta = ABSTRACTION_META[idx];
+  const cfg = window._styleCfg || {};
+  const pc = cfg.propCase || 'snake';
+
+  // Source events: user's loaded events (up to 3) or fallback
+  const evSrc = (window._previewEvents && window._previewEvents.length)
+    ? window._previewEvents.slice(0, 3)
+    : EXAMPLE_EVENTS_RAW;
+
+  const eventNames = evSrc.map(ev => buildAbstractionEventName(ev, idx));
+
+  // Property chips in user's prop case style
+  const propKeys = meta.propBaseKeys.map(k => applyPropCase(k, pc));
+
   document.getElementById('abstraction-example').innerHTML = `
-    <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--amp-gray-700)">${ex.label}</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">${ex.events.map(e=>`<code style="font-family:'DM Mono',monospace;font-size:12px;background:white;padding:2px 8px;border-radius:4px;border:1px solid var(--amp-gray-300)">${e}</code>`).join('')}</div>
-    <div style="font-size:12px;color:var(--amp-gray-500)">${ex.note}</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:12px;font-weight:700;color:var(--amp-gray-700)">${meta.label}</span>
+      <span style="font-size:11px;color:var(--amp-gray-500)">— event names from your taxonomy</span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      ${eventNames.map(e => `<code style="font-family:'DM Mono',monospace;font-size:12px;background:white;padding:3px 10px;border-radius:4px;border:1.5px solid ${meta.borderColor};color:var(--amp-gray-900)">${e}</code>`).join('')}
+    </div>
+    <div style="margin-bottom:10px">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-gray-500);margin-bottom:6px">Properties needed</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${propKeys.map(p => `<span style="font-family:'DM Mono',monospace;font-size:11px;background:var(--amp-gray-100);border:1px solid var(--amp-gray-300);padding:2px 8px;border-radius:4px;color:var(--amp-gray-700)">${p}</span>`).join('')}
+      </div>
+      <div style="font-size:11px;color:var(--amp-gray-500);margin-top:6px">${meta.propNote}</div>
+    </div>
+    <div style="background:${meta.bgColor};border-left:3px solid ${meta.calloutColor};border-radius:0 6px 6px 0;padding:10px 12px;font-size:12px;color:var(--amp-gray-700);line-height:1.5">
+      <strong style="color:${meta.calloutColor}">${meta.calloutIcon} Property impact:</strong> ${meta.callout}
+    </div>
   `;
 }
 
