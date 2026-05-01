@@ -569,7 +569,7 @@ const CUSTOMER_CONFIG = {
 <!-- ──────────────────────────────────────────────────────────── PRESENTER CHROME -->
 <button class="p-nav-btn" id="p-prev" onclick="presenterNav(-1)" title="Previous (←)">&#8592;</button>
 <button class="p-nav-btn" id="p-next" onclick="presenterNav(1)" title="Next (→)">&#8594;</button>
-<div id="p-progress">Overview · 1 of 12</div>
+<div id="p-progress">Overview · 1 of 14</div>
 
 <!-- ──────────────────────────────────────────────────────────── TABS -->
 <nav class="tabs-bar" id="tabs-bar">
@@ -1035,9 +1035,18 @@ const CUSTOMER_CONFIG = {
 
 <!-- ████  TAB 3 — TAXONOMY DESIGN  ████ -->
 <section class="tab-panel" id="panel-3">
-  <div class="section-eyebrow">Step 4 of 9</div>
-  <h1 class="section-title">Build Your Style Guide</h1>
-  <p class="section-subtitle">Define your naming conventions once — the preview updates live as you configure your rules.</p>
+  <div class="section-eyebrow" id="panel-3-eyebrow">Step 4.1 of 9</div>
+  <h1 class="section-title" id="panel-3-title">Build Your Style Guide</h1>
+
+  <!-- Sub-tab nav -->
+  <nav class="sub-tabs-bar">
+    <button class="sub-tab-btn active" id="stab-3-0" onclick="switchSubTab(3,0)">4.1 Style Guide</button>
+    <button class="sub-tab-btn" id="stab-3-1" onclick="switchSubTab(3,1)">4.2 Abstraction Spectrum</button>
+  </nav>
+
+  <!-- ── Sub-panel 3.1 — Style Guide ── -->
+  <div class="sub-panel active" id="subpanel-3-0">
+  <p class="section-subtitle" style="margin-top:-4px;margin-bottom:20px">Define your naming conventions once — the preview updates live as you configure your rules.</p>
 
   <!-- ── Connect to Live Project ─────────────────────────────── -->
   <div class="card" style="margin-bottom:20px">
@@ -1171,11 +1180,15 @@ const CUSTOMER_CONFIG = {
     </div>
   </div>
 
-  <hr class="divider">
+  <div style="display:flex;justify-content:space-between;margin-top:8px">
+    <button class="btn btn-secondary" onclick="switchTab(2)">← Back: Governance Model</button>
+    <button class="btn btn-primary" onclick="switchSubTab(3,1)">Next: Abstraction Spectrum →</button>
+  </div>
+  </div><!-- /subpanel-3-0 -->
 
-  <div class="section-eyebrow">Abstraction Spectrum</div>
-  <h3 style="font-size:16px;font-weight:600;margin-bottom:6px">Finding the right granularity</h3>
-  <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:16px">Drag the slider to see examples of overly granular vs overly consolidated event naming.</p>
+  <!-- ── Sub-panel 3.2 — Abstraction Spectrum ── -->
+  <div class="sub-panel" id="subpanel-3-1">
+  <p class="section-subtitle" style="margin-top:-4px;margin-bottom:20px">Explore how granularity decisions affect your event names and the properties needed to make them useful.</p>
 
   <div class="card">
     <div class="slider-wrap">
@@ -1190,22 +1203,24 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="switchTab(2)">← Back: Governance Model</button>
+    <button class="btn btn-secondary" onclick="switchSubTab(3,0)">← Back: Style Guide</button>
     <button class="btn btn-primary" onclick="switchTab(4)" id="next-from-taxonomy">Next: Tracking Plan →</button>
   </div>
+  </div><!-- /subpanel-3-1 -->
+
 </section>
 
-<!-- ████  TAB 4 — TRACKING PLAN (with sub-tabs 4.1 / 4.2 / 4.3)  ████ -->
+<!-- ████  TAB 4 — TRACKING PLAN (with sub-tabs 5.1 / 5.2 / 5.3 / 5.4)  ████ -->
 <section class="tab-panel" id="panel-4">
-  <div class="section-eyebrow" id="panel-4-eyebrow">Step 4 of 9</div>
+  <div class="section-eyebrow" id="panel-4-eyebrow">Step 5.1 of 9</div>
   <h1 class="section-title" id="panel-4-title">Tracking Plan & Branches</h1>
 
   <!-- Sub-tab nav -->
   <nav class="sub-tabs-bar">
-    <button class="sub-tab-btn active" id="stab-4-0" onclick="switchSubTab(4,0)">4.1 Tracking Plan & Branches</button>
-    <button class="sub-tab-btn" id="stab-4-1" onclick="switchSubTab(4,1)">4.2 Schema Settings</button>
-    <button class="sub-tab-btn" id="stab-4-2" onclick="switchSubTab(4,2)">4.3 Virtual Data Extensions</button>
-    <button class="sub-tab-btn" id="stab-4-3" onclick="switchSubTab(4,3)">4.4 Transformations</button>
+    <button class="sub-tab-btn active" id="stab-4-0" onclick="switchSubTab(4,0)">5.1 Tracking Plan & Branches</button>
+    <button class="sub-tab-btn" id="stab-4-1" onclick="switchSubTab(4,1)">5.2 Schema Settings</button>
+    <button class="sub-tab-btn" id="stab-4-2" onclick="switchSubTab(4,2)">5.3 Virtual Data Extensions</button>
+    <button class="sub-tab-btn" id="stab-4-3" onclick="switchSubTab(4,3)">5.4 Transformations</button>
   </nav>
 
   <!-- ── Sub-panel 4.1 ── -->
@@ -1900,14 +1915,23 @@ const CUSTOMER_CONFIG = {
 })();
 
 // ── Tab switching ────────────────────────────────────────────
-// Step numbers mirror the nav tab numbers (1=Overview has no step, 2-7 = steps 2-7)
-// Sub-tabs within tab 4 use decimal notation: 4.1, 4.2, 4.3
+// Step numbers mirror the nav tab numbers (1=Overview has no step, 2-9 = steps 2-9)
+// Sub-tabs within tabs 3 and 4 use decimal notation: 4.1, 4.2 / 5.1, 5.2, 5.3, 5.4
 const TAB_PROGRESS = { 0: null, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9 };
-const SUB_PROGRESS = { '4-0': 5, '4-1': 5 + 1/4, '4-2': 5 + 2/4, '4-3': 5 + 3/4 };
+const SUB_PROGRESS = {
+  '3-0': 4, '3-1': 4 + 1/2,
+  '4-0': 5, '4-1': 5 + 1/4, '4-2': 5 + 2/4, '4-3': 5 + 3/4,
+};
 const TOTAL_STEPS  = 9;
 
-const SUB_TITLES   = { '4-0': 'Tracking Plan & Branches', '4-1': 'Schema Settings', '4-2': 'Virtual Data Extensions', '4-3': 'Transformations' };
-const SUB_EYEBROWS = { '4-0': 'Step 5.1 of 9', '4-1': 'Step 5.2 of 9', '4-2': 'Step 5.3 of 9', '4-3': 'Step 5.4 of 9' };
+const SUB_TITLES   = {
+  '3-0': 'Build Your Style Guide', '3-1': 'Abstraction Spectrum',
+  '4-0': 'Tracking Plan & Branches', '4-1': 'Schema Settings', '4-2': 'Virtual Data Extensions', '4-3': 'Transformations',
+};
+const SUB_EYEBROWS = {
+  '3-0': 'Step 4.1 of 9', '3-1': 'Step 4.2 of 9',
+  '4-0': 'Step 5.1 of 9', '4-1': 'Step 5.2 of 9', '4-2': 'Step 5.3 of 9', '4-3': 'Step 5.4 of 9',
+};
 
 function updateProgressBar(step) {
   const wrap = document.getElementById('nav-progress-wrap');
@@ -1927,10 +1951,14 @@ function switchTab(idx) {
   document.querySelectorAll('.tab-btn')[idx].classList.add('active');
 
   // For tab 3, restore whichever sub-tab was last active (default 0)
-  if (idx === 4) {
-    const active = document.querySelector('#panel-4 .sub-panel.active');
+  if (idx === 3) {
+    const active = document.querySelector('#panel-3 .sub-panel.active');
     const subIdx = active ? parseInt(active.id.split('-')[2]) : 0;
     _updateSubTabProgress(3, subIdx);
+  } else if (idx === 4) {
+    const active = document.querySelector('#panel-4 .sub-panel.active');
+    const subIdx = active ? parseInt(active.id.split('-')[2]) : 0;
+    _updateSubTabProgress(4, subIdx);
   } else {
     updateProgressBar(TAB_PROGRESS[idx]);
   }
@@ -1941,10 +1969,10 @@ function switchTab(idx) {
 function _updateSubTabProgress(tabIdx, subIdx) {
   const key = tabIdx + '-' + subIdx;
   updateProgressBar(SUB_PROGRESS[key]);
-  if (tabIdx === 4) {
-    document.getElementById('panel-4-eyebrow').textContent = SUB_EYEBROWS[key];
-    document.getElementById('panel-4-title').textContent   = SUB_TITLES[key];
-  }
+  const eyebrow = document.getElementById('panel-' + tabIdx + '-eyebrow');
+  const title   = document.getElementById('panel-' + tabIdx + '-title');
+  if (eyebrow) eyebrow.textContent = SUB_EYEBROWS[key];
+  if (title)   title.textContent   = SUB_TITLES[key];
 }
 
 function switchSubTab(tabIdx, subIdx) {
@@ -2899,7 +2927,8 @@ const PRESENTER_STEPS = [
   { tab: 0, label: 'Overview',             sub: null },
   { tab: 1, label: 'Project Strategy',     sub: null },
   { tab: 2, label: 'Governance Model',     sub: null },
-  { tab: 3, label: 'Taxonomy Design',      sub: null },
+  { tab: 3, label: 'Style Guide',          sub: 0    },
+  { tab: 3, label: 'Abstraction Spectrum', sub: 1    },
   { tab: 4, label: 'Tracking Plan 5.1',    sub: 0    },
   { tab: 4, label: 'Tracking Plan 5.2',    sub: 1    },
   { tab: 4, label: 'Tracking Plan 5.3',    sub: 2    },
@@ -2915,11 +2944,11 @@ let presenterActive = false;
 function getCurrentPresenterIdx() {
   const activeBtn = document.querySelector('.tab-btn.active');
   const tabIdx = activeBtn ? parseInt(activeBtn.dataset.index) : 0;
-  if (tabIdx === 4) {
-    // Find which sub-tab is active by its ID (stab-4-0, stab-4-1, ...)
-    const activeSubBtn = document.querySelector('.sub-tab-btn.active');
+  if (tabIdx === 3 || tabIdx === 4) {
+    // Find which sub-tab is active within this specific panel
+    const activeSubBtn = document.querySelector('#panel-' + tabIdx + ' .sub-tab-btn.active');
     const subIdx = activeSubBtn ? parseInt(activeSubBtn.id.split('-').pop()) : 0;
-    return PRESENTER_STEPS.findIndex(s => s.tab === 4 && s.sub === subIdx);
+    return PRESENTER_STEPS.findIndex(s => s.tab === tabIdx && s.sub === subIdx);
   }
   return PRESENTER_STEPS.findIndex(s => s.tab === tabIdx && s.sub === null);
 }
