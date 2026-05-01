@@ -580,25 +580,28 @@ const CUSTOMER_CONFIG = {
     <span class="tab-num">2</span> Project Strategy
   </button>
   <button class="tab-btn" onclick="switchTab(2)" data-index="2">
-    <span class="tab-num">3</span> Governance Model
+    <span class="tab-num">3</span> Data Governance
   </button>
   <button class="tab-btn" onclick="switchTab(3)" data-index="3">
-    <span class="tab-num">4</span> Taxonomy Design
+    <span class="tab-num">4</span> Governance Model
   </button>
-  <button class="tab-btn" id="tab-data" onclick="switchTab(4)" data-index="4">
-    <span class="tab-num">5</span> Tracking Plan
+  <button class="tab-btn" onclick="switchTab(4)" data-index="4">
+    <span class="tab-num">5</span> Taxonomy Design
   </button>
-  <button class="tab-btn" id="tab-dac" onclick="switchTab(5)" data-index="5">
-    <span class="tab-num">6</span> Governance Controls
+  <button class="tab-btn" id="tab-data" onclick="switchTab(5)" data-index="5">
+    <span class="tab-num">6</span> Tracking Plan
   </button>
-  <button class="tab-btn" id="tab-agent" onclick="switchTab(6)" data-index="6">
-    <span class="tab-num">7</span> Data Assistant Agent
+  <button class="tab-btn" id="tab-dac" onclick="switchTab(6)" data-index="6">
+    <span class="tab-num">7</span> Governance Controls
   </button>
-  <button class="tab-btn" onclick="switchTab(7)" data-index="7">
-    <span class="tab-num">8</span> Workshop Activity
+  <button class="tab-btn" id="tab-agent" onclick="switchTab(7)" data-index="7">
+    <span class="tab-num">8</span> Data Assistant Agent
   </button>
   <button class="tab-btn" onclick="switchTab(8)" data-index="8">
-    <span class="tab-num">9</span> Next Steps
+    <span class="tab-num">9</span> Workshop Activity
+  </button>
+  <button class="tab-btn" onclick="switchTab(9)" data-index="9">
+    <span class="tab-num">10</span> Next Steps
   </button>
 </nav>
 <div class="nav-progress-wrap" id="nav-progress-wrap" style="display:none">
@@ -611,6 +614,88 @@ const CUSTOMER_CONFIG = {
 <!-- ████  TAB 1 — OVERVIEW  ████ -->
 <section class="tab-panel active" id="panel-0">
   <div class="section-eyebrow">Getting Started</div>
+  <h1 class="section-title">Data Governance Workshop</h1>
+  <p class="section-subtitle">A practical session to align your team on project structure, governance ownership, naming conventions, and the Amplitude features that keep your data clean at scale.</p>
+
+  <div class="card">
+    <div class="card-title">What You'll Build Today</div>
+    <div class="card-body">
+      <p style="margin-bottom:16px">By the end of this session, you'll walk away with four concrete decisions and artifacts:</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:24px">
+        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 2</div>
+          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your project strategy</div>
+          <div style="font-size:12px;color:var(--amp-gray-500)">How you structure Amplitude projects — per platform, per BU, aggregate, or Portfolios</div>
+        </div>
+        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 4</div>
+          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your governance model</div>
+          <div style="font-size:12px;color:var(--amp-gray-500)">A process framework matched to your team size, maturity, and org structure</div>
+        </div>
+        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 5</div>
+          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your naming conventions</div>
+          <div style="font-size:12px;color:var(--amp-gray-500)">A style guide you configure live — event case, tense, order, and property format</div>
+        </div>
+        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 9</div>
+          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your governance process table</div>
+          <div style="font-size:12px;color:var(--amp-gray-500)">Who owns what, how they do it, and when — ready to share with your team</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-gray-500);margin-bottom:10px">Full agenda</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 2</span>
+          <span style="color:var(--amp-gray-700)"><strong>Project Strategy</strong> — choose how to structure your Amplitude project(s)</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 3</span>
+          <span style="color:var(--amp-gray-700)"><strong>What is Data Governance?</strong> — the pillars, the quality flywheel, and why it matters</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 4</span>
+          <span style="color:var(--amp-gray-700)"><strong>Governance Model</strong> — pick the ownership and approval model that fits your org</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 5</span>
+          <span style="color:var(--amp-gray-700)"><strong>Taxonomy Design</strong> — build your naming style guide and explore the abstraction spectrum</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 6</span>
+          <span style="color:var(--amp-gray-700)"><strong>Tracking Plan</strong> — branches, schema settings, virtual data extensions, and transformations</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 7</span>
+          <span style="color:var(--amp-gray-700)"><strong>Governance Controls</strong> — DAC tags, schema enforcement, and Observe monitoring</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 8</span>
+          <span style="color:var(--amp-gray-700)"><strong>Data Assistant Agent</strong> — automate taxonomy cleanup and governance suggestions with AI</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 9</span>
+          <span style="color:var(--amp-gray-700)"><strong>Workshop Activity</strong> — build your governance process table together</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 10</span>
+          <span style="color:var(--amp-gray-700)"><strong>Next Steps</strong> — your prioritized action plan and recommended resources</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;margin-top:8px">
+    <button class="btn btn-primary" onclick="switchTab(1)">Next: Project Strategy →</button>
+  </div>
+
+</section>
+
+<!-- ████  TAB 3 — WHAT IS DATA GOVERNANCE  ████ -->
+<section class="tab-panel" id="panel-2">
+  <div class="section-eyebrow">Step 3 of 10</div>
   <h1 class="section-title">What is Data Governance?</h1>
   <p class="section-subtitle">Data governance is the set of standards, processes, and ownership that ensures your analytics data stays accurate, trustworthy, and actionable over time.</p>
 
@@ -655,7 +740,7 @@ const CUSTOMER_CONFIG = {
     <div class="flywheel-step">
       <div class="flywheel-step-icon">🧹</div>
       <h4>Maintain & prune</h4>
-      <p>Taxonomy Agent, deprecation</p>
+      <p>Data Assistant Agent, deprecation</p>
     </div>
     <div class="flywheel-arrow">→</div>
     <div class="flywheel-step">
@@ -665,81 +750,20 @@ const CUSTOMER_CONFIG = {
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title">Workshop Structure — What You'll Build Today</div>
-    <div class="card-body">
-      <p style="margin-bottom:16px">By the end of this session, you'll walk away with four concrete decisions and artifacts:</p>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:20px">
-        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 2</div>
-          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your project strategy</div>
-          <div style="font-size:12px;color:var(--amp-gray-500)">How you structure Amplitude projects — per platform, per BU, aggregate, or Portfolios</div>
-        </div>
-        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 3</div>
-          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your governance model</div>
-          <div style="font-size:12px;color:var(--amp-gray-500)">A process framework matched to your team size, maturity, and org structure</div>
-        </div>
-        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 4</div>
-          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your naming conventions</div>
-          <div style="font-size:12px;color:var(--amp-gray-500)">A style guide you configure live — event case, tense, order, and property format</div>
-        </div>
-        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 8</div>
-          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your governance process table</div>
-          <div style="font-size:12px;color:var(--amp-gray-500)">Who owns what, how they do it, and when — ready to share with your team</div>
-        </div>
-      </div>
-
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-gray-500);margin-bottom:10px">Full agenda</div>
-      <div style="display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
-          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 2</span>
-          <span style="color:var(--amp-gray-700)"><strong>Project Strategy</strong> — choose how to structure your Amplitude project(s)</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
-          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 3</span>
-          <span style="color:var(--amp-gray-700)"><strong>Governance Model</strong> — pick the ownership and approval model that fits your org</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
-          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 4</span>
-          <span style="color:var(--amp-gray-700)"><strong>Taxonomy Design</strong> — build your naming style guide and explore the abstraction spectrum</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
-          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 5</span>
-          <span style="color:var(--amp-gray-700)"><strong>Tracking Plan</strong> — branches, schema settings, virtual data extensions, and transformations</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
-          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 6</span>
-          <span style="color:var(--amp-gray-700)"><strong>Governance Controls</strong> — DAC tags, schema enforcement, and Observe monitoring</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
-          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 7</span>
-          <span style="color:var(--amp-gray-700)"><strong>Data Assistant Agent</strong> — automate taxonomy cleanup and governance suggestions with AI</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
-          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 8</span>
-          <span style="color:var(--amp-gray-700)"><strong>Workshop Activity</strong> — build your governance process table together</span>
-        </div>
-        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
-          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 9</span>
-          <span style="color:var(--amp-gray-700)"><strong>Next Steps</strong> — your prioritized action plan and recommended resources</span>
-        </div>
-      </div>
-    </div>
+  <div class="callout callout-blue" style="margin-top:8px">
+    <span class="callout-icon">💡</span>
+    <div>Governance isn't a one-time project — it's an ongoing practice. The flywheel above shows how each step reinforces the next, compounding data quality over time.</div>
   </div>
 
-  <div style="display:flex;justify-content:flex-end;margin-top:8px">
-    <button class="btn btn-primary" onclick="switchTab(1)">Next: Project Strategy →</button>
+  <div style="display:flex;justify-content:space-between;margin-top:16px">
+    <button class="btn btn-secondary" onclick="switchTab(1)">← Back: Project Strategy</button>
+    <button class="btn btn-primary" onclick="switchTab(3)">Next: Governance Model →</button>
   </div>
-
 </section>
 
 <!-- ████  TAB 2 — PROJECT STRATEGY  ████ -->
 <section class="tab-panel" id="panel-1">
-  <div class="section-eyebrow">Step 2 of 9</div>
+  <div class="section-eyebrow">Step 2 of 10</div>
   <h1 class="section-title">Define Your Project Strategy</h1>
   <p class="section-subtitle">How you structure Amplitude projects determines your governance scope, cross-team visibility, and reporting flexibility. Choose the pattern that fits your organization.</p>
 
@@ -903,13 +927,13 @@ const CUSTOMER_CONFIG = {
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
     <button class="btn btn-secondary" onclick="switchTab(0)">← Back: Overview</button>
-    <button class="btn btn-primary" onclick="switchTab(2)">Next: Governance Model →</button>
+    <button class="btn btn-primary" onclick="switchTab(2)">Next: What is Data Governance? →</button>
   </div>
 </section>
 
 <!-- ████  TAB 3 — GOVERNANCE MODEL  ████ -->
-<section class="tab-panel" id="panel-2">
-  <div class="section-eyebrow">Step 3 of 9</div>
+<section class="tab-panel" id="panel-3">
+  <div class="section-eyebrow">Step 4 of 10</div>
   <h1 class="section-title">Choose Your Governance Model</h1>
   <p class="section-subtitle">Answer four quick questions to get a recommended model — or select one directly below.</p>
 
@@ -1082,24 +1106,24 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="switchTab(1)">← Back: Project Strategy</button>
-    <button class="btn btn-primary" onclick="switchTab(3)">Next: Taxonomy Design →</button>
+    <button class="btn btn-secondary" onclick="switchTab(2)">← Back: What is Data Governance?</button>
+    <button class="btn btn-primary" onclick="switchTab(4)">Next: Taxonomy Design →</button>
   </div>
 </section>
 
 <!-- ████  TAB 3 — TAXONOMY DESIGN  ████ -->
-<section class="tab-panel" id="panel-3">
-  <div class="section-eyebrow" id="panel-3-eyebrow">Step 4.1 of 9</div>
-  <h1 class="section-title" id="panel-3-title">Build Your Style Guide</h1>
+<section class="tab-panel" id="panel-4">
+  <div class="section-eyebrow" id="panel-4-eyebrow">Step 4.1 of 9</div>
+  <h1 class="section-title" id="panel-4-title">Build Your Style Guide</h1>
 
   <!-- Sub-tab nav -->
   <nav class="sub-tabs-bar">
-    <button class="sub-tab-btn active" id="stab-3-0" onclick="switchSubTab(3,0)">4.1 Style Guide</button>
-    <button class="sub-tab-btn" id="stab-3-1" onclick="switchSubTab(3,1)">4.2 Abstraction Spectrum</button>
+    <button class="sub-tab-btn active" id="stab-4-0" onclick="switchSubTab(4,0)">5.1 Style Guide</button>
+    <button class="sub-tab-btn" id="stab-4-1" onclick="switchSubTab(4,1)">5.2 Abstraction Spectrum</button>
   </nav>
 
   <!-- ── Sub-panel 3.1 — Style Guide ── -->
-  <div class="sub-panel active" id="subpanel-3-0">
+  <div class="sub-panel active" id="subpanel-4-0">
   <p class="section-subtitle" style="margin-top:-4px;margin-bottom:20px">Define your naming conventions once — the preview updates live as you configure your rules.</p>
 
   <!-- ── Connect to Live Project ─────────────────────────────── -->
@@ -1235,13 +1259,13 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="switchTab(2)">← Back: Governance Model</button>
-    <button class="btn btn-primary" onclick="switchSubTab(3,1)">Next: Abstraction Spectrum →</button>
+    <button class="btn btn-secondary" onclick="switchTab(3)">← Back: Governance Model</button>
+    <button class="btn btn-primary" onclick="switchSubTab(4,1)">Next: Abstraction Spectrum →</button>
   </div>
   </div><!-- /subpanel-3-0 -->
 
   <!-- ── Sub-panel 3.2 — Abstraction Spectrum ── -->
-  <div class="sub-panel" id="subpanel-3-1">
+  <div class="sub-panel" id="subpanel-4-1">
   <p class="section-subtitle" style="margin-top:-4px;margin-bottom:20px">Explore how granularity decisions affect your event names and the properties needed to make them useful.</p>
 
   <div class="card">
@@ -1257,28 +1281,28 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="switchSubTab(3,0)">← Back: Style Guide</button>
-    <button class="btn btn-primary" onclick="switchTab(4)" id="next-from-taxonomy">Next: Tracking Plan →</button>
+    <button class="btn btn-secondary" onclick="switchSubTab(4,0)">← Back: Style Guide</button>
+    <button class="btn btn-primary" onclick="switchTab(5)" id="next-from-taxonomy">Next: Tracking Plan →</button>
   </div>
   </div><!-- /subpanel-3-1 -->
 
 </section>
 
 <!-- ████  TAB 4 — TRACKING PLAN (with sub-tabs 5.1 / 5.2 / 5.3 / 5.4)  ████ -->
-<section class="tab-panel" id="panel-4">
-  <div class="section-eyebrow" id="panel-4-eyebrow">Step 5.1 of 9</div>
-  <h1 class="section-title" id="panel-4-title">Tracking Plan & Branches</h1>
+<section class="tab-panel" id="panel-5">
+  <div class="section-eyebrow" id="panel-5-eyebrow">Step 5.1 of 9</div>
+  <h1 class="section-title" id="panel-5-title">Tracking Plan & Branches</h1>
 
   <!-- Sub-tab nav -->
   <nav class="sub-tabs-bar">
-    <button class="sub-tab-btn active" id="stab-4-0" onclick="switchSubTab(4,0)">5.1 Tracking Plan & Branches</button>
-    <button class="sub-tab-btn" id="stab-4-1" onclick="switchSubTab(4,1)">5.2 Schema Settings</button>
-    <button class="sub-tab-btn" id="stab-4-2" onclick="switchSubTab(4,2)">5.3 Virtual Data Extensions</button>
-    <button class="sub-tab-btn" id="stab-4-3" onclick="switchSubTab(4,3)">5.4 Transformations</button>
+    <button class="sub-tab-btn active" id="stab-5-0" onclick="switchSubTab(5,0)">6.1 Tracking Plan & Branches</button>
+    <button class="sub-tab-btn" id="stab-5-1" onclick="switchSubTab(5,1)">6.2 Schema Settings</button>
+    <button class="sub-tab-btn" id="stab-5-2" onclick="switchSubTab(5,2)">6.3 Virtual Data Extensions</button>
+    <button class="sub-tab-btn" id="stab-5-3" onclick="switchSubTab(5,3)">6.4 Transformations</button>
   </nav>
 
   <!-- ── Sub-panel 4.1 ── -->
-  <div class="sub-panel active" id="subpanel-4-0">
+  <div class="sub-panel active" id="subpanel-5-0">
     <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">The tracking plan is your source of truth. Branches let teams propose changes without breaking production data.</p>
     <div class="card-grid-2">
       <div class="card">
@@ -1339,13 +1363,13 @@ const CUSTOMER_CONFIG = {
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:24px">
-      <button class="btn btn-secondary" onclick="switchTab(3)">← Back: Taxonomy Design</button>
-      <button class="btn btn-primary" onclick="switchSubTab(4,1)">Next: Schema Settings →</button>
+      <button class="btn btn-secondary" onclick="switchTab(4)">← Back: Taxonomy Design</button>
+      <button class="btn btn-primary" onclick="switchSubTab(5,1)">Next: Schema Settings →</button>
     </div>
   </div>
 
   <!-- ── Sub-panel 4.2 ── -->
-  <div class="sub-panel" id="subpanel-4-1">
+  <div class="sub-panel" id="subpanel-5-1">
     <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Schema enforcement is configured <strong>project-wide</strong> — the same rules apply across all your sources. Observe then lets you filter violations by source to pinpoint which SDK or integration is sending bad data. These settings are the rules engine that powers <strong>Amplitude Observe</strong>.</p>
 
     <!-- Observe connection callout -->
@@ -1433,13 +1457,13 @@ const CUSTOMER_CONFIG = {
     </div>
 
     <div style="display:flex;justify-content:space-between;margin-top:24px">
-      <button class="btn btn-secondary" onclick="switchSubTab(4,0)">← Back: Tracking Plan</button>
-      <button class="btn btn-primary" onclick="switchSubTab(4,2)">Next: Virtual Data Extensions →</button>
+      <button class="btn btn-secondary" onclick="switchSubTab(5,0)">← Back: Tracking Plan</button>
+      <button class="btn btn-primary" onclick="switchSubTab(5,2)">Next: Virtual Data Extensions →</button>
     </div>
   </div>
 
   <!-- ── Sub-panel 4.3 ── -->
-  <div class="sub-panel" id="subpanel-4-2">
+  <div class="sub-panel" id="subpanel-5-2">
     <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Enrich your taxonomy without re-instrumentation — these three features create new data dimensions retroactively, no SDK changes required.</p>
 
     <div class="card-grid" style="margin-bottom:24px">
@@ -1488,13 +1512,13 @@ const CUSTOMER_CONFIG = {
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:8px">
-      <button class="btn btn-secondary" onclick="switchSubTab(4,1)">← Back: Schema Settings</button>
-      <button class="btn btn-primary" onclick="switchSubTab(4,3)">Next: Transformations →</button>
+      <button class="btn btn-secondary" onclick="switchSubTab(5,1)">← Back: Schema Settings</button>
+      <button class="btn btn-primary" onclick="switchSubTab(5,3)">Next: Transformations →</button>
     </div>
   </div>
 
   <!-- ── Sub-panel 4.4 ── -->
-  <div class="sub-panel" id="subpanel-4-3">
+  <div class="sub-panel" id="subpanel-5-3">
     <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Fix common instrumentation mistakes retroactively — no code changes, no re-deployment. Transformations apply at query time and leave your raw data untouched.</p>
 
     <div class="callout callout-blue" style="margin-bottom:24px">
@@ -1578,16 +1602,16 @@ const CUSTOMER_CONFIG = {
     </div>
 
     <div style="display:flex;justify-content:space-between;margin-top:8px">
-      <button class="btn btn-secondary" onclick="switchSubTab(4,2)">← Back: Virtual Data Extensions</button>
-      <button class="btn btn-primary" onclick="switchTab(5)" id="next-from-tracking">Next: Governance Controls →</button>
+      <button class="btn btn-secondary" onclick="switchSubTab(5,2)">← Back: Virtual Data Extensions</button>
+      <button class="btn btn-primary" onclick="switchTab(6)" id="next-from-tracking">Next: Governance Controls →</button>
     </div>
   </div>
 
 </section>
 
 <!-- ████  TAB 5 — GOVERNANCE CONTROLS (DAC)  ████ -->
-<section class="tab-panel" id="panel-5">
-  <div class="section-eyebrow">Step 6 of 9</div>
+<section class="tab-panel" id="panel-6">
+  <div class="section-eyebrow">Step 7 of 10</div>
   <h1 class="section-title">Governance Controls</h1>
   <p class="section-subtitle">Classify your properties, control who sees sensitive data, and manage event lifecycle.</p>
 
@@ -1726,14 +1750,14 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(5)">← Back</button>
-    <button class="btn btn-primary" onclick="switchTab(6)" id="next-from-controls">Next: Data Assistant Agent →</button>
+    <button class="btn btn-secondary" onclick="navigatePrev(6)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(7)" id="next-from-controls">Next: Data Assistant Agent →</button>
   </div>
 </section>
 
 <!-- ████  TAB 6 — TAXONOMY AGENT  ████ -->
-<section class="tab-panel" id="panel-6">
-  <div class="section-eyebrow">Step 7 of 9</div>
+<section class="tab-panel" id="panel-7">
+  <div class="section-eyebrow">Step 8 of 10</div>
   <h1 class="section-title">AI-Powered Data Governance</h1>
   <p class="section-subtitle">Amplitude's AI agents help you build, maintain, and scale your taxonomy — from first instrumentation through ongoing governance.</p>
 
@@ -1826,14 +1850,14 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(6)">← Back</button>
-    <button class="btn btn-primary" onclick="switchTab(7)">Next: Workshop Activity →</button>
+    <button class="btn btn-secondary" onclick="navigatePrev(7)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(8)">Next: Workshop Activity →</button>
   </div>
 </section>
 
 <!-- ████  TAB 7 — WORKSHOP ACTIVITY  ████ -->
-<section class="tab-panel" id="panel-7">
-  <div class="section-eyebrow">Step 8 of 9</div>
+<section class="tab-panel" id="panel-8">
+  <div class="section-eyebrow">Step 9 of 10</div>
   <h1 class="section-title">Your Governance Process Table</h1>
   <p class="section-subtitle">Fill in this table live during the workshop. This becomes your team's governance runbook — who does what, how, and when.</p>
 
@@ -1914,14 +1938,14 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(7)">← Back</button>
-    <button class="btn btn-primary" onclick="switchTab(8)">Next: Next Steps →</button>
+    <button class="btn btn-secondary" onclick="navigatePrev(8)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(9)">Next: Next Steps →</button>
   </div>
 </section>
 
 <!-- ████  TAB 8 — NEXT STEPS  ████ -->
-<section class="tab-panel" id="panel-8">
-  <div class="section-eyebrow">Step 9 of 9</div>
+<section class="tab-panel" id="panel-9">
+  <div class="section-eyebrow">Step 10 of 10</div>
   <h1 class="section-title">Next Steps</h1>
   <p class="section-subtitle">Your post-workshop action plan. Remove any items that aren't relevant to your team, then share or print this list.</p>
 
@@ -1940,7 +1964,7 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(8)">← Back</button>
+    <button class="btn btn-secondary" onclick="navigatePrev(9)">← Back</button>
   </div>
 </section>
 
@@ -1970,21 +1994,21 @@ const CUSTOMER_CONFIG = {
 
 // ── Tab switching ────────────────────────────────────────────
 // Step numbers mirror the nav tab numbers (1=Overview has no step, 2-9 = steps 2-9)
-// Sub-tabs within tabs 3 and 4 use decimal notation: 4.1, 4.2 / 5.1, 5.2, 5.3, 5.4
-const TAB_PROGRESS = { 0: null, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9 };
+// Sub-tabs within tabs 4 and 5 use decimal notation: 5.1, 5.2 / 6.1, 6.2, 6.3, 6.4
+const TAB_PROGRESS = { 0: null, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10 };
 const SUB_PROGRESS = {
-  '3-0': 4, '3-1': 4 + 1/2,
-  '4-0': 5, '4-1': 5 + 1/4, '4-2': 5 + 2/4, '4-3': 5 + 3/4,
+  '4-0': 5, '4-1': 5 + 1/2,
+  '5-0': 6, '5-1': 6 + 1/4, '5-2': 6 + 2/4, '5-3': 6 + 3/4,
 };
-const TOTAL_STEPS  = 9;
+const TOTAL_STEPS  = 10;
 
 const SUB_TITLES   = {
-  '3-0': 'Build Your Style Guide', '3-1': 'Abstraction Spectrum',
-  '4-0': 'Tracking Plan & Branches', '4-1': 'Schema Settings', '4-2': 'Virtual Data Extensions', '4-3': 'Transformations',
+  '4-0': 'Build Your Style Guide', '4-1': 'Abstraction Spectrum',
+  '5-0': 'Tracking Plan & Branches', '5-1': 'Schema Settings', '5-2': 'Virtual Data Extensions', '5-3': 'Transformations',
 };
 const SUB_EYEBROWS = {
-  '3-0': 'Step 4.1 of 9', '3-1': 'Step 4.2 of 9',
-  '4-0': 'Step 5.1 of 9', '4-1': 'Step 5.2 of 9', '4-2': 'Step 5.3 of 9', '4-3': 'Step 5.4 of 9',
+  '4-0': 'Step 5.1 of 10', '4-1': 'Step 5.2 of 10',
+  '5-0': 'Step 6.1 of 10', '5-1': 'Step 6.2 of 10', '5-2': 'Step 6.3 of 10', '5-3': 'Step 6.4 of 10',
 };
 
 function updateProgressBar(step) {
@@ -2005,12 +2029,12 @@ function switchTab(idx) {
   document.querySelectorAll('.tab-btn')[idx].classList.add('active');
 
   // For tab 3, restore whichever sub-tab was last active (default 0)
-  if (idx === 3) {
-    const active = document.querySelector('#panel-3 .sub-panel.active');
+  if (idx === 4) {
+    const active = document.querySelector('#panel-4 .sub-panel.active');
     const subIdx = active ? parseInt(active.id.split('-')[2]) : 0;
     _updateSubTabProgress(3, subIdx);
-  } else if (idx === 4) {
-    const active = document.querySelector('#panel-4 .sub-panel.active');
+  } else if (idx === 5) {
+    const active = document.querySelector('#panel-5 .sub-panel.active');
     const subIdx = active ? parseInt(active.id.split('-')[2]) : 0;
     _updateSubTabProgress(4, subIdx);
   } else {
@@ -2438,7 +2462,7 @@ function processLoadedNames(names, source) {
 
   // Auto-apply detected convention and switch to Taxonomy Design tab
   applyDetectedConvention();
-  switchTab(3);
+  switchTab(4);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -2980,17 +3004,18 @@ window.addEventListener('message', (e) => {
 const PRESENTER_STEPS = [
   { tab: 0, label: 'Overview',             sub: null },
   { tab: 1, label: 'Project Strategy',     sub: null },
-  { tab: 2, label: 'Governance Model',     sub: null },
-  { tab: 3, label: 'Style Guide',          sub: 0    },
-  { tab: 3, label: 'Abstraction Spectrum', sub: 1    },
-  { tab: 4, label: 'Tracking Plan 5.1',    sub: 0    },
-  { tab: 4, label: 'Tracking Plan 5.2',    sub: 1    },
-  { tab: 4, label: 'Tracking Plan 5.3',    sub: 2    },
-  { tab: 4, label: 'Tracking Plan 5.4',    sub: 3    },
-  { tab: 5, label: 'Governance Controls',  sub: null },
-  { tab: 6, label: 'Data Assistant Agent', sub: null },
-  { tab: 7, label: 'Workshop Activity',    sub: null },
-  { tab: 8, label: 'Next Steps',           sub: null },
+  { tab: 2, label: 'Data Governance 101',  sub: null },
+  { tab: 3, label: 'Governance Model',     sub: null },
+  { tab: 4, label: 'Style Guide',          sub: 0    },
+  { tab: 4, label: 'Abstraction Spectrum', sub: 1    },
+  { tab: 5, label: 'Tracking Plan 6.1',    sub: 0    },
+  { tab: 5, label: 'Tracking Plan 6.2',    sub: 1    },
+  { tab: 5, label: 'Tracking Plan 6.3',    sub: 2    },
+  { tab: 5, label: 'Tracking Plan 6.4',    sub: 3    },
+  { tab: 6, label: 'Governance Controls',  sub: null },
+  { tab: 7, label: 'Data Assistant Agent', sub: null },
+  { tab: 8, label: 'Workshop Activity',    sub: null },
+  { tab: 9, label: 'Next Steps',           sub: null },
 ];
 
 let presenterActive = false;
@@ -2998,7 +3023,7 @@ let presenterActive = false;
 function getCurrentPresenterIdx() {
   const activeBtn = document.querySelector('.tab-btn.active');
   const tabIdx = activeBtn ? parseInt(activeBtn.dataset.index) : 0;
-  if (tabIdx === 3 || tabIdx === 4) {
+  if (tabIdx === 4 || tabIdx === 5) {
     // Find which sub-tab is active within this specific panel
     const activeSubBtn = document.querySelector('#panel-' + tabIdx + ' .sub-tab-btn.active');
     const subIdx = activeSubBtn ? parseInt(activeSubBtn.id.split('-').pop()) : 0;
