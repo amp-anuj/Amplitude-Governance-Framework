@@ -668,12 +668,66 @@ const CUSTOMER_CONFIG = {
   <div class="card">
     <div class="card-title">Workshop Structure — What You'll Build Today</div>
     <div class="card-body">
-      <p style="margin-bottom:10px">By the end of this session, you'll walk away with three concrete artifacts:</p>
-      <ul style="padding-left:18px;line-height:1.9;font-size:14px;color:var(--amp-gray-700)">
-        <li><strong>Your governance model</strong> — a recommended process framework matched to your team size and maturity</li>
-        <li><strong>Your naming conventions</strong> — a style guide you build live, with a live validator</li>
-        <li><strong>Your governance process table</strong> — who owns what, how they do it, and when — ready to share with your team</li>
-      </ul>
+      <p style="margin-bottom:16px">By the end of this session, you'll walk away with four concrete decisions and artifacts:</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:20px">
+        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 2</div>
+          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your project strategy</div>
+          <div style="font-size:12px;color:var(--amp-gray-500)">How you structure Amplitude projects — per platform, per BU, aggregate, or Portfolios</div>
+        </div>
+        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 3</div>
+          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your governance model</div>
+          <div style="font-size:12px;color:var(--amp-gray-500)">A process framework matched to your team size, maturity, and org structure</div>
+        </div>
+        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 4</div>
+          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your naming conventions</div>
+          <div style="font-size:12px;color:var(--amp-gray-500)">A style guide you configure live — event case, tense, order, and property format</div>
+        </div>
+        <div style="background:var(--amp-gray-100);border-radius:var(--radius);padding:12px 14px;border-left:3px solid var(--amp-blue)">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-blue);margin-bottom:4px">Step 8</div>
+          <div style="font-size:13px;font-weight:600;color:var(--amp-gray-900);margin-bottom:2px">Your governance process table</div>
+          <div style="font-size:12px;color:var(--amp-gray-500)">Who owns what, how they do it, and when — ready to share with your team</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amp-gray-500);margin-bottom:10px">Full agenda</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 2</span>
+          <span style="color:var(--amp-gray-700)"><strong>Project Strategy</strong> — choose how to structure your Amplitude project(s)</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 3</span>
+          <span style="color:var(--amp-gray-700)"><strong>Governance Model</strong> — pick the ownership and approval model that fits your org</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 4</span>
+          <span style="color:var(--amp-gray-700)"><strong>Taxonomy Design</strong> — build your naming style guide and explore the abstraction spectrum</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 5</span>
+          <span style="color:var(--amp-gray-700)"><strong>Tracking Plan</strong> — branches, schema settings, virtual data extensions, and transformations</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 6</span>
+          <span style="color:var(--amp-gray-700)"><strong>Governance Controls</strong> — DAC tags, schema enforcement, and Observe monitoring</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 7</span>
+          <span style="color:var(--amp-gray-700)"><strong>Data Assistant Agent</strong> — automate taxonomy cleanup and governance suggestions with AI</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 8</span>
+          <span style="color:var(--amp-gray-700)"><strong>Workshop Activity</strong> — build your governance process table together</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;font-size:13px">
+          <span style="min-width:52px;font-weight:600;color:var(--amp-blue)">Step 9</span>
+          <span style="color:var(--amp-gray-700)"><strong>Next Steps</strong> — your prioritized action plan and recommended resources</span>
+        </div>
+      </div>
     </div>
   </div>
 
