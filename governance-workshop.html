@@ -187,6 +187,19 @@
   .model-detail-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--amp-gray-500); margin-bottom: 4px; }
   .model-detail-val { font-size: 13px; font-weight: 600; color: var(--amp-gray-900); }
 
+  /* ── Project Strategy / Gov Model option cards ─── */
+  .gov-model-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; }
+  .gov-model-card {
+    border: 2px solid var(--amp-gray-300); border-radius: var(--radius-lg); padding: 16px 14px;
+    cursor: pointer; text-align: center; transition: all var(--transition);
+    background: var(--amp-white);
+  }
+  .gov-model-card:hover { border-color: var(--amp-blue); background: var(--amp-blue-light); }
+  .gov-model-card.selected { border-color: var(--amp-blue); background: var(--amp-blue-light); }
+  .gov-model-icon { font-size: 28px; margin-bottom: 8px; }
+  .gov-model-name { font-size: 13px; font-weight: 700; color: var(--amp-gray-900); margin-bottom: 4px; }
+  .gov-model-tag { font-size: 11px; color: var(--amp-gray-500); line-height: 1.4; }
+
   /* ── Style Guide Builder ──────────────────────── */
   .style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
   .form-group { margin-bottom: 16px; }
@@ -507,25 +520,28 @@ const CUSTOMER_CONFIG = {
     <span class="tab-num">1</span> Overview
   </button>
   <button class="tab-btn" onclick="switchTab(1)" data-index="1">
-    <span class="tab-num">2</span> Governance Model
+    <span class="tab-num">2</span> Project Strategy
   </button>
   <button class="tab-btn" onclick="switchTab(2)" data-index="2">
-    <span class="tab-num">3</span> Taxonomy Design
+    <span class="tab-num">3</span> Governance Model
   </button>
-  <button class="tab-btn" id="tab-data" onclick="switchTab(3)" data-index="3">
-    <span class="tab-num">4</span> Tracking Plan
+  <button class="tab-btn" onclick="switchTab(3)" data-index="3">
+    <span class="tab-num">4</span> Taxonomy Design
   </button>
-  <button class="tab-btn" id="tab-dac" onclick="switchTab(4)" data-index="4">
-    <span class="tab-num">5</span> Governance Controls
+  <button class="tab-btn" id="tab-data" onclick="switchTab(4)" data-index="4">
+    <span class="tab-num">5</span> Tracking Plan
   </button>
-  <button class="tab-btn" id="tab-agent" onclick="switchTab(5)" data-index="5">
-    <span class="tab-num">6</span> Data Assistant Agent
+  <button class="tab-btn" id="tab-dac" onclick="switchTab(5)" data-index="5">
+    <span class="tab-num">6</span> Governance Controls
   </button>
-  <button class="tab-btn" onclick="switchTab(6)" data-index="6">
-    <span class="tab-num">7</span> Workshop Activity
+  <button class="tab-btn" id="tab-agent" onclick="switchTab(6)" data-index="6">
+    <span class="tab-num">7</span> Data Assistant Agent
   </button>
   <button class="tab-btn" onclick="switchTab(7)" data-index="7">
-    <span class="tab-num">8</span> Next Steps
+    <span class="tab-num">8</span> Workshop Activity
+  </button>
+  <button class="tab-btn" onclick="switchTab(8)" data-index="8">
+    <span class="tab-num">9</span> Next Steps
   </button>
 </nav>
 <div class="nav-progress-wrap" id="nav-progress-wrap" style="display:none">
@@ -605,14 +621,184 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:flex-end;margin-top:8px">
-    <button class="btn btn-primary" onclick="switchTab(1)">Next: Governance Model →</button>
+    <button class="btn btn-primary" onclick="switchTab(1)">Next: Project Strategy →</button>
   </div>
 
 </section>
 
-<!-- ████  TAB 2 — GOVERNANCE MODEL  ████ -->
+<!-- ████  TAB 2 — PROJECT STRATEGY  ████ -->
 <section class="tab-panel" id="panel-1">
-  <div class="section-eyebrow">Step 2 of 8</div>
+  <div class="section-eyebrow">Step 2 of 9</div>
+  <h1 class="section-title">Define Your Project Strategy</h1>
+  <p class="section-subtitle">How you structure Amplitude projects determines your governance scope, cross-team visibility, and reporting flexibility. Choose the pattern that fits your organization.</p>
+
+  <div class="card" style="margin-bottom:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <div class="card-title">🗂️ Choose a Project Strategy</div>
+      <button class="btn btn-secondary btn-sm" id="ps-view-toggle" onclick="togglePSView()">View All Options</button>
+    </div>
+    <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:16px">Click a strategy to explore how it fits your organization. You can compare all options side-by-side using the toggle above.</p>
+
+    <div class="gov-model-grid" id="ps-card-grid">
+      <div class="gov-model-card" id="ps-card-platform" onclick="selectPS('platform')">
+        <div class="gov-model-icon">📱</div>
+        <div class="gov-model-name">Per Platform</div>
+        <div class="gov-model-tag">Best for platform-differentiated teams</div>
+      </div>
+      <div class="gov-model-card" id="ps-card-bu" onclick="selectPS('bu')">
+        <div class="gov-model-icon">🏢</div>
+        <div class="gov-model-name">Per Business Unit</div>
+        <div class="gov-model-tag">Best for independent product lines</div>
+      </div>
+      <div class="gov-model-card" id="ps-card-aggregate" onclick="selectPS('aggregate')">
+        <div class="gov-model-icon">🌐</div>
+        <div class="gov-model-name">Aggregate Project</div>
+        <div class="gov-model-tag">Best for unified analytics</div>
+      </div>
+      <div class="gov-model-card" id="ps-card-portfolio" onclick="selectPS('portfolio')">
+        <div class="gov-model-icon">📊</div>
+        <div class="gov-model-name">Portfolios</div>
+        <div class="gov-model-tag">Best for cross-project rollups</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Selected strategy detail ─── -->
+  <div id="ps-detail" style="display:none">
+    <div class="model-result show" id="ps-result" style="margin-bottom:20px;margin-top:0">
+      <div class="model-badge" id="ps-badge">✅ Selected Strategy</div>
+      <h2 id="ps-name" style="font-size:20px;font-weight:700;margin-bottom:6px;color:var(--amp-black)">—</h2>
+      <p id="ps-description" style="font-size:14px;color:var(--amp-gray-500);line-height:1.6;margin-bottom:14px"></p>
+      <div class="model-detail-grid">
+        <div class="model-detail">
+          <div class="model-detail-label">Best For</div>
+          <div class="model-detail-val" id="ps-best-for">—</div>
+        </div>
+        <div class="model-detail">
+          <div class="model-detail-label">Governance Scope</div>
+          <div class="model-detail-val" id="ps-scope">—</div>
+        </div>
+        <div class="model-detail">
+          <div class="model-detail-label">Complexity</div>
+          <div class="model-detail-val" id="ps-complexity">—</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+        <div class="model-detail">
+          <div class="model-detail-label" style="color:var(--amp-green)">✅ Strengths</div>
+          <div id="ps-pros" style="font-size:13px;line-height:1.8;color:var(--amp-gray-700)"></div>
+        </div>
+        <div class="model-detail">
+          <div class="model-detail-label" style="color:var(--amp-red)">⚠️ Tradeoffs</div>
+          <div id="ps-cons" style="font-size:13px;line-height:1.8;color:var(--amp-gray-700)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Compare all options (hidden by default) ─── -->
+  <div id="ps-all-options" style="display:none;margin-bottom:20px">
+    <div class="section-eyebrow" style="margin-bottom:12px">All Strategy Options</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+
+      <div class="card" style="border:2px solid var(--amp-gray-300)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">📱</span>
+          <strong style="font-size:15px">Per Platform</strong>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">Separate Amplitude projects for each platform (iOS, Android, Web). Each platform team owns their tracking plan independently.</p>
+        <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600">✅ Strengths</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:10px;line-height:1.7">
+          <li>Clean separation of concerns per platform</li>
+          <li>Platform teams have full autonomy</li>
+          <li>Easier schema management per surface</li>
+        </ul>
+        <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
+          <li>Cross-platform analysis requires Portfolios</li>
+          <li>Risk of duplicate/inconsistent event names</li>
+          <li>Higher governance overhead across multiple plans</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border:2px solid var(--amp-gray-300)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">🏢</span>
+          <strong style="font-size:15px">Per Business Unit</strong>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">One project per product line or business unit. Teams within a BU share a tracking plan, but BUs operate independently.</p>
+        <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600">✅ Strengths</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:10px;line-height:1.7">
+          <li>Aligns with org structure and ownership</li>
+          <li>BU-level governance is tractable</li>
+          <li>Good isolation for data privacy/compliance</li>
+        </ul>
+        <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
+          <li>Cross-BU user journeys are fragmented</li>
+          <li>Company-level rollups need Portfolios</li>
+          <li>Harder to enforce naming standards across BUs</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border:2px solid var(--amp-gray-300)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">🌐</span>
+          <strong style="font-size:15px">Aggregate Project</strong>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">A single Amplitude project that ingests events from all platforms and teams. Unified tracking plan for the entire organization.</p>
+        <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600">✅ Strengths</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:10px;line-height:1.7">
+          <li>Full cross-platform user journey visibility</li>
+          <li>One tracking plan — simpler to govern</li>
+          <li>Unified metrics and chart definitions</li>
+        </ul>
+        <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
+          <li>Risk of event name conflicts across teams</li>
+          <li>Requires strong central governance to scale</li>
+          <li>Schema changes affect all teams simultaneously</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border:2px solid var(--amp-gray-300)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">📊</span>
+          <strong style="font-size:15px">Portfolios</strong>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">Multiple projects (per platform or BU) linked together via Amplitude Portfolios, enabling cross-project analysis without merging data streams.</p>
+        <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600">✅ Strengths</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:10px;line-height:1.7">
+          <li>Autonomy per team with cross-project analysis</li>
+          <li>Best of both worlds for large orgs</li>
+          <li>Cross-project funnels and user identity stitching</li>
+        </ul>
+        <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
+          <li>Requires consistent event naming across projects</li>
+          <li>More complex to set up and maintain</li>
+          <li>Portfolio access management adds overhead</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+  <div class="callout callout-blue">
+    <span class="callout-icon">💡</span>
+    <div>Your project strategy is a foundational decision — it shapes everything from your tracking plan scope to how you report cross-team metrics. Most teams start simple (Aggregate or Per Platform) and evolve to Portfolios as they scale.</div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:8px">
+    <button class="btn btn-secondary" onclick="switchTab(0)">← Back: Overview</button>
+    <button class="btn btn-primary" onclick="switchTab(2)">Next: Governance Model →</button>
+  </div>
+</section>
+
+<!-- ████  TAB 3 — GOVERNANCE MODEL  ████ -->
+<section class="tab-panel" id="panel-2">
+  <div class="section-eyebrow">Step 3 of 9</div>
   <h1 class="section-title">Choose Your Governance Model</h1>
   <p class="section-subtitle">Answer four quick questions to get a recommended model — or select one directly below.</p>
 
@@ -683,6 +869,101 @@ const CUSTOMER_CONFIG = {
     <ul class="checklist" id="model-checklist"></ul>
   </div>
 
+  <!-- ── View all governance models ─── -->
+  <div style="display:flex;justify-content:flex-end;margin-top:16px;margin-bottom:4px">
+    <button class="btn btn-secondary btn-sm" id="gm-view-toggle" onclick="toggleGMView()">View All Models</button>
+  </div>
+  <div id="gm-all-options" style="display:none;margin-bottom:20px">
+    <div class="section-eyebrow" style="margin-bottom:12px">All Governance Models</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+
+      <div class="card" style="border:2px solid var(--amp-gray-300)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">🧍</span>
+          <strong style="font-size:15px">Centralized</strong>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">A single data or analytics team owns the tracking plan, naming standards, and approvals. All instrumentation changes route through this team.</p>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Central data/analytics team</div>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> Medium — one team absorbs all review load</div>
+        <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600;margin-top:8px">✅ Strengths</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:8px;line-height:1.7">
+          <li>Highly consistent taxonomy across all teams</li>
+          <li>Clear accountability and fast decisions</li>
+          <li>Works well with smaller orgs</li>
+        </ul>
+        <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
+          <li>Central team becomes a bottleneck at scale</li>
+          <li>Product teams may feel blocked</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border:2px solid var(--amp-gray-300)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">👥</span>
+          <strong style="font-size:15px">Federated</strong>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">Each product team manages their own events, with a shared style guide and optional central review. Teams have autonomy within guardrails.</p>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Team leads + shared standards doc</div>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> Low central, higher per-team discipline</div>
+        <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600;margin-top:8px">✅ Strengths</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:8px;line-height:1.7">
+          <li>Teams move fast with local ownership</li>
+          <li>Scales well across many teams</li>
+          <li>Reduces central team bottleneck</li>
+        </ul>
+        <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
+          <li>Risk of naming inconsistency across teams</li>
+          <li>Requires strong style guide and enforcement tooling</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border:2px solid var(--amp-gray-300)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">🏛️</span>
+          <strong style="font-size:15px">Council</strong>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">A cross-functional governance committee with representatives from each team. Major taxonomy decisions are reviewed and ratified collectively.</p>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Cross-functional governance council</div>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> High — requires ongoing coordination</div>
+        <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600;margin-top:8px">✅ Strengths</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:8px;line-height:1.7">
+          <li>High buy-in across teams</li>
+          <li>Balanced representation of needs</li>
+          <li>Great for large, politically complex orgs</li>
+        </ul>
+        <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
+          <li>Slow decision-making by design</li>
+          <li>Hard to maintain momentum without a dedicated chair</li>
+        </ul>
+      </div>
+
+      <div class="card" style="border:2px solid var(--amp-gray-300)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:22px">🤝</span>
+          <strong style="font-size:15px">Hybrid</strong>
+        </div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">A mix of centralized standards (naming, schema) with federated ownership (team-level tracking plan management). Central team sets the floor, teams build on it.</p>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Central team (standards) + team leads (execution)</div>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> Medium — well-balanced for growing orgs</div>
+        <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600;margin-top:8px">✅ Strengths</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:8px;line-height:1.7">
+          <li>Consistent taxonomy with team autonomy</li>
+          <li>Most recommended for mid-to-large orgs</li>
+          <li>Central guardrails prevent drift</li>
+        </ul>
+        <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
+        <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
+          <li>Requires clear delineation of central vs. team scope</li>
+          <li>More complex to document and enforce</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
   <hr class="divider">
   <div class="callout callout-blue">
     <span class="callout-icon">💡</span>
@@ -690,14 +971,14 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="switchTab(0)">← Back: Overview</button>
-    <button class="btn btn-primary" onclick="switchTab(2)">Next: Taxonomy Design →</button>
+    <button class="btn btn-secondary" onclick="switchTab(1)">← Back: Project Strategy</button>
+    <button class="btn btn-primary" onclick="switchTab(3)">Next: Taxonomy Design →</button>
   </div>
 </section>
 
 <!-- ████  TAB 3 — TAXONOMY DESIGN  ████ -->
-<section class="tab-panel" id="panel-2">
-  <div class="section-eyebrow">Step 3 of 8</div>
+<section class="tab-panel" id="panel-3">
+  <div class="section-eyebrow">Step 4 of 9</div>
   <h1 class="section-title">Build Your Style Guide</h1>
   <p class="section-subtitle">Define your naming conventions once — the preview updates live as you configure your rules.</p>
 
@@ -852,26 +1133,26 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="switchTab(1)">← Back: Governance Model</button>
-    <button class="btn btn-primary" onclick="switchTab(3)" id="next-from-taxonomy">Next: Tracking Plan →</button>
+    <button class="btn btn-secondary" onclick="switchTab(2)">← Back: Governance Model</button>
+    <button class="btn btn-primary" onclick="switchTab(4)" id="next-from-taxonomy">Next: Tracking Plan →</button>
   </div>
 </section>
 
 <!-- ████  TAB 4 — TRACKING PLAN (with sub-tabs 4.1 / 4.2 / 4.3)  ████ -->
-<section class="tab-panel" id="panel-3">
-  <div class="section-eyebrow" id="panel-3-eyebrow">Step 3 of 8</div>
-  <h1 class="section-title" id="panel-3-title">Tracking Plan & Branches</h1>
+<section class="tab-panel" id="panel-4">
+  <div class="section-eyebrow" id="panel-4-eyebrow">Step 4 of 9</div>
+  <h1 class="section-title" id="panel-4-title">Tracking Plan & Branches</h1>
 
   <!-- Sub-tab nav -->
   <nav class="sub-tabs-bar">
-    <button class="sub-tab-btn active" id="stab-3-0" onclick="switchSubTab(3,0)">4.1 Tracking Plan & Branches</button>
-    <button class="sub-tab-btn" id="stab-3-1" onclick="switchSubTab(3,1)">4.2 Schema Settings</button>
-    <button class="sub-tab-btn" id="stab-3-2" onclick="switchSubTab(3,2)">4.3 Virtual Data Extensions</button>
-    <button class="sub-tab-btn" id="stab-3-3" onclick="switchSubTab(3,3)">4.4 Transformations</button>
+    <button class="sub-tab-btn active" id="stab-4-0" onclick="switchSubTab(4,0)">4.1 Tracking Plan & Branches</button>
+    <button class="sub-tab-btn" id="stab-4-1" onclick="switchSubTab(4,1)">4.2 Schema Settings</button>
+    <button class="sub-tab-btn" id="stab-4-2" onclick="switchSubTab(4,2)">4.3 Virtual Data Extensions</button>
+    <button class="sub-tab-btn" id="stab-4-3" onclick="switchSubTab(4,3)">4.4 Transformations</button>
   </nav>
 
   <!-- ── Sub-panel 4.1 ── -->
-  <div class="sub-panel active" id="subpanel-3-0">
+  <div class="sub-panel active" id="subpanel-4-0">
     <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">The tracking plan is your source of truth. Branches let teams propose changes without breaking production data.</p>
     <div class="card-grid-2">
       <div class="card">
@@ -932,13 +1213,13 @@ const CUSTOMER_CONFIG = {
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:24px">
-      <button class="btn btn-secondary" onclick="switchTab(2)">← Back: Taxonomy Design</button>
-      <button class="btn btn-primary" onclick="switchSubTab(3,1)">Next: Schema Settings →</button>
+      <button class="btn btn-secondary" onclick="switchTab(3)">← Back: Taxonomy Design</button>
+      <button class="btn btn-primary" onclick="switchSubTab(4,1)">Next: Schema Settings →</button>
     </div>
   </div>
 
   <!-- ── Sub-panel 4.2 ── -->
-  <div class="sub-panel" id="subpanel-3-1">
+  <div class="sub-panel" id="subpanel-4-1">
     <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Schema enforcement is configured <strong>project-wide</strong> — the same rules apply across all your sources. Observe then lets you filter violations by source to pinpoint which SDK or integration is sending bad data. These settings are the rules engine that powers <strong>Amplitude Observe</strong>.</p>
 
     <!-- Observe connection callout -->
@@ -1026,13 +1307,13 @@ const CUSTOMER_CONFIG = {
     </div>
 
     <div style="display:flex;justify-content:space-between;margin-top:24px">
-      <button class="btn btn-secondary" onclick="switchSubTab(3,0)">← Back: Tracking Plan</button>
-      <button class="btn btn-primary" onclick="switchSubTab(3,2)">Next: Virtual Data Extensions →</button>
+      <button class="btn btn-secondary" onclick="switchSubTab(4,0)">← Back: Tracking Plan</button>
+      <button class="btn btn-primary" onclick="switchSubTab(4,2)">Next: Virtual Data Extensions →</button>
     </div>
   </div>
 
   <!-- ── Sub-panel 4.3 ── -->
-  <div class="sub-panel" id="subpanel-3-2">
+  <div class="sub-panel" id="subpanel-4-2">
     <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Enrich your taxonomy without re-instrumentation — these three features create new data dimensions retroactively, no SDK changes required.</p>
 
     <div class="card-grid" style="margin-bottom:24px">
@@ -1081,13 +1362,13 @@ const CUSTOMER_CONFIG = {
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:8px">
-      <button class="btn btn-secondary" onclick="switchSubTab(3,1)">← Back: Schema Settings</button>
-      <button class="btn btn-primary" onclick="switchSubTab(3,3)">Next: Transformations →</button>
+      <button class="btn btn-secondary" onclick="switchSubTab(4,1)">← Back: Schema Settings</button>
+      <button class="btn btn-primary" onclick="switchSubTab(4,3)">Next: Transformations →</button>
     </div>
   </div>
 
   <!-- ── Sub-panel 4.4 ── -->
-  <div class="sub-panel" id="subpanel-3-3">
+  <div class="sub-panel" id="subpanel-4-3">
     <p class="section-subtitle" style="margin-top:-8px;margin-bottom:20px">Fix common instrumentation mistakes retroactively — no code changes, no re-deployment. Transformations apply at query time and leave your raw data untouched.</p>
 
     <div class="callout callout-blue" style="margin-bottom:24px">
@@ -1171,16 +1452,16 @@ const CUSTOMER_CONFIG = {
     </div>
 
     <div style="display:flex;justify-content:space-between;margin-top:8px">
-      <button class="btn btn-secondary" onclick="switchSubTab(3,2)">← Back: Virtual Data Extensions</button>
-      <button class="btn btn-primary" onclick="switchTab(4)" id="next-from-tracking">Next: Governance Controls →</button>
+      <button class="btn btn-secondary" onclick="switchSubTab(4,2)">← Back: Virtual Data Extensions</button>
+      <button class="btn btn-primary" onclick="switchTab(5)" id="next-from-tracking">Next: Governance Controls →</button>
     </div>
   </div>
 
 </section>
 
 <!-- ████  TAB 5 — GOVERNANCE CONTROLS (DAC)  ████ -->
-<section class="tab-panel" id="panel-4">
-  <div class="section-eyebrow">Step 5 of 8</div>
+<section class="tab-panel" id="panel-5">
+  <div class="section-eyebrow">Step 6 of 9</div>
   <h1 class="section-title">Governance Controls</h1>
   <p class="section-subtitle">Classify your properties, control who sees sensitive data, and manage event lifecycle.</p>
 
@@ -1319,14 +1600,14 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(4)">← Back</button>
-    <button class="btn btn-primary" onclick="switchTab(5)" id="next-from-controls">Next: Data Assistant Agent →</button>
+    <button class="btn btn-secondary" onclick="navigatePrev(5)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(6)" id="next-from-controls">Next: Data Assistant Agent →</button>
   </div>
 </section>
 
 <!-- ████  TAB 6 — TAXONOMY AGENT  ████ -->
-<section class="tab-panel" id="panel-5">
-  <div class="section-eyebrow">Step 6 of 8</div>
+<section class="tab-panel" id="panel-6">
+  <div class="section-eyebrow">Step 7 of 9</div>
   <h1 class="section-title">AI-Powered Data Governance</h1>
   <p class="section-subtitle">Amplitude's AI agents help you build, maintain, and scale your taxonomy — from first instrumentation through ongoing governance.</p>
 
@@ -1419,14 +1700,14 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(5)">← Back</button>
-    <button class="btn btn-primary" onclick="switchTab(6)">Next: Workshop Activity →</button>
+    <button class="btn btn-secondary" onclick="navigatePrev(6)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(7)">Next: Workshop Activity →</button>
   </div>
 </section>
 
 <!-- ████  TAB 7 — WORKSHOP ACTIVITY  ████ -->
-<section class="tab-panel" id="panel-6">
-  <div class="section-eyebrow">Step 7 of 8</div>
+<section class="tab-panel" id="panel-7">
+  <div class="section-eyebrow">Step 8 of 9</div>
   <h1 class="section-title">Your Governance Process Table</h1>
   <p class="section-subtitle">Fill in this table live during the workshop. This becomes your team's governance runbook — who does what, how, and when.</p>
 
@@ -1507,14 +1788,14 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(6)">← Back</button>
-    <button class="btn btn-primary" onclick="switchTab(7)">Next: Next Steps →</button>
+    <button class="btn btn-secondary" onclick="navigatePrev(7)">← Back</button>
+    <button class="btn btn-primary" onclick="switchTab(8)">Next: Next Steps →</button>
   </div>
 </section>
 
 <!-- ████  TAB 8 — NEXT STEPS  ████ -->
-<section class="tab-panel" id="panel-7">
-  <div class="section-eyebrow">Step 8 of 8</div>
+<section class="tab-panel" id="panel-8">
+  <div class="section-eyebrow">Step 9 of 9</div>
   <h1 class="section-title">Next Steps</h1>
   <p class="section-subtitle">Your post-workshop action plan. Remove any items that aren't relevant to your team, then share or print this list.</p>
 
@@ -1533,7 +1814,7 @@ const CUSTOMER_CONFIG = {
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-top:8px">
-    <button class="btn btn-secondary" onclick="navigatePrev(7)">← Back</button>
+    <button class="btn btn-secondary" onclick="navigatePrev(8)">← Back</button>
   </div>
 </section>
 
@@ -1564,12 +1845,12 @@ const CUSTOMER_CONFIG = {
 // ── Tab switching ────────────────────────────────────────────
 // Step numbers mirror the nav tab numbers (1=Overview has no step, 2-7 = steps 2-7)
 // Sub-tabs within tab 4 use decimal notation: 4.1, 4.2, 4.3
-const TAB_PROGRESS = { 0: null, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8 };
-const SUB_PROGRESS = { '3-0': 4, '3-1': 4 + 1/4, '3-2': 4 + 2/4, '3-3': 4 + 3/4 };
-const TOTAL_STEPS  = 8;
+const TAB_PROGRESS = { 0: null, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9 };
+const SUB_PROGRESS = { '4-0': 5, '4-1': 5 + 1/4, '4-2': 5 + 2/4, '4-3': 5 + 3/4 };
+const TOTAL_STEPS  = 9;
 
-const SUB_TITLES   = { '3-0': 'Tracking Plan & Branches', '3-1': 'Schema Settings', '3-2': 'Virtual Data Extensions', '3-3': 'Transformations' };
-const SUB_EYEBROWS = { '3-0': 'Step 4.1 of 8', '3-1': 'Step 4.2 of 8', '3-2': 'Step 4.3 of 8', '3-3': 'Step 4.4 of 8' };
+const SUB_TITLES   = { '4-0': 'Tracking Plan & Branches', '4-1': 'Schema Settings', '4-2': 'Virtual Data Extensions', '4-3': 'Transformations' };
+const SUB_EYEBROWS = { '4-0': 'Step 5.1 of 9', '4-1': 'Step 5.2 of 9', '4-2': 'Step 5.3 of 9', '4-3': 'Step 5.4 of 9' };
 
 function updateProgressBar(step) {
   const wrap = document.getElementById('nav-progress-wrap');
@@ -1589,8 +1870,8 @@ function switchTab(idx) {
   document.querySelectorAll('.tab-btn')[idx].classList.add('active');
 
   // For tab 3, restore whichever sub-tab was last active (default 0)
-  if (idx === 3) {
-    const active = document.querySelector('#panel-3 .sub-panel.active');
+  if (idx === 4) {
+    const active = document.querySelector('#panel-4 .sub-panel.active');
     const subIdx = active ? parseInt(active.id.split('-')[2]) : 0;
     _updateSubTabProgress(3, subIdx);
   } else {
@@ -1603,9 +1884,9 @@ function switchTab(idx) {
 function _updateSubTabProgress(tabIdx, subIdx) {
   const key = tabIdx + '-' + subIdx;
   updateProgressBar(SUB_PROGRESS[key]);
-  if (tabIdx === 3) {
-    document.getElementById('panel-3-eyebrow').textContent = SUB_EYEBROWS[key];
-    document.getElementById('panel-3-title').textContent   = SUB_TITLES[key];
+  if (tabIdx === 4) {
+    document.getElementById('panel-4-eyebrow').textContent = SUB_EYEBROWS[key];
+    document.getElementById('panel-4-title').textContent   = SUB_TITLES[key];
   }
 }
 
@@ -1695,6 +1976,83 @@ function applyModel(model) {
   const cl = document.getElementById('model-checklist');
   cl.innerHTML = m.checklist.map(item => `<li onclick="toggleCheck(this)"><div class="check-box">✓</div><span>${item}</span></li>`).join('');
   document.getElementById('model-result').classList.add('show');
+}
+
+// ── Project Strategy ─────────────────────────────────────────
+const PS_OPTIONS = {
+  platform: {
+    name: 'Per Platform',
+    icon: '📱',
+    description: 'Separate Amplitude projects for each platform (iOS, Android, Web). Each platform team owns their tracking plan independently.',
+    bestFor: 'Teams with platform-specific engineering orgs and distinct user journeys per surface',
+    scope: 'Per platform — each project governed separately',
+    complexity: 'Medium — multiple tracking plans to maintain',
+    pros: ['Clean separation of concerns per platform', 'Platform teams have full autonomy', 'Easier schema management per surface', 'Platform-specific schema enforcement rules'],
+    cons: ['Cross-platform analysis requires Portfolios', 'Risk of duplicate/inconsistent event names across projects', 'Higher governance overhead — multiple tracking plans', 'User identity stitching needed for cross-surface journeys']
+  },
+  bu: {
+    name: 'Per Business Unit',
+    icon: '🏢',
+    description: 'One Amplitude project per product line or business unit. Teams within a BU share a tracking plan, but BUs operate independently.',
+    bestFor: 'Orgs with distinct product lines or brands that have separate analytics needs',
+    scope: 'Per BU — each business unit owns their governance',
+    complexity: 'Medium — BU-level governance is tractable',
+    pros: ['Aligns with org structure and team ownership', 'BU-level governance is tractable and accountable', 'Good isolation for data privacy and compliance requirements', 'Each BU can move at their own pace'],
+    cons: ['Cross-BU user journeys are fragmented', 'Company-level rollups require Portfolios', 'Harder to enforce naming standards across BUs', 'Risk of diverging conventions over time']
+  },
+  aggregate: {
+    name: 'Aggregate Project',
+    icon: '🌐',
+    description: 'A single Amplitude project that ingests events from all platforms and teams. One unified tracking plan for the entire organization.',
+    bestFor: 'Smaller orgs or teams that need a single source of truth for cross-platform analytics from day one',
+    scope: 'Organization-wide — single tracking plan governs all',
+    complexity: 'Low to start, High at scale',
+    pros: ['Full cross-platform user journey visibility out of the box', 'One tracking plan — simpler to govern initially', 'Unified metrics, chart definitions, and cohorts', 'Fastest to get started with minimal setup'],
+    cons: ['Risk of event name conflicts as teams grow', 'Requires strong central governance to scale beyond 2–3 teams', 'Schema changes affect all teams simultaneously', 'Can become unwieldy with 5+ teams instrumenting']
+  },
+  portfolio: {
+    name: 'Portfolios',
+    icon: '📊',
+    description: 'Multiple projects (per platform or BU) linked together via Amplitude Portfolios, enabling cross-project analysis without merging data streams.',
+    bestFor: 'Large orgs that need team autonomy AND cross-project visibility for company-level metrics',
+    scope: 'Hybrid — per-project governance + Portfolio-level analysis',
+    complexity: 'High — most flexible but most complex to govern',
+    pros: ['Team autonomy with cross-project analysis capabilities', 'Cross-project funnels and user identity stitching', 'Best of both worlds for large, multi-team organizations', 'Each project can have its own governance cadence'],
+    cons: ['Requires consistent event naming across all projects for cross-project analysis', 'More complex to set up and maintain', 'Portfolio access management adds operational overhead', 'Governance must coordinate across project owners']
+  }
+};
+
+let psSelected = null;
+let psViewAll = false;
+let gmViewAll = false;
+
+function selectPS(key) {
+  psSelected = key;
+  const opt = PS_OPTIONS[key];
+  // Highlight card
+  document.querySelectorAll('#ps-card-grid .gov-model-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('ps-card-' + key).classList.add('selected');
+  // Populate detail
+  document.getElementById('ps-name').textContent = opt.icon + ' ' + opt.name;
+  document.getElementById('ps-description').textContent = opt.description;
+  document.getElementById('ps-best-for').textContent = opt.bestFor;
+  document.getElementById('ps-scope').textContent = opt.scope;
+  document.getElementById('ps-complexity').textContent = opt.complexity;
+  document.getElementById('ps-pros').innerHTML = opt.pros.map(p => '• ' + p).join('<br>');
+  document.getElementById('ps-cons').innerHTML = opt.cons.map(c => '• ' + c).join('<br>');
+  document.getElementById('ps-detail').style.display = '';
+}
+
+function togglePSView() {
+  psViewAll = !psViewAll;
+  document.getElementById('ps-all-options').style.display = psViewAll ? '' : 'none';
+  document.getElementById('ps-view-toggle').textContent = psViewAll ? 'Hide Options' : 'View All Options';
+}
+
+function toggleGMView() {
+  gmViewAll = !gmViewAll;
+  document.getElementById('gm-all-options').style.display = gmViewAll ? '' : 'none';
+  document.getElementById('gm-view-toggle').textContent = gmViewAll ? 'Hide Models' : 'View All Models';
 }
 
 // ── Style guide preview ────────────────────────────────────────
@@ -1941,7 +2299,7 @@ function processLoadedNames(names, source) {
 
   // Auto-apply detected convention and switch to Taxonomy Design tab
   applyDetectedConvention();
-  switchTab(2);
+  switchTab(3);
 }
 
 // ══════════════════════════════════════════════════════════════
