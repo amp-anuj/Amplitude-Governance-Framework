@@ -2659,8 +2659,8 @@ const ABSTRACTION_META = [
     calloutIcon: '⚠️',
     calloutColor: 'var(--amp-red)',
     callout: 'Context is baked into the event name — properties stay light. But you need a unique event for every screen, section, and variant. Funnels across surfaces require listing every single event name.',
-    propNote: 'Minimal event properties — context is already encoded in the name.',
-    propBaseKeys: ['platform', 'app_version'],
+    propNote: 'Almost no event properties needed — all context is baked into the name.',
+    propBaseKeys: ['button_label'],
   },
   {
     label: '⚠️ Slightly Granular',
@@ -2670,7 +2670,7 @@ const ABSTRACTION_META = [
     calloutColor: 'var(--amp-orange)',
     callout: 'Screen is encoded in the name so you skip a page property — but now you need to enumerate every screen variant in every chart. Cross-surface analysis becomes tedious fast.',
     propNote: 'A few properties, but the screen in the name duplicates context you could put in a property.',
-    propBaseKeys: ['platform', 'app_version', 'element_id'],
+    propBaseKeys: ['button_label', 'element_id'],
   },
   {
     label: '⚖️ Just Right',
@@ -2680,7 +2680,7 @@ const ABSTRACTION_META = [
     calloutColor: 'var(--amp-green)',
     callout: 'One event name covers every surface. Properties do the heavy lifting — filter by page, section, or element_type to answer any question without touching the taxonomy.',
     propNote: 'Properties carry all the context you need for segmentation and filtering.',
-    propBaseKeys: ['platform', 'page', 'section', 'element_type', 'button_label', 'plan_type'],
+    propBaseKeys: ['page', 'section', 'element_type', 'button_label', 'plan_type'],
   },
   {
     label: '📦 Slightly Consolidated',
@@ -2690,7 +2690,7 @@ const ABSTRACTION_META = [
     calloutColor: 'var(--amp-orange)',
     callout: 'More generic names mean properties must distinguish what actually happened. Analysis requires stacking multiple filters — charts get fragile when a property is missing or inconsistent.',
     propNote: 'More properties required to separate what happened from where and how it happened.',
-    propBaseKeys: ['platform', 'page', 'section', 'element_type', 'action_type', 'target_text', 'component_id', 'plan_type'],
+    propBaseKeys: ['page', 'section', 'element_type', 'action_type', 'target_text', 'component_id', 'plan_type'],
   },
   {
     label: '📦 Too Consolidated',
@@ -2700,7 +2700,7 @@ const ABSTRACTION_META = [
     calloutColor: 'var(--amp-red)',
     callout: 'Properties become your entire data model. Every chart needs 5–8 filters just to isolate a single action. Any missing or inconsistent property value breaks analysis — and trust in the data.',
     propNote: 'Properties are critical load-bearing infrastructure. Miss one and your analysis falls apart.',
-    propBaseKeys: ['platform', 'page', 'section', 'element_type', 'action_type', 'target_text', 'component_id', 'interaction_subtype', 'context_key', 'context_value', 'source_surface', 'plan_type'],
+    propBaseKeys: ['page', 'section', 'element_type', 'action_type', 'target_text', 'component_id', 'interaction_subtype', 'context_key', 'context_value', 'source_surface', 'plan_type'],
   },
 ];
 
