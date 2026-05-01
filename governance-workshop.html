@@ -106,7 +106,7 @@
   .tab-btn.hidden-tab { display: none; }
 
   /* ── Content ──────────────────────────────────── */
-  .content { max-width: 960px; margin: 0 auto; padding: 32px 24px 80px; }
+  .content { max-width: 1280px; margin: 0 auto; padding: 32px 48px 80px; }
   .tab-panel { display: none; animation: fadeIn .2s ease; }
   .tab-panel.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
@@ -486,6 +486,52 @@
     .tab-panel { display: block !important; page-break-after: always; }
     .activity-input { border: 1px solid #ccc; }
   }
+
+  /* ── Presenter Mode ───────────────────────────── */
+  .present-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px;
+    background: var(--amp-blue); color: #fff;
+    border: none; font-size: 12px; font-weight: 600;
+    cursor: pointer; letter-spacing: .02em; transition: opacity .15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .present-btn:hover { opacity: .85; }
+  .present-btn svg { flex-shrink: 0; }
+
+  .p-nav-btn {
+    display: none;
+    position: fixed; top: 50%; transform: translateY(-50%);
+    z-index: 200; background: rgba(0,0,0,.55);
+    color: #fff; border: none; border-radius: 50%;
+    width: 52px; height: 52px; font-size: 22px;
+    cursor: pointer; align-items: center; justify-content: center;
+    transition: background .15s; backdrop-filter: blur(4px);
+  }
+  .p-nav-btn:hover { background: rgba(0,0,0,.78); }
+  #p-prev { left: 14px; }
+  #p-next { right: 14px; }
+
+  #p-progress {
+    display: none;
+    position: fixed; top: 14px; right: 14px; z-index: 201;
+    background: rgba(0,0,0,.65); color: #fff;
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; letter-spacing: .04em;
+    backdrop-filter: blur(4px);
+  }
+
+  body.presenter-mode .header { display: none !important; }
+  body.presenter-mode .tabs-bar { display: none !important; }
+  body.presenter-mode .nav-progress-wrap { display: none !important; }
+  body.presenter-mode .p-nav-btn { display: flex; }
+  body.presenter-mode #p-progress { display: block; }
+  body.presenter-mode .content {
+    max-width: 1400px;
+    padding: 56px 96px 80px;
+    margin: 0 auto;
+  }
+  body.presenter-mode .tab-panel.active { min-height: 100vh; }
 </style>
 </head>
 <body>
@@ -511,8 +557,19 @@ const CUSTOMER_CONFIG = {
     <div class="header-divider"></div>
     <span class="header-title">Data Governance Workshop</span>
   </div>
-  <div id="header-customer" class="header-customer" style="display:none"></div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <div id="header-customer" class="header-customer" style="display:none"></div>
+    <button class="present-btn" onclick="togglePresenterMode()" id="present-toggle-btn">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><polygon points="4,2 14,8 4,14" fill="white"/></svg>
+      Present
+    </button>
+  </div>
 </header>
+
+<!-- ──────────────────────────────────────────────────────────── PRESENTER CHROME -->
+<button class="p-nav-btn" id="p-prev" onclick="presenterNav(-1)" title="Previous (←)">&#8592;</button>
+<button class="p-nav-btn" id="p-next" onclick="presenterNav(1)" title="Next (→)">&#8594;</button>
+<div id="p-progress">Overview · 1 of 12</div>
 
 <!-- ──────────────────────────────────────────────────────────── TABS -->
 <nav class="tabs-bar" id="tabs-bar">
@@ -2716,6 +2773,85 @@ window.addEventListener('message', (e) => {
   if (!e.data || e.data.type !== 'amp_gov_events') return;
   const names = e.data.names;
   if (Array.isArray(names) && names.length > 0) processLoadedNames(names, 'bookmarklet');
+});
+
+// ══ PRESENTER MODE ════════════════════════════════════════════
+// Flat ordered list of all steps for keyboard navigation.
+// Each tab maps to one or more steps; the Tracking Plan tab (idx 4)
+// has 4 sub-steps (one per sub-tab).
+const PRESENTER_STEPS = [
+  { tab: 0, label: 'Overview',             sub: null },
+  { tab: 1, label: 'Project Strategy',     sub: null },
+  { tab: 2, label: 'Governance Model',     sub: null },
+  { tab: 3, label: 'Taxonomy Design',      sub: null },
+  { tab: 4, label: 'Tracking Plan 5.1',    sub: 0    },
+  { tab: 4, label: 'Tracking Plan 5.2',    sub: 1    },
+  { tab: 4, label: 'Tracking Plan 5.3',    sub: 2    },
+  { tab: 4, label: 'Tracking Plan 5.4',    sub: 3    },
+  { tab: 5, label: 'Governance Controls',  sub: null },
+  { tab: 6, label: 'Data Assistant Agent', sub: null },
+  { tab: 7, label: 'Workshop Activity',    sub: null },
+  { tab: 8, label: 'Next Steps',           sub: null },
+];
+
+let presenterActive = false;
+
+function getCurrentPresenterIdx() {
+  const activeBtn = document.querySelector('.tab-btn.active');
+  const tabIdx = activeBtn ? parseInt(activeBtn.dataset.index) : 0;
+  if (tabIdx === 4) {
+    // Find which sub-tab is active by its ID (stab-4-0, stab-4-1, ...)
+    const activeSubBtn = document.querySelector('.sub-tab-btn.active');
+    const subIdx = activeSubBtn ? parseInt(activeSubBtn.id.split('-').pop()) : 0;
+    return PRESENTER_STEPS.findIndex(s => s.tab === 4 && s.sub === subIdx);
+  }
+  return PRESENTER_STEPS.findIndex(s => s.tab === tabIdx && s.sub === null);
+}
+
+function updatePresenterProgress() {
+  const idx = getCurrentPresenterIdx();
+  const step = PRESENTER_STEPS[idx] || PRESENTER_STEPS[0];
+  document.getElementById('p-progress').textContent =
+    step.label + ' · ' + (idx + 1) + ' of ' + PRESENTER_STEPS.length;
+}
+
+function presenterNav(dir) {
+  const idx = getCurrentPresenterIdx();
+  const next = idx + dir;
+  if (next < 0 || next >= PRESENTER_STEPS.length) return;
+  const target = PRESENTER_STEPS[next];
+  if (target.sub !== null) {
+    // Navigate to tracking plan tab then switch sub-tab
+    switchTab(target.tab);
+    setTimeout(() => { switchSubTab(target.tab, target.sub); updatePresenterProgress(); }, 40);
+  } else {
+    switchTab(target.tab);
+    updatePresenterProgress();
+  }
+}
+
+function togglePresenterMode() {
+  presenterActive = !presenterActive;
+  document.body.classList.toggle('presenter-mode', presenterActive);
+  const btn = document.getElementById('present-toggle-btn');
+  if (presenterActive) {
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="12" rx="1" fill="white"/><rect x="9" y="2" width="5" height="12" rx="1" fill="white"/></svg> Exit';
+    btn.style.background = '#3D4045';
+    updatePresenterProgress();
+    window.scrollTo(0, 0);
+  } else {
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><polygon points="4,2 14,8 4,14" fill="white"/></svg> Present';
+    btn.style.background = 'var(--amp-blue)';
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  if (!presenterActive) return;
+  // Don't hijack keys when user is typing in an input/textarea
+  if (['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); presenterNav(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); presenterNav(-1); }
+  if (e.key === 'Escape') { if (presenterActive) togglePresenterMode(); }
 });
 </script>
 </body>
