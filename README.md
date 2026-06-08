@@ -4,7 +4,7 @@ An interactive, single-file HTML workshop for Amplitude CSAs to run live data go
 
 ## Overview
 
-The workshop guides teams through the key pillars of Amplitude data governance in a structured, 7-step flow. Everything runs in the browser — no server, no dependencies, no install.
+The workshop guides teams through the key pillars of Amplitude data governance in a structured, 10-step flow. Everything runs in the browser — no server, no dependencies, no install.
 
 ## How to Use
 
@@ -21,12 +21,15 @@ Or open `governance-workshop.html` directly in any modern browser.
 | # | Tab | What it covers |
 |---|-----|---------------|
 | 1 | Overview | Workshop goals, governance pillars, and what good governance looks like |
-| 2 | Governance Model | Centralized vs. federated vs. hybrid — pick the right model and generate a checklist |
-| 3 | Taxonomy Design | Style guide builder — naming conventions, object-action pattern, property standards |
-| 4 | Tracking Plan | Four sub-tabs: Branches (4.1), Schema Settings + Observe (4.2), Virtual Data Extensions (4.3), Transformations (4.4) |
-| 5 | Governance Controls | Data Access Controls — blocking, dropping, PII tagging, event lifecycle |
-| 6 | Data Assistant Agent | Today's Data Assistant capabilities + link to launch the Data Assistant Agent in the customer's project |
-| 7 | Workshop Activity | Live-fill governance process table, review cadence, and post-workshop checklist |
+| 2 | Project Strategy | Per Platform / Per BU / Aggregate / Portfolios — choosing the right project structure |
+| 3 | What is Data Governance? | Three pillars of governance and the Quality Flywheel |
+| 4 | Governance Model | Centralized vs. Federated vs. Council vs. Hybrid — pick the right model and generate a checklist |
+| 5 | Taxonomy Design | Style guide builder — naming conventions, object-action pattern, property standards, abstraction spectrum |
+| 6 | Tracking Plan | Four sub-tabs: Branches (6.1), Schema Settings + Observe (6.2), Virtual Data Extensions (6.3), Transformations (6.4) |
+| 7 | Governance Controls | Data Access Controls — blocking, dropping, PII tagging, event lifecycle and deprecation |
+| 8 | AI-Powered Governance | Today's Data Assistant capabilities + upcoming AI Governance Agents |
+| 9 | Workshop Activity | Live-fill governance process table and review cadence |
+| 10 | Next Steps | Post-workshop checklist and follow-up actions |
 
 ## Loading Customer Events (Bookmarklet)
 

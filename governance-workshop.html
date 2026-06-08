@@ -1336,7 +1336,7 @@ const CUSTOMER_CONFIG = {
             <div class="branch-step-dot">3</div>
             <div class="branch-step-content">
               <h4>Submit merge request</h4>
-              <p>Auto-notifies reviewers in Slack — shows diff of what changed</p>
+              <p>Notifies reviewers via email (or Slack with integration) — shows diff of what changed</p>
             </div>
           </div>
           <div class="branch-step">
@@ -1388,10 +1388,10 @@ const CUSTOMER_CONFIG = {
     <p style="font-size:12px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px">Unexpected Properties</p>
     <div class="schema-decision" style="grid-template-columns:1fr 1fr 1fr">
       <div class="schema-option" onclick="selectPropSchema('allow')">
-        <h4>Allow</h4>
-        <p style="font-size:12px;color:var(--amp-gray-500)">Unexpected properties are ingested and visible</p>
+        <h4>Default (No Enforcement)</h4>
+        <p style="font-size:12px;color:var(--amp-gray-500)">Unexpected properties ingested and visible — no schema rules configured</p>
         <div class="schema-consequence show" id="con-prop-allow">
-          Best for discovery phases. New properties sent from the SDK appear in Amplitude and can be retroactively added to the tracking plan. Observe will show them as part of the event stream.
+          This is the behavior before any schema settings are applied. New properties sent from the SDK appear in Amplitude and can be retroactively added to the tracking plan. Best for early discovery phases — move to "Mark as Unexpected" once you have a stable schema.
         </div>
       </div>
       <div class="schema-option" onclick="selectPropSchema('mark')">
@@ -1429,7 +1429,7 @@ const CUSTOMER_CONFIG = {
       <div class="card-title" style="margin-bottom:12px">👁️ What Observe Surfaces (Data → Events)</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div style="font-size:12px;padding:8px 10px;background:var(--amp-gray-50);border-radius:6px;border-left:3px solid #22c55e">
-          <strong>Valid</strong><br><span style="color:var(--amp-gray-500)">Event matches your current schema exactly</span>
+          <strong>Live</strong><br><span style="color:var(--amp-gray-500)">Event matches your current schema exactly</span>
         </div>
         <div style="font-size:12px;padding:8px 10px;background:var(--amp-gray-50);border-radius:6px;border-left:3px solid #f59e0b">
           <strong>Unexpected</strong><br><span style="color:var(--amp-gray-500)">Event not yet in the tracking plan — review and add, or reject</span>
@@ -1544,7 +1544,7 @@ const CUSTOMER_CONFIG = {
       </div>
 
       <div class="card">
-        <div class="card-title" style="border-top:3px solid #f59e0b;padding-top:12px">✏️ Rename Property Values</div>
+        <div class="card-title" style="border-top:3px solid #f59e0b;padding-top:12px">✏️ Rename Value</div>
         <p style="font-size:13px;color:var(--amp-gray-500);margin:8px 0 10px">Correct misspellings or standardize inconsistent casing in property values.</p>
         <div style="font-size:12px;background:var(--amp-gray-50);border-radius:6px;padding:10px;font-family:monospace;color:var(--amp-gray-700)">
           <div style="color:var(--amp-gray-400);margin-bottom:4px">// Before</div>
@@ -1707,29 +1707,35 @@ const CUSTOMER_CONFIG = {
     <div><strong>Recovery:</strong> Deleted events are restorable anytime via <em>Data → Events → Deleted Events → Restore</em> — this does not recover the data sent to Amplitude while the event was deleted.</div>
   </div>
 
-  <h3 style="font-size:15px;font-weight:600;margin-bottom:12px">4-Step Deprecation Workflow</h3>
+  <h3 style="font-size:15px;font-weight:600;margin-bottom:12px">5-Step Deprecation Workflow</h3>
   <div class="card">
     <div style="display:flex;gap:0;align-items:flex-start;overflow-x:auto">
-      <div style="flex:1;text-align:center;padding:12px;min-width:120px">
+      <div style="flex:1;text-align:center;padding:12px;min-width:110px">
         <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">1</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px">Identify</div>
         <div style="font-size:11px;color:var(--amp-gray-500)">Data Assistant surfaces events unused for 90+ days or fired on a single day</div>
       </div>
       <div style="color:var(--amp-gray-300);font-size:20px;padding-top:20px">→</div>
-      <div style="flex:1;text-align:center;padding:12px;min-width:120px">
+      <div style="flex:1;text-align:center;padding:12px;min-width:110px">
         <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">2</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px">Notify</div>
         <div style="font-size:11px;color:var(--amp-gray-500)">Owners notified via email + Slack 30 days before deletion — they can save the event</div>
       </div>
       <div style="color:var(--amp-gray-300);font-size:20px;padding-top:20px">→</div>
-      <div style="flex:1;text-align:center;padding:12px;min-width:120px">
+      <div style="flex:1;text-align:center;padding:12px;min-width:110px">
         <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">3</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px">Hide</div>
         <div style="font-size:11px;color:var(--amp-gray-500)">Remove from picker, confirm no active charts depend on the event</div>
       </div>
       <div style="color:var(--amp-gray-300);font-size:20px;padding-top:20px">→</div>
-      <div style="flex:1;text-align:center;padding:12px;min-width:120px">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-red);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">4</div>
+      <div style="flex:1;text-align:center;padding:12px;min-width:110px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-orange);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">4</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Block</div>
+        <div style="font-size:11px;color:var(--amp-gray-500)">Stop new data ingestion — historical data preserved, old charts still render</div>
+      </div>
+      <div style="color:var(--amp-gray-300);font-size:20px;padding-top:20px">→</div>
+      <div style="flex:1;text-align:center;padding:12px;min-width:110px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--amp-red);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 8px;font-size:13px">5</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:4px">Delete</div>
         <div style="font-size:11px;color:var(--amp-gray-500)">Permanent removal — only for compliance or data minimization requirements</div>
       </div>
@@ -1814,7 +1820,7 @@ const CUSTOMER_CONFIG = {
     </div>
     <div class="pillar-card" style="border-top:3px solid var(--amp-green)">
       <div class="pillar-icon" style="background:var(--amp-green-light)">🤖</div>
-      <h3>Data Assistant Agent</h3>
+      <h3>Enhanced Data Assistant Agent</h3>
       <p>Surfaces the top recommended actions to improve data quality on an ongoing basis. Goes beyond today's Data Assistant with richer AI-driven prioritization across four areas:</p>
       <ul style="font-size:12px;color:var(--amp-gray-500);padding-left:16px;margin-top:8px;line-height:1.8">
         <li>Updating descriptions and other missing metadata</li>
@@ -1879,7 +1885,7 @@ const CUSTOMER_CONFIG = {
         <tr>
           <td class="activity-row-label">🗑️ Event Removal</td>
           <td><textarea class="activity-input" placeholder="e.g. Governance owner makes final call on deletions"></textarea></td>
-          <td><textarea class="activity-input" placeholder="e.g. Deprecation workflow: identify → notify → hide → delete"></textarea></td>
+          <td><textarea class="activity-input" placeholder="e.g. Deprecation workflow: identify → notify → hide → block → delete"></textarea></td>
           <td><textarea class="activity-input" placeholder="e.g. Quarterly cleanup cycle, 30-day notice required"></textarea></td>
         </tr>
         <tr>
