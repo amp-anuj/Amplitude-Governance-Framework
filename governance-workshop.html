@@ -1147,7 +1147,6 @@ const CUSTOMER_CONFIG = {
         <div class="bm-step-num">1</div>
         <div>Drag this to your bookmarks bar <span style="color:var(--amp-gray-400)">(one-time setup)</span>:</div>
         <a id="bookmarklet-link" class="bm-drag-link" title="Drag me to your bookmarks bar">📊 Get Events &amp; Properties</a>
-        <a id="bookmarklet-debug-link" class="bm-drag-link" style="background:#6B21A8;font-size:11px;padding:7px 13px;margin-left:6px" title="Debug: monitors all GraphQL queries on the properties pages">🔍 Debug Props</a>
       </div>
       <div class="bm-step">
         <div class="bm-step-num">2</div>
@@ -1732,20 +1731,23 @@ const CUSTOMER_CONFIG = {
   <h3 style="font-size:16px;font-weight:600;margin-bottom:4px">Automated Cleanup with Data Assistant</h3>
   <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:12px">Automated tasks run daily across your workspace — surfacing stale events so data governors can act without manual audits. Requires Admin/Manager permissions and must be enabled by Amplitude Support.</p>
 
-  <div class="card-grid-2" style="margin-bottom:16px">
-    <div class="card" style="margin-bottom:0">
-      <div class="card-title">🕐 Stale Events (90-day default)</div>
-      <p style="font-size:12px;color:var(--amp-gray-500);margin-top:6px">Events not queried in any chart for 90+ days are flagged as candidates. The threshold is configurable. Includes a mandatory <strong>30-day notification window</strong> before deletion — event owners are notified via email and Slack so they can save events they still need.</p>
+  <div class="card-grid" style="margin-bottom:12px">
+    <div class="card" style="margin-bottom:0;border-left:3px solid var(--amp-blue)">
+      <div class="card-title">🕐 Stale Events</div>
+      <p style="font-size:12px;color:var(--amp-gray-500);margin-top:6px;margin-bottom:8px">Events with no recent data ingestion — last seen date is beyond a configurable threshold (default 90 days). Triggers a <strong>30-day notification window</strong> before deletion so owners can preserve events they still need via email or in-app banner.</p>
     </div>
-    <div class="card" style="margin-bottom:0">
-      <div class="card-title">📅 Single-Day Events (test data)</div>
-      <p style="font-size:12px;color:var(--amp-gray-500);margin-top:6px">Events that fired only on a single calendar day (typically test instrumentation) are automatically identified and scheduled for deletion after the 30-day window. Threshold is configurable.</p>
+    <div class="card" style="margin-bottom:0;border-left:3px solid var(--amp-orange)">
+      <div class="card-title">📅 Single-Day Events</div>
+      <p style="font-size:12px;color:var(--amp-gray-500);margin-top:6px;margin-bottom:8px">Events where the first and last seen dates are identical — typically test or accidental instrumentation. Configurable days-ago threshold (default 90 days). Same 30-day preservation window before removal.</p>
+    </div>
+    <div class="card" style="margin-bottom:0;border-left:3px solid var(--amp-green)">
+      <div class="card-title">📉 Unused Events</div>
+      <p style="font-size:12px;color:var(--amp-gray-500);margin-top:6px;margin-bottom:8px">Events ingested but never queried in any chart for 90+ days — data is arriving but nobody is using it. Optimises event volume so your plan only contains events analysts actively rely on. Requires enablement by Amplitude Support.</p>
     </div>
   </div>
 
-  <div class="callout callout-blue" style="margin-bottom:16px">
-    <span class="callout-icon">⚠️</span>
-    <div><strong>Recovery:</strong> Deleted events are restorable anytime via <em>Data → Events → Deleted Events → Restore</em> — this does not recover the data sent to Amplitude while the event was deleted.</div>
+  <div style="background:var(--amp-gray-50);border-radius:8px;padding:11px 14px;font-size:12px;color:var(--amp-gray-600);line-height:1.7;margin-bottom:16px">
+    <strong>Setup:</strong> Configure thresholds and tag any events to exclude. Tasks run workspace-wide by default but can target a single project. Tasks can be removed at any time — choose whether to affect pending or future changes only. &nbsp;·&nbsp; <strong>Recovery:</strong> Deleted events are always restorable via <em>Data → Events → Deleted Events → Restore</em> (historical data is preserved).
   </div>
 
   <h3 style="font-size:15px;font-weight:600;margin-bottom:12px">5-Step Deprecation Workflow</h3>
@@ -2909,346 +2911,6 @@ if(D){
   const link = document.getElementById('bookmarklet-link');
   if (link) link.href = 'javascript:' + encodeURIComponent(code);
 
-  buildPropsDebugBookmarklet(dataTabUrl);
-}
-
-// Debug-only bookmarklet: monitors ALL /graphql queries while navigating the properties pages
-// so we can see exact query names and response shapes without the full production flow.
-function buildPropsDebugBookmarklet(dataTabUrl) {
-  const dataTabUrlStr = dataTabUrl || '';
-  const debugCode = `(function(){
-var D=${JSON.stringify(dataTabUrlStr)};
-
-// ── Log overlay ──────────────────────────────────────────────────
-var LOG=document.createElement('pre');
-LOG.setAttribute('style','position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#0d1117;color:#7fff7f;padding:12px 110px 12px 16px;font:11px/1.7 monospace;max-height:55vh;overflow:auto;border-bottom:2px solid #238636;user-select:text;cursor:text;');
-document.body.appendChild(LOG);
-var origFetch=window.fetch;
-function log(msg){LOG.textContent+=(new Date()).toLocaleTimeString()+' '+msg+'\\n';LOG.scrollTop=9999;}
-var copyBtn=document.createElement('button');
-copyBtn.textContent='Copy log';
-copyBtn.setAttribute('style','position:fixed;top:6px;right:70px;z-index:2147483648;background:#1f6feb;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font:bold 11px sans-serif');
-copyBtn.onclick=function(){try{navigator.clipboard.writeText(LOG.textContent);}catch(e){var ta=document.createElement('textarea');ta.value=LOG.textContent;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}copyBtn.textContent='Copied!';setTimeout(function(){copyBtn.textContent='Copy log';},1500);};
-document.body.appendChild(copyBtn);
-var closeBtn=document.createElement('button');
-closeBtn.textContent='Close';
-closeBtn.setAttribute('style','position:fixed;top:6px;right:8px;z-index:2147483648;background:#6e7681;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font:bold 11px sans-serif');
-closeBtn.onclick=function(){window.fetch=origFetch;if(LOG.parentNode)LOG.parentNode.removeChild(LOG);copyBtn.remove();closeBtn.remove();};
-document.body.appendChild(closeBtn);
-
-log('=== DEBUG BOOKMARKLET v2 ===');
-log('D='+D.slice(0,100));
-
-// ── Query constants ──────────────────────────────────────────────
-var _PROP_FRAG='fragment SharedObservablePropertyWithObserveData on ObservableProperty{id versionId kind name dateCreated displayName description category required type schema example isHidden isOfficial origin isShared overridePropertyRevisionId isBlocked isPlanned isQueryable classifications cartPropertyConfig{parentProperties childProperties isSplit __typename} seenStats{firstSeen lastSeen __typename} __typename}';
-var _PROP_Q='query __OP__($orgId:ID!,$workspaceId:ID!,$branchId:ID!,$versionId:ID!,$environmentId:ID,$branchName:String!){orgs(id:$orgId){id workspaces(id:$workspaceId){id branches(id:$branchId){id versions(id:$versionId,environmentId:$environmentId,branchName:$branchName){id properties(kinds:[__KINDS__],statuses:[live,planned,blocked,unexpected]){...SharedObservablePropertyWithObserveData __typename} __typename} __typename} __typename} __typename}} '+_PROP_FRAG;
-var _EP_Q=_PROP_Q.replace('__OP__','EventProperties').replace('__KINDS__','event');
-var _UP_Q=_PROP_Q.replace('__OP__','UserProperties').replace('__KINDS__','user');
-var apiIds=null;
-
-// ── extractInto ──────────────────────────────────────────────────
-var BLOCKLIST=['apiKey','timeZoneId','secretKey','instrumentationCounts','dynamicScriptKey','retailCalendar','score'];
-function extractInto(dest,seenMap,data){
-  if(!data||typeof data!=='object')return;
-  (function scan(v,depth){
-    if(!v||typeof v!=='object'||depth>12)return;
-    if(Array.isArray(v)){
-      if(v.length>2&&v[0]&&typeof v[0]==='object'){
-        var sk=Object.keys(v[0]);
-        if(sk.indexOf('node')!==-1&&v[0].node&&typeof v[0].node==='object'){
-          scan(v.map(function(i){return i.node;}).filter(Boolean),depth+1);return;
-        }
-        if(BLOCKLIST.some(function(k){return sk.indexOf(k)!==-1;}))return;
-        var n0=v[0].name||v[0].event_type||v[0].eventType||v[0].outputEventName||v[0].displayName||v[0].display;
-        if(n0&&typeof n0==='string'&&n0.length>0&&n0.length<200){
-          v.forEach(function(item){
-            var n=item&&(item.name||item.event_type||item.eventType||item.outputEventName||item.displayName||item.display);
-            if(n&&typeof n==='string'&&!seenMap[n]){seenMap[n]=true;dest.push(n);}
-          });return;
-        }
-      }
-      v.forEach(function(i){scan(i,depth+1);});
-    }else{Object.values(v).forEach(function(i){scan(i,depth+1);});}
-  })(data,0);
-}
-
-// ── Capture buckets ──────────────────────────────────────────────
-var evC=[],epC=[],upC=[],seenEv={},seenEp={},seenUp={};
-var getEventsDone=false,propsDone=false,propsPhase=0;
-var savedGqlMeta=null; // {url, headers} from first intercepted graphql request
-
-// ── Parse base path from URL ─────────────────────────────────────
-var dp=D.replace('https://app.amplitude.com','').split('?')[0];
-var pathParts=dp.split('/');
-// /data/{orgSlug}/{wsSlug}/events/... → base = /data/{orgSlug}/{wsSlug}
-var evIdx=pathParts.indexOf('events');
-var prIdx=pathParts.indexOf('properties');
-var cutIdx=evIdx>=0?evIdx:(prIdx>=0?prIdx:pathParts.length);
-var base=pathParts.slice(0,cutIdx).join('/');
-log('base='+base+' dp='+dp);
-
-// ── PHASE 1: intercept ALL graphql requests ──────────────────────
-// We watch every query to find which ones carry orgId/workspaceId/branchId.
-// These are the variables needed to fire EP+UP directly.
-window.fetch=function(url,opts){
-  var urlStr=typeof url==='string'?url:(url&&url.url)||'';
-  var isGQL=urlStr.indexOf('/graphql')!==-1;
-  var opName='';
-  if(isGQL){
-    var qm=urlStr.match(/[?&]q=([^&]+)/);
-    opName=qm?decodeURIComponent(qm[1]):'(no-q)';
-    var vars={};
-    var _parsedBody={};
-    if(opts&&opts.body&&typeof opts.body==='string'){
-      try{_parsedBody=JSON.parse(opts.body);vars=_parsedBody.variables||{};}catch(e){}
-    }
-    // Log body structure (shows if Amplitude uses persisted queries or full query strings)
-    var _bodyKeys=Object.keys(_parsedBody).join(',');
-    var _hasQuery=!!_parsedBody.query;
-    var _hasExt=!!(_parsedBody.extensions&&_parsedBody.extensions.persistedQuery);
-    var isGE=/^(Get|get)Events$/.test(opName);
-    var isEP=opName==='EventProperties';
-    var isUP=opName==='UserProperties';
-    // Log every unique op (suppress repeated GetEvents noise after first two)
-    if(isEP||isUP){
-      log('>>> NETWORK: '+opName+' bodyKeys='+_bodyKeys+' hasQuery='+_hasQuery+' hasAPQ='+_hasExt+' vars='+JSON.stringify(vars).slice(0,200));
-    }else if(isGE){
-      log('>>> GetEvents bodyKeys='+_bodyKeys+' hasQuery='+_hasQuery+' hasAPQ='+_hasExt+' vars='+JSON.stringify(vars));
-    }else if(opName==='DeletedEventPropertyNames'||opName==='SimpleObservedEvents'){
-      log('>>> '+opName+' bodyKeys='+_bodyKeys+' hasQuery='+_hasQuery+' vars='+JSON.stringify(vars).slice(0,300));
-    }else{
-      log('    op='+opName+' bodyKeys='+_bodyKeys+' hasQuery='+_hasQuery);
-    }
-    // Grab apiIds from ANY query that carries orgId
-    if(vars.orgId){
-      if(!apiIds){
-        apiIds={orgId:String(vars.orgId),workspaceId:String(vars.workspaceId||''),
-                branchId:String(vars.branchId||''),versionId:String(vars.versionId||''),
-                branchName:String(vars.branchName||'main'),environmentId:vars.environmentId||null};
-        log('*** apiIds from '+opName+': '+JSON.stringify(apiIds));
-      }else if(!apiIds.workspaceId||!apiIds.branchId||!apiIds.versionId){
-        // Update missing UUIDs - DeletedEventPropertyNames/SimpleObservedEvents fire with full UUIDs
-        if(vars.workspaceId)apiIds.workspaceId=String(vars.workspaceId);
-        if(vars.branchId)apiIds.branchId=String(vars.branchId);
-        if(vars.versionId)apiIds.versionId=String(vars.versionId);
-        if(vars.branchName)apiIds.branchName=String(vars.branchName);
-        if(vars.environmentId!=null)apiIds.environmentId=vars.environmentId;
-        log('*** apiIds updated from '+opName+': ws='+apiIds.workspaceId+' br='+apiIds.branchId+' ver='+apiIds.versionId);
-      }
-    }
-    // Capture graphql URL base + headers from first request (for auth header mirroring)
-    if(!savedGqlMeta){
-      try{
-        var _sh={};var _hh=opts&&opts.headers;
-        if(_hh){if(typeof _hh.forEach==='function'){_hh.forEach(function(v,k){_sh[k]=v;});}else{Object.assign(_sh,_hh);}}
-        savedGqlMeta={url:urlStr.split('?')[0],headers:_sh};
-        // Extract orgId from URL path (e.g. /t/graphql/org/110391) - avoids regex with backslash-slash in template literal
-        var _orgPart=(urlStr.split('/org/')[1]||'').split('/')[0].split('?')[0];
-        if(_orgPart&&!isNaN(Number(_orgPart))&&!apiIds){
-          apiIds={orgId:_orgPart,workspaceId:'',branchId:'',versionId:'',branchName:'main',environmentId:null};
-          log('orgId from URL: '+apiIds.orgId+' (still need workspaceId/branchId/versionId)');
-        }
-        log('gql meta: url='+savedGqlMeta.url+' headerKeys='+Object.keys(_sh).join(','));
-      }catch(e){}
-    }
-    // Strip AbortSignal from EP/UP - prevents navigation away from aborting their response
-    if((isEP||isUP)&&opts&&opts.signal){
-      opts=Object.assign({},opts);delete opts.signal;
-      log('    signal stripped from '+opName);
-    }
-  }
-  var result=origFetch.call(this,url,opts);
-  if(isGQL){
-    var isGE2=/^(Get|get)Events$/.test(opName);
-    var isEP2=opName==='EventProperties';
-    var isUP2=opName==='UserProperties';
-    result.then(function(resp){
-      resp.clone().json().then(function(body){
-        if(isGE2){
-          extractInto(evC,seenEv,body.data||body);
-          // Try to extract IDs from GE response structure
-          try{
-            var _gd=body.data;
-            if(_gd&&_gd.orgs&&_gd.orgs[0]){
-              var _go=_gd.orgs[0];var _gws=_go.workspaces&&_go.workspaces[0];
-              var _gbr=_gws&&_gws.branches&&_gws.branches[0];var _gvr=_gbr&&_gbr.versions&&_gbr.versions[0];
-              if(_gbr&&_gvr){
-                if(!apiIds)apiIds={orgId:'',workspaceId:'',branchId:'',versionId:'',branchName:'main',environmentId:null};
-                if(!apiIds.orgId)apiIds.orgId=String(_go.id||'');
-                if(!apiIds.workspaceId)apiIds.workspaceId=String(_gws.id||'');
-                if(!apiIds.branchId)apiIds.branchId=String(_gbr.id||'');
-                if(!apiIds.versionId)apiIds.versionId=String(_gvr.id||'');
-                log('apiIds from GE resp: '+JSON.stringify(apiIds));
-              }
-            }
-          }catch(e){}
-          log('GetEvents done: evC='+evC.length+' apiIds='+!!apiIds);
-          getEventsDone=true;
-        }else if(isEP2){
-          log('EventProperties NETWORK resp ('+resp.status+'): '+JSON.stringify(body).slice(0,300));
-          extractInto(epC,seenEp,body.data||body);
-          log('EP extracted: '+epC.length+' names'+(epC.length>0?' sample: '+epC.slice(0,3).join(', '):''));
-        }else if(isUP2){
-          log('UserProperties NETWORK resp ('+resp.status+'): '+JSON.stringify(body).slice(0,300));
-          extractInto(upC,seenUp,body.data||body);
-          log('UP extracted: '+upC.length+' names'+(upC.length>0?' sample: '+upC.slice(0,3).join(', '):''));
-        }else{
-          // Log ALL other query responses so we can find where workspaceId/branchId come from
-          var rStr=JSON.stringify(body).slice(0,400);
-          log('    RESP '+opName+': '+rStr);
-        }
-      }).catch(function(){});
-    }).catch(function(){});
-  }
-  return result;
-};
-
-// ── PHASE 2: navigate to events, then properties ─────────────────
-// Step 1: bounce to events page (triggers GetEvents)
-log('--- nav to events page ---');
-history.pushState(null,'','/');window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
-setTimeout(function(){
-  history.pushState(null,'',dp);window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
-},80);
-
-// Step 2: after events load, navigate to properties page
-// EP/UP will fire over network if not cached; if cached, we'll try direct API
-setTimeout(function(){
-  log('--- nav to properties page (testing EP/UP network fire) ---');
-  var propsPath=base+'/properties/main/latest/event';
-  log('propsPath='+propsPath);
-  history.pushState(null,'',propsPath);window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
-},3000);
-
-// Step 3: after properties page, try direct API if we have apiIds but no EP/UP
-setTimeout(function(){
-  log('--- 8s checkpoint ---');
-  log('evC='+evC.length+' epC='+epC.length+' upC='+upC.length+' apiIds='+JSON.stringify(apiIds));
-  if(epC.length>0||upC.length>0){log('=== SUCCESS via navigation ===');return;}
-  if(!apiIds||!apiIds.orgId){
-    log('ERROR: no apiIds - no query with orgId fired. Cannot bootstrap.');
-    log('Check the op list above - none of the queries had orgId in variables.');
-    return;
-  }
-  if(propsPhase>0)return;propsPhase=1;
-
-  var pending=2;
-  function onDone(){
-    if(--pending===0){
-      log('=== COMPLETE: ep='+epC.length+' up='+upC.length+' ===');
-      if(epC.length>0)log('EP sample: '+epC.slice(0,5).join(', '));
-      if(upC.length>0)log('UP sample: '+upC.slice(0,5).join(', '));
-      if(epC.length===0&&upC.length===0)log('>>> ZERO PROPS - see GQL errors above <<<');
-    }
-  }
-  function fireEPUP(){
-    var vars={orgId:apiIds.orgId,workspaceId:apiIds.workspaceId,branchId:apiIds.branchId,
-              versionId:apiIds.versionId,branchName:apiIds.branchName,environmentId:apiIds.environmentId};
-    log('firing EP/UP vars: '+JSON.stringify(vars));
-    // CRITICAL: Amplitude uses persisted/pre-registered queries identified by ?q=OpName.
-    // The body must be {operationName, variables} WITHOUT a "query" field.
-    // Including "query" causes: HttpError: Missing param "query".
-    function fireQ(opName,dest,seenMap){
-      var _url=((savedGqlMeta&&savedGqlMeta.url)||'/graphql')+'?q='+opName;
-      var _hdrs=Object.assign({},savedGqlMeta&&savedGqlMeta.headers||{},{'Content-Type':'application/json'});
-      delete _hdrs['content-length'];delete _hdrs['Content-Length'];delete _hdrs['content-type'];
-      log(opName+' firing (persisted-query format) url='+_url);
-      origFetch(_url,{method:'POST',headers:_hdrs,
-        body:JSON.stringify({operationName:opName,variables:vars}),
-        credentials:'include'
-      }).then(function(r){
-        log(opName+' HTTP '+r.status);
-        r.text().then(function(t){
-          log(opName+' resp: '+t.slice(0,500));
-          try{
-            var b=JSON.parse(t);
-            if(b&&b.errors)log(opName+' GQL errors: '+JSON.stringify(b.errors).slice(0,400));
-            extractInto(dest,seenMap,b.data||b);
-            log(opName+' extracted: '+dest.length+' names');
-          }catch(e){log(opName+' parse err: '+e);}
-          onDone();
-        }).catch(function(e){log(opName+' text err: '+e);onDone();});
-      }).catch(function(e){log(opName+' fetch err: '+e);onDone();});
-    }
-    fireQ('EventProperties',epC,seenEp);
-    fireQ('UserProperties',upC,seenUp);
-  }
-
-  if(apiIds.workspaceId&&apiIds.branchId&&apiIds.versionId){
-    log('all IDs present - firing EP/UP (persisted-query format)');
-    fireEPUP();
-  }else{
-    // workspaceId/branchId/versionId empty.
-    // Strategy: fire EventProperties (a registered op) with orgId+branchName only,
-    // no "query" field. Log full response to learn if server resolves IDs from org context
-    // or returns a GraphQL error showing which IDs are needed.
-    log('probe: firing EventProperties with orgId only (no workspace IDs) to diagnose server behavior');
-    var _pu=savedGqlMeta.url+'?q=EventProperties';
-    var _ph=Object.assign({},savedGqlMeta.headers||{},{'Content-Type':'application/json'});
-    delete _ph['content-length'];delete _ph['Content-Length'];delete _ph['content-type'];
-    var _pv={orgId:apiIds.orgId,workspaceId:'',branchId:'',versionId:'',branchName:apiIds.branchName,environmentId:null};
-    origFetch(_pu,{method:'POST',headers:_ph,
-      body:JSON.stringify({operationName:'EventProperties',variables:_pv}),
-      credentials:'include'
-    }).then(function(r){
-      log('probe HTTP '+r.status);
-      r.text().then(function(t){
-        log('probe resp (full): '+t.slice(0,800));
-        // Parse and try to extract workspace IDs from a GraphQL error response
-        try{
-          var _pd=JSON.parse(t);
-          if(_pd&&_pd.data){
-            // Server returned data - maybe it resolved from orgId alone
-            log('probe returned data - extracting');
-            extractInto(epC,seenEp,_pd.data||_pd);
-            log('probe EP extracted: '+epC.length+' names');
-          }
-          if(_pd&&_pd.errors){
-            log('probe GQL errors: '+JSON.stringify(_pd.errors));
-          }
-        }catch(e){log('probe parse: '+e);}
-        // Always fire the real EP/UP too so we see both outcomes
-        var pending2=2;
-        function onDone2(){if(--pending2===0){
-          log('=== COMPLETE: ep='+epC.length+' up='+upC.length+' ===');
-          if(epC.length>0)log('EP sample: '+epC.slice(0,5).join(', '));
-          if(upC.length>0)log('UP sample: '+upC.slice(0,5).join(', '));
-          if(epC.length===0&&upC.length===0)log('>>> ZERO PROPS - see probe resp above for diagnosis <<<');
-        }}
-        function fire2(opName,dest,seenMap){
-          var _u=savedGqlMeta.url+'?q='+opName;
-          var _h=Object.assign({},savedGqlMeta.headers||{},{'Content-Type':'application/json'});
-          delete _h['content-length'];delete _h['Content-Length'];delete _h['content-type'];
-          var _v={orgId:apiIds.orgId,workspaceId:'',branchId:'',versionId:'',branchName:apiIds.branchName,environmentId:null};
-          origFetch(_u,{method:'POST',headers:_h,
-            body:JSON.stringify({operationName:opName,variables:_v}),
-            credentials:'include'
-          }).then(function(r){
-            log(opName+' HTTP '+r.status);
-            r.text().then(function(t2){
-              log(opName+' resp: '+t2.slice(0,500));
-              try{var b=JSON.parse(t2);if(b&&b.data){extractInto(dest,seenMap,b.data||b);log(opName+' extracted: '+dest.length);}}catch(e){}
-              onDone2();
-            }).catch(function(e){log(opName+' text err: '+e);onDone2();});
-          }).catch(function(e){log(opName+' fetch err: '+e);onDone2();});
-        }
-        fire2('EventProperties',epC,seenEp);
-        fire2('UserProperties',upC,seenUp);
-      }).catch(function(e){log('probe text err: '+e);});
-    }).catch(function(e){log('probe fetch err: '+e);});
-    // Return early - onDone is handled by inner fire2 callbacks
-    return;
-  }
-},8000);
-
-// 30s hard timeout
-setTimeout(function(){
-  log('=== 30s TIMEOUT: evC='+evC.length+' epC='+epC.length+' upC='+upC.length+' ===');
-},30000);
-})()`;
-
-  const dbgLink = document.getElementById('bookmarklet-debug-link');
-  if (dbgLink) dbgLink.href = 'javascript:' + encodeURIComponent(debugCode);
 }
 
 // Reads events+properties passed back from the bookmarklet via URL hash
@@ -3341,6 +3003,9 @@ function processLoadedProperties(eventProps, userProps) {
   // Store real props for live preview (sample up to 6 each for readability)
   window._previewEventProps = epFiltered.slice(0, 4);
   window._previewUserProps  = upFiltered.slice(0, 4);
+
+  // Update property dropdown option labels with real customer property names
+  updatePropDropdownExamples(epFiltered, upFiltered);
 
   // detectPropCasing returns 'snake' | 'camel' | 'upper'.
   // The dropdowns have snake/camel/lower — map 'upper' to 'snake' (closest for a standard dropdown).
@@ -3660,6 +3325,31 @@ function updateDropdownExamples(ev) {
   screenEl.options[0].text = `None (${base})`;
   screenEl.options[1].text = `Page: prefix (Page: ${base})`;
   screenEl.options[2].text = `Screen: prefix (Screen: ${base})`;
+}
+
+// Update property casing dropdown option labels with a real customer property name.
+// Picks the first multi-word name from the list (best illustrates casing differences),
+// falling back to the first name if all are single-word.
+function updatePropDropdownExamples(epNames, upNames) {
+  function pickExample(names) {
+    if (!names || !names.length) return null;
+    return names.find(n => propToWords(n).length > 1) || names[0];
+  }
+  function setOptions(selectId, name) {
+    const el = document.getElementById(selectId);
+    if (!el || !name) return;
+    const words = propToWords(name);
+    const snake = words.join('_');
+    const camel = words[0] + words.slice(1).map(w => w[0].toUpperCase() + w.slice(1)).join('');
+    const title = words.map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
+    const lower = words.join('');
+    el.options[0].text = `snake_case (${snake})`;
+    el.options[1].text = `camelCase (${camel})`;
+    el.options[2].text = `Title Case (${title})`;
+    el.options[3].text = `lowercase (${lower})`;
+  }
+  setOptions('sg-prop-case', pickExample(epNames));
+  setOptions('sg-up-case',   pickExample(upNames));
 }
 
 function applyDetectedConvention() {
