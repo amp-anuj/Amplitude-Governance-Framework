@@ -23,7 +23,7 @@ Or open `governance-workshop.html` directly in any modern browser.
 | 1 | Overview | Workshop goals, governance pillars, and what good governance looks like |
 | 2 | Project Strategy | Per Platform / Per BU / Aggregate / Portfolios — choosing the right project structure |
 | 3 | What is Data Governance? | Three pillars of governance and the Quality Flywheel |
-| 4 | Governance Model | Centralized vs. Federated vs. Council vs. Hybrid — pick the right model and generate a checklist |
+| 4 | Governance Model | Team vs. Centralized vs. Decentralized vs. Organizational — pick the right model and generate a checklist |
 | 5 | Taxonomy Design | Style guide builder — naming conventions, object-action pattern, property standards, abstraction spectrum |
 | 6 | Tracking Plan | Four sub-tabs: Branches (6.1), Schema Settings + Observe (6.2), Virtual Data Extensions (6.3), Transformations (6.4) |
 | 7 | Governance Controls | Data Access Controls — blocking, dropping, PII tagging, event lifecycle and deprecation |

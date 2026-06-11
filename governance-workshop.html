@@ -551,7 +551,7 @@ const CUSTOMER_CONFIG = {
 <header class="header">
   <div class="header-left">
     <div class="header-logo">
-      <svg viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><path fill="#fff" d="M400,0C179.11627,0,0,179.11621,0,400s179.11627,400,400,400,400-179.11694,400-400S620.88379,0,400,0ZM674.30933,412.20886h-190.08447c13.61145,54.58142,38.56927,185.06018,72.89178,185.06018,25.97406,0,38.04761-40.62988,61.52643-106.34509,3.84601-10.76489,8.99756-25.72791,14.91132-41.77185,1.36511-3.70325,4.85303-6.31702,8.7998-6.28528,6.16193.04944,10.5578,6.04749,8.69067,11.93494-3.42151,10.78894-6.76276,23.12256-9.91211,37.24634-21.48242,96.34106-46.84576,158.87549-97.99213,158.87549-57.72101,0-91.76971-149.10742-116.30505-238.71472h-174.13635s-18.5556,58.16235-34.46942,110.92065c-2.31335,7.66956-9.37433,12.9165-17.38513,12.9165h-.00006c-11.13251,0-19.65839-9.92273-17.94989-20.92322,4.80029-30.90747,11.0755-63.85547,19.36273-103.07458h-70.15942c-15.2735,0-27.65509-12.38159-27.65509-27.65515h0c0-15.42773,12.62317-27.87231,28.04926-27.65234l82.06635,1.16968c29.29401-119.74182,72.90405-235.66113,132.43781-235.66113,56.93982,0,103.06055,154.07471,124.74683,238.7749,71.55847,1.62134,147.85266,4.30688,204.25861,8.7561,11.04541.87109,19.55536,10.10107,19.55536,21.18066v.00012c0,11.73474-9.513,21.2478-21.2478,21.2478ZM344.9079,175.58252c-18.52173,0-51.9552,74.73584-79.61096,182.97217,6.38806.00342,68.79803.07031,147.36523,1.33228-23.15546-85.44873-51.02808-184.30444-67.75427-184.30444Z"/></svg>
       Amplitude
     </div>
     <div class="header-divider"></div>
@@ -1022,12 +1022,12 @@ const CUSTOMER_CONFIG = {
 
       <div class="card" style="border:2px solid var(--amp-gray-300)">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <span style="font-size:22px">👥</span>
-          <strong style="font-size:15px">Federated</strong>
+          <span style="font-size:22px">🌐</span>
+          <strong style="font-size:15px">Decentralized</strong>
         </div>
-        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">Each product team manages their own events, with a shared style guide and optional central review. Teams have autonomy within guardrails.</p>
-        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Team leads + shared standards doc</div>
-        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> Low central, higher per-team discipline</div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">Each product team owns their own taxonomy within shared guardrails. A governance lead per team enforces the master style guide. Best for orgs with 5+ autonomous teams.</p>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> One governance lead per product team</div>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> Medium–High — requires per-team discipline</div>
         <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600;margin-top:8px">✅ Strengths</div>
         <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:8px;line-height:1.7">
           <li>Teams move fast with local ownership</li>
@@ -1044,10 +1044,10 @@ const CUSTOMER_CONFIG = {
       <div class="card" style="border:2px solid var(--amp-gray-300)">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
           <span style="font-size:22px">🏛️</span>
-          <strong style="font-size:15px">Council</strong>
+          <strong style="font-size:15px">Organizational</strong>
         </div>
-        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">A cross-functional governance committee with representatives from each team. Major taxonomy decisions are reviewed and ratified collectively.</p>
-        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Cross-functional governance council</div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">A cross-functional governance council (data, eng, legal, product) sets standards and reviews major changes. Best for large enterprises with multiple BUs and compliance requirements.</p>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Data Governance Council (data, eng, legal, product)</div>
         <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> High — requires ongoing coordination</div>
         <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600;margin-top:8px">✅ Strengths</div>
         <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:8px;line-height:1.7">
@@ -1064,22 +1064,22 @@ const CUSTOMER_CONFIG = {
 
       <div class="card" style="border:2px solid var(--amp-gray-300)">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <span style="font-size:22px">🤝</span>
-          <strong style="font-size:15px">Hybrid</strong>
+          <span style="font-size:22px">👤</span>
+          <strong style="font-size:15px">Team</strong>
         </div>
-        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">A mix of centralized standards (naming, schema) with federated ownership (team-level tracking plan management). Central team sets the floor, teams build on it.</p>
-        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Central team (standards) + team leads (execution)</div>
-        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> Medium — well-balanced for growing orgs</div>
+        <p style="font-size:13px;color:var(--amp-gray-500);margin-bottom:10px">One analytics lead or PM manages all data governance. Ideal for early-stage orgs or teams with 1–2 squads where low overhead and fast decisions matter most.</p>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Owner:</span> Analytics Lead or single PM</div>
+        <div style="font-size:12px;color:var(--amp-gray-700);margin-bottom:4px"><span style="color:var(--amp-gray-500);font-weight:600">Effort:</span> Low — single approver, minimal coordination</div>
         <div style="font-size:12px;color:var(--amp-green);margin-bottom:4px;font-weight:600;margin-top:8px">✅ Strengths</div>
         <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;margin-bottom:8px;line-height:1.7">
-          <li>Consistent taxonomy with team autonomy</li>
-          <li>Most recommended for mid-to-large orgs</li>
-          <li>Central guardrails prevent drift</li>
+          <li>Fast decisions with low overhead</li>
+          <li>Easy to start — one style guide, one owner</li>
+          <li>Great for early-stage governance maturity</li>
         </ul>
         <div style="font-size:12px;color:var(--amp-red);margin-bottom:4px;font-weight:600">⚠️ Tradeoffs</div>
         <ul style="font-size:12px;color:var(--amp-gray-700);padding-left:16px;line-height:1.7">
-          <li>Requires clear delineation of central vs. team scope</li>
-          <li>More complex to document and enforce</li>
+          <li>Scales poorly beyond 2–3 product teams</li>
+          <li>Single point of failure if the owner leaves</li>
         </ul>
       </div>
 
@@ -1146,7 +1146,8 @@ const CUSTOMER_CONFIG = {
       <div class="bm-step">
         <div class="bm-step-num">1</div>
         <div>Drag this to your bookmarks bar <span style="color:var(--amp-gray-400)">(one-time setup)</span>:</div>
-        <a id="bookmarklet-link" class="bm-drag-link" title="Drag me to your bookmarks bar">📊 Get Amplitude Events</a>
+        <a id="bookmarklet-link" class="bm-drag-link" title="Drag me to your bookmarks bar">📊 Get Events &amp; Properties</a>
+        <a id="bookmarklet-debug-link" class="bm-drag-link" style="background:#6B21A8;font-size:11px;padding:7px 13px;margin-left:6px" title="Debug: monitors all GraphQL queries on the properties pages">🔍 Debug Props</a>
       </div>
       <div class="bm-step">
         <div class="bm-step-num">2</div>
@@ -1154,7 +1155,7 @@ const CUSTOMER_CONFIG = {
       </div>
       <div class="bm-step">
         <div class="bm-step-num">3</div>
-        <div>Once Amplitude loads, click the <strong>📊 Get Amplitude Events</strong> bookmark — your style guide will be configured automatically</div>
+        <div>Once Amplitude loads, click the <strong>📊 Get Events &amp; Properties</strong> bookmark — events, event properties, and user properties are loaded and your style guide is configured automatically</div>
       </div>
     </div>
     <div id="bm-status-area"></div>
@@ -1169,6 +1170,29 @@ const CUSTOMER_CONFIG = {
       </div>
       <div class="detection-chips" id="detection-chips"></div>
       <div id="sample-events-row" style="font-size:12px;color:var(--amp-gray-500);line-height:1.8"></div>
+    </div>
+
+    <!-- Property detection banner ──────────────────────────── -->
+    <div class="detection-banner" id="prop-detection-banner" style="display:none;margin-top:8px">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--amp-gray-900);margin-bottom:2px">
+          🏷️ Property naming conventions — <span id="prop-detection-count-ev">0</span> event props &amp; <span id="prop-detection-count-up">0</span> user props
+        </div>
+        <div style="font-size:12px;color:var(--amp-gray-500)">Detected from your live project · used to set property casing in style rules</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Event Properties</div>
+          <div class="detection-chips" id="event-prop-chips" style="margin:0 0 6px"></div>
+          <div id="event-prop-samples" style="font-size:11px;color:var(--amp-gray-500);line-height:1.8"></div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--amp-gray-500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">User Properties</div>
+          <div class="detection-chips" id="user-prop-chips" style="margin:0 0 6px"></div>
+          <div id="user-prop-samples" style="font-size:11px;color:var(--amp-gray-500);line-height:1.8"></div>
+        </div>
+      </div>
+      <div id="prop-mismatch-note" style="display:none;margin-top:8px;font-size:12px;color:var(--amp-orange);font-weight:500"></div>
     </div>
   </div>
 
@@ -1205,10 +1229,21 @@ const CUSTOMER_CONFIG = {
         </div>
 
         <div class="form-group">
-          <label class="form-label">Property name casing</label>
+          <label class="form-label">Event property casing</label>
           <select class="form-select" id="sg-prop-case" onchange="updatePreview()">
             <option value="snake">snake_case (user_id, plan_type)</option>
             <option value="camel">camelCase (userId, planType)</option>
+            <option value="title">Title Case (User Id, Plan Type)</option>
+            <option value="lower">lowercase (userid, plantype)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">User property casing</label>
+          <select class="form-select" id="sg-up-case" onchange="updatePreview()">
+            <option value="snake">snake_case (user_id, plan_type)</option>
+            <option value="camel">camelCase (userId, planType)</option>
+            <option value="title">Title Case (User Id, Plan Type)</option>
             <option value="lower">lowercase (userid, plantype)</option>
           </select>
         </div>
@@ -1228,9 +1263,15 @@ const CUSTOMER_CONFIG = {
       <div class="preview-panel">
         <h4>Live Preview</h4>
         <div id="preview-events"></div>
-        <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px">
-          <div style="color:rgba(255,255,255,.4);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Properties on button_clicked</div>
-          <div id="preview-props" style="font-size:12px;line-height:1.8"></div>
+        <div style="margin-top:10px;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <div style="color:rgba(255,255,255,.4);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Event props</div>
+            <div id="preview-props" style="font-size:12px;line-height:1.6"></div>
+          </div>
+          <div>
+            <div style="color:rgba(255,255,255,.4);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">User props</div>
+            <div id="preview-user-props" style="font-size:12px;line-height:1.6"></div>
+          </div>
         </div>
       </div>
 
@@ -2226,10 +2267,23 @@ function applyCase(str, caseType) {
   return str; // title
 }
 
+function propToWords(str) {
+  // Handles snake_case, camelCase, PascalCase, Title Case, and mixed
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1 $2')        // camel/Pascal split
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')  // acronym split
+    .replace(/[_\-]/g, ' ')                       // underscore/dash → space
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean);
+}
 function applyPropCase(str, pc) {
-  if (pc === 'snake') return str.toLowerCase().replace(/ /g,'_');
-  if (pc === 'camel') { const w = str.split('_'); return w[0] + w.slice(1).map(s=>s[0].toUpperCase()+s.slice(1)).join(''); }
-  return str.toLowerCase();
+  const words = propToWords(str);
+  if (!words.length) return str;
+  if (pc === 'snake') return words.join('_');
+  if (pc === 'camel') return words[0] + words.slice(1).map(w => w[0].toUpperCase() + w.slice(1)).join('');
+  if (pc === 'title') return words.map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
+  return words.join(''); // 'lower'
 }
 
 function buildEventName(ev, cfg) {
@@ -2307,52 +2361,69 @@ function buildBookmarklet(dataTabUrl) {
   const code = `(function(){
 var W=${JSON.stringify(workshopUrl)};
 var D=${JSON.stringify(dataTabUrlStr)};
-var finished=false,collected=[],seen={};
+
+// Debug overlay
+var LOG=document.createElement('pre');
+LOG.setAttribute('style','position:fixed;bottom:16px;right:16px;z-index:2147483647;background:rgba(0,0,0,.88);color:#7fff7f;padding:10px 14px;border-radius:8px;font:11px/1.6 monospace;max-width:420px;max-height:260px;overflow:auto;pointer-events:none;');
+document.body.appendChild(LOG);
+function log(msg){var d=new Date();LOG.innerHTML+='['+d.getSeconds()+'.'+d.getMilliseconds()+'s] '+msg+'\\n';LOG.scrollTop=9999;}
+log('bookmarklet started. D='+D.slice(0,60));
+
+var finished=false,evC=[],epC=[],upC=[],seenEv={},seenEp={},seenUp={};
 
 var T=document.createElement('div');
-T.setAttribute('style','position:fixed;top:16px;right:16px;z-index:2147483647;background:#0069FF;color:#fff;padding:14px 20px;border-radius:10px;font:600 13px/1.5 sans-serif;box-shadow:0 4px 24px rgba(0,0,0,.3);max-width:320px;transition:background .3s');
-T.innerHTML='\u23f3 Reading your Amplitude events\u2026<br><span style="font-weight:400;font-size:11px;opacity:.8">Intercepting GraphQL responses</span>';
+T.setAttribute('style','position:fixed;top:16px;right:16px;z-index:2147483647;background:#0069FF;color:#fff;padding:14px 20px;border-radius:10px;font:600 13px/1.5 sans-serif;box-shadow:0 4px 24px rgba(0,0,0,.3);max-width:340px;transition:background .3s');
+T.innerHTML='⏳ Reading events & properties…<br><span style="font-weight:400;font-size:11px;opacity:.8">Intercepting GraphQL responses</span>';
 document.body.appendChild(T);
 function toast(bg,html){T.style.background=bg;T.innerHTML=html;}
 function remove(){setTimeout(function(){if(T.parentNode)T.parentNode.removeChild(T);},2800);}
 
-function finish(names){
+function finish(){
   if(finished)return;
   finished=true;
   window.fetch=originalFetch;
   clearTimeout(giveUpTimer);
-  if(!names||!names.length){
-    toast('#E53935','\u274c No events found.<br><span style="font-weight:400;font-size:11px">Make sure the Data tab is open and events have loaded.</span>');
+  if(clearPropsTimer)clearTimeout(clearPropsTimer);
+  log('finish: evC='+evC.length+' epC='+epC.length+' upC='+upC.length);
+  if(!evC.length&&!epC.length&&!upC.length){
+    toast('#E53935','❌ Nothing found.<br><span style="font-weight:400;font-size:11px">Make sure the Data tab is open.</span>');
     setTimeout(function(){if(T.parentNode)T.parentNode.removeChild(T);},4000);
     return;
   }
-  toast('#00B85C','\u2705 Got '+names.length+' events \u2014 returning to workshop\u2026');
-  // Prefer postMessage so we focus the existing workshop tab without opening a new one
+  toast('#00B85C','✅ '+evC.length+' events · '+epC.length+' event props · '+upC.length+' user props<br><span style="font-weight:400;font-size:11px;opacity:.8">Returning to workshop…</span>');
+  // Trim property lists so the hash URL stays under ~200KB of base64
+  var epSend=epC.slice(0,600);
+  var upSend=upC.slice(0,600);
+  var payload={events:evC,eventProps:epSend,userProps:upSend};
+  // Always navigate back to the workshop via hash — more reliable than postMessage
+  // because browsers often block window.opener.focus() cross-tab.
+  // If the workshop was the opener, also ping it via postMessage as a fast path.
   if(window.opener&&!window.opener.closed){
-    try{
-      window.opener.postMessage({type:'amp_gov_events',names:names},'*');
-      window.opener.focus();
-      remove();
-      return;
-    }catch(e){}
+    try{window.opener.postMessage({type:'amp_gov_events',names:evC,eventProps:epSend,userProps:upSend},'*');}catch(e){}
   }
-  // Fallback: navigate current tab back to workshop with events in hash
-  var enc=btoa(unescape(encodeURIComponent(JSON.stringify(names))));
+  var enc=btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
   window.location.href=W+'#amp-events='+enc;
   remove();
 }
 
-function extract(data){
+var BLOCKLIST=['apiKey','timeZoneId','secretKey','instrumentationCounts','dynamicScriptKey','retailCalendar','score'];
+function extractInto(dest,seenMap,data){
   if(!data||typeof data!=='object')return;
   (function scan(v,depth){
-    if(!v||typeof v!=='object'||depth>4)return;
+    if(!v||typeof v!=='object'||depth>12)return;
     if(Array.isArray(v)){
       if(v.length>2&&v[0]&&typeof v[0]==='object'){
-        var n0=v[0].name||v[0].event_type||v[0].eventType||v[0].outputEventName||v[0].displayName;
+        var sk=Object.keys(v[0]);
+        if(sk.indexOf('node')!==-1&&v[0].node&&typeof v[0].node==='object'){
+          scan(v.map(function(i){return i.node;}).filter(Boolean),depth+1);
+          return;
+        }
+        if(BLOCKLIST.some(function(k){return sk.indexOf(k)!==-1;}))return;
+        var n0=v[0].name||v[0].event_type||v[0].eventType||v[0].outputEventName||v[0].displayName||v[0].display;
         if(n0&&typeof n0==='string'&&n0.length>0&&n0.length<200){
           v.forEach(function(item){
-            var n=item&&(item.name||item.event_type||item.eventType||item.outputEventName||item.displayName);
-            if(n&&typeof n==='string'&&!seen[n]){seen[n]=true;collected.push(n);}
+            var n=item&&(item.name||item.event_type||item.eventType||item.outputEventName||item.displayName||item.display);
+            if(n&&typeof n==='string'&&!seenMap[n]){seenMap[n]=true;dest.push(n);}
           });
           return;
         }
@@ -2362,45 +2433,464 @@ function extract(data){
   })(data,0);
 }
 
-// 1. Apollo InMemoryCache
-try{
-  var ac=window.__APOLLO_CLIENT__;
-  if(ac){
-    var cache=ac.cache.extract();
-    Object.values(cache).forEach(function(v){
-      if(!v||typeof v!=='object')return;
-      var n=v.name||v.eventType;
-      var t=v.__typename||'';
-      if(n&&typeof n==='string'&&t.toLowerCase().includes('event')&&!seen[n]){seen[n]=true;collected.push(n);}
-    });
-    if(collected.length>5){finish(collected);return;}
-    collected=[];seen={};
-  }
-}catch(e){}
-
-// 2. Patch fetch to capture GraphQL responses
+// propsPhase: 0=not started, 1=fetching event props, 2=fetching user props
+var getEventsPending=0,propsPhase=0,clearPropsTimer=null,propsBase='',propsPhaseTimer=null;
 var originalFetch=window.fetch;
+
+// ── Direct GraphQL query strings (reverse-engineered from Amplitude Data network requests).
+// Both EP and UP share the same fragment and query shape; only the 'kinds' filter differs.
+// Variables are injected at runtime from the intercepted GetEvents request body.
+var _PROP_FRAG='fragment SharedObservablePropertyWithObserveData on ObservableProperty{id versionId kind name dateCreated displayName description category required type schema example isHidden isOfficial origin isShared overridePropertyRevisionId isBlocked isPlanned isQueryable classifications cartPropertyConfig{parentProperties childProperties isSplit __typename} seenStats{firstSeen lastSeen __typename} __typename}';
+var _PROP_Q='query __OP__($orgId:ID!,$workspaceId:ID!,$branchId:ID!,$versionId:ID!,$environmentId:ID,$branchName:String!){orgs(id:$orgId){id workspaces(id:$workspaceId){id branches(id:$branchId){id versions(id:$versionId,environmentId:$environmentId,branchName:$branchName){id properties(kinds:[__KINDS__],statuses:[live,planned,blocked,unexpected]){...SharedObservablePropertyWithObserveData __typename} __typename} __typename} __typename} __typename}} '+_PROP_FRAG;
+var _EP_Q=_PROP_Q.replace('__OP__','EventProperties').replace('__KINDS__','event');
+var _UP_Q=_PROP_Q.replace('__OP__','UserProperties').replace('__KINDS__','user');
+
+// Variables extracted from the GetEvents request body (same orgId/workspaceId/etc. apply to EP+UP)
+var apiIds=null;
+// URL base + headers captured from first intercepted graphql request.
+// Amplitude may use a non-obvious endpoint (e.g. data.amplitude.com/graphql) and always
+// sends auth/CSRF headers we must mirror when firing EP+UP ourselves.
+var savedGqlMeta=null;
+
+// Save EP/UP request details to localStorage so we can replay on cache hits
+function saveReq(key,urlStr,opts){
+  try{
+    var h={};
+    if(opts&&opts.headers){
+      if(opts.headers.forEach){opts.headers.forEach(function(v,k){h[k]=v;});}
+      else{h=Object.assign({},opts.headers);}
+    }
+    localStorage.setItem(key,JSON.stringify({url:urlStr,method:(opts&&opts.method)||'POST',headers:h,body:(opts&&opts.body)||''}));
+  }catch(e){}
+}
+// Replay a saved request directly against the server, bypassing Apollo cache.
+// Does NOT call onDone if there's no saved entry — caller must guard with getItem check first.
+function replayReq(key,dest,seenMap,onDone){
+  try{
+    var s=localStorage.getItem(key);
+    if(!s){log('replay '+key+': no saved req');return;}
+    var r=JSON.parse(s);
+    log('replay '+key+': firing saved req');
+    originalFetch(r.url,{method:r.method,headers:r.headers,body:r.body,credentials:'include'}).then(function(resp){
+      resp.json().then(function(body){
+        extractInto(dest,seenMap,body.data||body);
+        log('replay '+key+' done: '+dest.length+' names');
+        onDone();
+      }).catch(function(e){log('replay '+key+' json fail: '+e);onDone();});
+    }).catch(function(e){log('replay '+key+' fetch fail: '+e);onDone();});
+  }catch(e){log('replay '+key+' error: '+e);onDone();}
+}
+
+// Walk the React fiber tree to extract property names that Apollo cached in component state.
+// Called as fallback when Apollo in-memory cache prevents network interception.
+// Returns the total count of names added.
+function extractPropsFromFibers(epDest,epSeen,upDest,upSeen){
+  try{
+    // Find the React container element — search body + children + grandchildren with Object.keys
+    // (React attaches __reactFiber$<hash> as an own enumerable property on the container)
+    var rootEl=null,fk=null;
+    var candidates=[];
+    try{candidates=Array.from(document.querySelectorAll('body,body > *,body > * > *'));}catch(e){candidates=[document.body];}
+    outer:for(var ci=0;ci<candidates.length;ci++){
+      try{
+        var ks=Object.keys(candidates[ci]);
+        for(var ki=0;ki<ks.length;ki++){
+          if(ks[ki].startsWith('__reactFiber')||ks[ki].startsWith('__reactInternalInstance')){
+            rootEl=candidates[ci];fk=ks[ki];break outer;
+          }
+        }
+      }catch(e){}
+    }
+    if(!fk){log('fiber: no root key on body+children+grandchildren');return 0;}
+    log('fiber: found root key on <'+rootEl.tagName+(rootEl.id?'#'+rootEl.id:'')+'>');
+    var rootFiber=rootEl[fk];
+    if(!rootFiber){log('fiber: null fiber');return 0;}
+    var visited=new WeakSet();
+    var count=0;
+    var relayEnv=null;
+
+    // ── Read directly from Relay normalized store ──────────────────
+    // Relay stores each record flat by ID; property records have name+kind fields.
+    function tryRelayStore(){
+      try{
+        var store=relayEnv.getStore();
+        if(!store)return 0;
+        var source=store.getSource?store.getSource():null;
+        if(!source)return 0;
+        var records=null;
+        try{records=source.toJSON();}catch(e){}
+        if(!records)try{records=source._records||source.__records;}catch(e){}
+        if(!records||typeof records!=='object')return 0;
+        var rvals=Object.values(records);
+        var found=0;
+        for(var ri=0;ri<rvals.length;ri++){
+          var rec=rvals[ri];
+          if(!rec||typeof rec.name!=='string'||!rec.name||!rec.kind)continue;
+          var ku=(rec.kind||'').toString().toUpperCase();
+          if(ku.indexOf('USER')!==-1){
+            if(!upSeen[rec.name]){upSeen[rec.name]=true;upDest.push(rec.name);found++;}
+          }else{
+            if(!epSeen[rec.name]){epSeen[rec.name]=true;epDest.push(rec.name);found++;}
+          }
+        }
+        return found;
+      }catch(e){log('relay store err: '+e);return 0;}
+    }
+
+    // ── Scan plain-object component state (Apollo / non-Relay paths) ─
+    function scanVal(v,depth){
+      if(!v||typeof v!=='object'||depth>12)return;
+      try{if(visited.has(v))return;visited.add(v);}catch(e){return;}
+      if(Array.isArray(v)){
+        if(v.length>20&&v[0]&&typeof v[0]==='object'&&typeof v[0].name==='string'&&v[0].kind){
+          v.forEach(function(item){
+            if(!item||typeof item.name!=='string'||!item.name)return;
+            var ku=(item.kind||'').toString().toUpperCase();
+            if(ku.indexOf('USER')!==-1){
+              if(!upSeen[item.name]){upSeen[item.name]=true;upDest.push(item.name);count++;}
+            }else{
+              if(!epSeen[item.name]){epSeen[item.name]=true;epDest.push(item.name);count++;}
+            }
+          });
+        }else{
+          for(var i=0;i<Math.min(v.length,10);i++){
+            if(v[i]&&typeof v[i]==='object')scanVal(v[i],depth+1);
+          }
+        }
+      }else{
+        var vs=Object.values(v);
+        for(var j=0;j<vs.length;j++){
+          if(vs[j]&&typeof vs[j]==='object')scanVal(vs[j],depth+1);
+        }
+      }
+    }
+
+    function walkFiber(fiber,depth){
+      if(!fiber||depth>300)return;
+      try{if(visited.has(fiber))return;visited.add(fiber);}catch(e){return;}
+      // Detect RelayEnvironmentProvider: context value is either the env directly
+      // or wrapped as {environment: env, __fragmentOwner: ...}
+      if(!relayEnv){
+        try{
+          var mp=fiber.memoizedProps;
+          if(mp&&mp.value&&typeof mp.value==='object'){
+            var val=mp.value;
+            var cand=(typeof val.getStore==='function')?val:
+                     (val.environment&&typeof val.environment.getStore==='function')?val.environment:null;
+            if(cand&&typeof cand.getNetwork==='function'){relayEnv=cand;log('relay env @ depth '+depth);}
+          }
+        }catch(e){}
+      }
+      try{if(fiber.memoizedProps)scanVal(fiber.memoizedProps,0);}catch(e){}
+      try{
+        var s=fiber.memoizedState;
+        while(s){
+          if(s.memoizedState)scanVal(s.memoizedState,0);
+          s=s.next;
+        }
+      }catch(e){}
+      walkFiber(fiber.child,depth+1);
+      walkFiber(fiber.sibling,depth+1);
+    }
+    walkFiber(rootFiber,0);
+    log('fiber scan: component-state='+count+' relayEnv='+!!relayEnv);
+
+    // Component-state scan found nothing → try Relay store directly
+    if(count===0&&relayEnv){
+      log('trying Relay store...');
+      var sc=tryRelayStore();
+      log('relay store: ep='+epDest.length+' up='+upDest.length);
+      count=sc;
+    }
+    return count;
+  }catch(e){log('fiber walk error: '+e);return 0;}
+}
+
 window.fetch=function(url,opts){
-  var result=originalFetch.apply(this,arguments);
   var urlStr=typeof url==='string'?url:(url&&url.url)||'';
+  var isGE=false,isEP=false,isUP=false;
   if(!finished&&urlStr.indexOf('/graphql')!==-1){
+    isGE=/q=(Get|get)Events/.test(urlStr);
+    isEP=urlStr.indexOf('q=EventProperties')!==-1;
+    isUP=urlStr.indexOf('q=UserProperties')!==-1;
+    if(isGE||isEP||isUP)log('>>> intercepted '+(isGE?'GE':isEP?'EP':'UP')+' sig='+(opts&&opts.signal?'YES':'no'));
+    // Extract orgId/workspaceId/branchId/versionId from ANY GraphQL request that carries them.
+    // GetEvents uses a different schema (appId only), but SimpleObservedEvents, EventProperties,
+    // UserProperties, and other Data queries all share the same org/workspace/branch/version vars.
+    if(opts&&opts.body&&typeof opts.body==='string'){
+      try{
+        var _gb=JSON.parse(opts.body);
+        if(_gb&&_gb.variables&&_gb.variables.orgId){
+          var _opN=_gb.operationName||(urlStr.match(/q=([^&]+)/)||[])[1]||'?';
+          if(!apiIds){
+            // First time: create full apiIds object
+            apiIds={orgId:String(_gb.variables.orgId),workspaceId:String(_gb.variables.workspaceId||''),
+                    branchId:String(_gb.variables.branchId||''),versionId:String(_gb.variables.versionId||''),
+                    branchName:String(_gb.variables.branchName||'main'),environmentId:_gb.variables.environmentId||null};
+            log('apiIds set from '+_opN+': '+JSON.stringify(apiIds));
+          }else if(!apiIds.workspaceId||!apiIds.branchId||!apiIds.versionId){
+            // Already have orgId from URL but missing workspace/branch/version — update them.
+            // DeletedEventPropertyNames and SimpleObservedEvents fire with full UUIDs.
+            if(_gb.variables.workspaceId)apiIds.workspaceId=String(_gb.variables.workspaceId);
+            if(_gb.variables.branchId)apiIds.branchId=String(_gb.variables.branchId);
+            if(_gb.variables.versionId)apiIds.versionId=String(_gb.variables.versionId);
+            if(_gb.variables.branchName)apiIds.branchName=String(_gb.variables.branchName);
+            if(_gb.variables.environmentId!=null)apiIds.environmentId=_gb.variables.environmentId;
+            log('apiIds updated from '+_opN+': ws='+apiIds.workspaceId+' br='+apiIds.branchId+' ver='+apiIds.versionId);
+          }
+          // If GetEvents already completed before this query fired, kick off props now.
+          if(evC.length>0&&getEventsPending===0)startPropsPhase();
+        }
+      }catch(e){log('apiIds extract err: '+e);}
+    }
+    // Capture the graphql base URL + request headers from the very first intercepted
+    // graphql call. Amplitude may use a non-standard domain and always sends auth/CSRF
+    // headers. We mirror these when firing EP+UP as direct requests.
+    if(!savedGqlMeta){
+      try{
+        var _sh={};
+        var _hObj=opts&&opts.headers;
+        if(_hObj){
+          if(typeof _hObj.forEach==='function'){_hObj.forEach(function(v,k){_sh[k]=v;});}
+          else{Object.assign(_sh,_hObj);}
+        }
+        savedGqlMeta={url:urlStr.split('?')[0],headers:_sh};
+        log('gql meta: url='+savedGqlMeta.url+' headerKeys='+Object.keys(_sh).join(','));
+        // Also extract orgId from the URL path e.g. /t/graphql/org/110391
+        // (same technique as debug bookmarklet - avoids backslash-slash in template literal)
+        var _urlOrgPart=(urlStr.split('/org/')[1]||'').split('/')[0].split('?')[0];
+        if(_urlOrgPart&&!isNaN(Number(_urlOrgPart))&&!apiIds){
+          apiIds={orgId:_urlOrgPart,workspaceId:'',branchId:'',versionId:'',branchName:'main',environmentId:null};
+          log('apiIds.orgId from gql URL: '+apiIds.orgId);
+          if(evC.length>0&&getEventsPending===0)startPropsPhase();
+        }
+      }catch(e){}
+    }
+    // Strip React's AbortController signal from property queries so the body
+    // survives component unmount during navigation (shared stream = shared abort)
+    if((isEP||isUP)&&opts&&opts.signal){
+      opts=Object.assign({},opts);
+      delete opts.signal;
+      log('    signal stripped');
+    }
+    // Save EP/UP request for cache-bust replay on future runs (fallback only)
+    if(isEP)saveReq('__amp_gov_ep',urlStr,opts);
+    if(isUP)saveReq('__amp_gov_up',urlStr,opts);
+  }
+  var result=originalFetch.call(this,url,opts);
+  if(!finished&&urlStr.indexOf('/graphql')!==-1){
+    if(isGE)getEventsPending++;
     result.then(function(resp){
       if(finished)return;
+      if(isEP||isUP)log('    resp arrived status='+resp.status);
       resp.clone().json().then(function(body){
         if(finished)return;
-        extract(body.data||body);
-        if(collected.length>0)finish(collected);
-      }).catch(function(){});
-    }).catch(function(){});
+        if(isGE){
+          getEventsPending=Math.max(0,getEventsPending-1);
+          extractInto(evC,seenEv,body.data||body);
+          // Extract workspace/branch/version IDs from GE response body.
+          // This is more reliable than parsing request variables, because the GE
+          // response contains the *resolved* IDs regardless of what variable names
+          // the GetEvents query uses.  We only fill in fields that are still empty.
+          try{
+            var _gd=body.data;
+            if(_gd&&_gd.orgs&&_gd.orgs[0]){
+              var _go=_gd.orgs[0];
+              var _gws=_go.workspaces&&_go.workspaces[0];
+              var _gbr=_gws&&_gws.branches&&_gws.branches[0];
+              var _gvr=_gbr&&_gbr.versions&&_gbr.versions[0];
+              if(_gbr&&_gvr){
+                if(!apiIds)apiIds={orgId:'',workspaceId:'',branchId:'',versionId:'',branchName:'main',environmentId:null};
+                if(!apiIds.orgId)apiIds.orgId=String(_go.id||'');
+                if(!apiIds.workspaceId)apiIds.workspaceId=String(_gws.id||'');
+                if(!apiIds.branchId)apiIds.branchId=String(_gbr.id||'');
+                if(!apiIds.versionId)apiIds.versionId=String(_gvr.id||'');
+                log('apiIds from GE resp: org='+apiIds.orgId+' ws='+apiIds.workspaceId+' br='+apiIds.branchId+' ver='+apiIds.versionId);
+              }
+            }
+          }catch(e){log('apiIds GE-resp extract err: '+e);}
+          if(evC.length>0&&getEventsPending===0){
+            // Delay 2.5s — DeletedEventPropertyNames fires ~1s after GE and brings apiIds.
+            // The apiIds capture block (below) will call startPropsPhase() early if it fires in time.
+            // If not, this timer fires as fallback with whatever apiIds we have.
+            if(!propsPhaseTimer)propsPhaseTimer=setTimeout(function(){if(propsPhase===0)startPropsPhase();},2500);
+          }
+        }else if(isEP){
+          log('isEP: extracting');
+          extractInto(epC,seenEp,body.data||body);
+          log('isEP done: epC='+epC.length);
+          epDone=true;checkBothPropsDone();
+        }else if(isUP){
+          log('isUP: extracting');
+          extractInto(upC,seenUp,body.data||body);
+          log('isUP done: upC='+upC.length);
+          upDone=true;checkBothPropsDone();
+        }
+      }).catch(function(err){
+        if(isEP||isUP)log('    json() FAILED: '+err);
+        if(isGE)getEventsPending=Math.max(0,getEventsPending-1);
+      });
+    }).catch(function(err){
+      if(isEP||isUP)log('    resp FAILED: '+err);
+      if(isGE)getEventsPending=Math.max(0,getEventsPending-1);
+    });
   }
   return result;
 };
 
-var giveUpTimer=setTimeout(function(){
-  if(!finished){if(collected.length>0)finish(collected);else finish([]);}
-},12000);
+// Both EventProperties and UserProperties fire simultaneously on the event-props page.
+// Wait for both before calling finish() to avoid a race where UP resolves before EP.
+var epDone=false,upDone=false;
+function checkBothPropsDone(){
+  if(epDone&&upDone&&!finished)finish();
+}
 
-// 3. SPA re-navigation — stay in same JS context so fetch patch survives
+function navTo(path){
+  try{
+    history.pushState(null,'',path);
+    window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
+  }catch(e){}
+}
+
+function startPropsPhase(){
+  if(propsPhase>0)return;
+  propsPhase=1;
+  log('startPropsPhase: evC='+evC.length+' apiIds='+JSON.stringify(apiIds));
+  toast('#0069FF','⏳ '+evC.length+' events — fetching properties…<br><span style="font-weight:400;font-size:11px;opacity:.8">Almost done</span>');
+
+  // ── shared helpers ────────────────────────────────────────────────────────
+  var pending=2;
+  function onPropDone(){if(--pending===0&&!finished){epDone=true;upDone=true;finish();}}
+  function fireQ(opName,qStr,dest,seenMap){
+    var _gqlUrl=((savedGqlMeta&&savedGqlMeta.url)||'/graphql')+'?q='+opName;
+    var _gqlHdrs=Object.assign({},savedGqlMeta&&savedGqlMeta.headers||{},{'content-type':'application/json'});
+    delete _gqlHdrs['content-length'];delete _gqlHdrs['Content-Length'];
+    var _fv={orgId:apiIds.orgId,workspaceId:apiIds.workspaceId,branchId:apiIds.branchId,
+             versionId:apiIds.versionId,branchName:apiIds.branchName,environmentId:apiIds.environmentId};
+    log(opName+' firing url='+_gqlUrl+' vars='+JSON.stringify(_fv));
+    originalFetch(_gqlUrl,{method:'POST',
+      headers:_gqlHdrs,
+      body:JSON.stringify({operationName:opName,variables:_fv,query:qStr}),
+      credentials:'include'
+    }).then(function(r){
+      log(opName+' HTTP '+r.status);
+      r.text().then(function(t){
+        log(opName+' raw: '+t.slice(0,300));
+        try{
+          var b=JSON.parse(t);
+          if(b&&b.errors)log(opName+' GQL errors: '+JSON.stringify(b.errors).slice(0,300));
+          extractInto(dest,seenMap,b.data||b);
+        }catch(e){log(opName+' parse: '+e);}
+        log(opName+' direct: '+dest.length+' names');
+        onPropDone();
+      }).catch(function(e){log(opName+' text: '+e);onPropDone();});
+    }).catch(function(e){log(opName+' fetch: '+e);onPropDone();});
+  }
+
+  function doDirectFire(){
+    log('direct API: ws='+apiIds.workspaceId+' br='+apiIds.branchId+' ver='+apiIds.versionId);
+    fireQ('EventProperties',_EP_Q,epC,seenEp);
+    fireQ('UserProperties',_UP_Q,upC,seenUp);
+  }
+
+  function doNavFallback(){
+    log('nav fallback');
+    var _dp=D.replace('https://app.amplitude.com','');
+    var _si=_dp.indexOf('/events/');
+    if(_si===-1)_si=_dp.indexOf('/properties/');
+    propsBase=_si>=0?_dp.slice(0,_si):'';
+    navTo('/');
+    setTimeout(function(){
+      if(finished)return;
+      navTo(propsBase+'/properties/main/latest/event');
+    },120);
+    setTimeout(function(){
+      if(finished)return;
+      if(epDone&&upDone)return;
+      var fc=extractPropsFromFibers(epC,seenEp,upC,seenUp);
+      if(fc>0){epDone=true;upDone=true;if(!finished)finish();return;}
+      var eh=!!localStorage.getItem('__amp_gov_ep'),uh=!!localStorage.getItem('__amp_gov_up');
+      if(!eh&&!uh)return;
+      var er=epDone||!eh,ur=upDone||!uh;
+      function chkR(){if(er&&ur&&!finished)finish();}
+      if(!epDone&&eh)replayReq('__amp_gov_ep',epC,seenEp,function(){epDone=true;er=true;chkR();});
+      if(!upDone&&uh)replayReq('__amp_gov_up',upC,seenUp,function(){upDone=true;ur=true;chkR();});
+      chkR();
+    },3000);
+  }
+
+  // ── routing ───────────────────────────────────────────────────────────────
+  if(apiIds&&apiIds.orgId&&apiIds.workspaceId&&apiIds.branchId&&apiIds.versionId){
+    // All four IDs present - fire directly
+    doDirectFire();
+  }else if(apiIds&&apiIds.orgId&&savedGqlMeta){
+    // Have orgId (from URL or intercepted query) but missing workspace/branch/version UUIDs.
+    // Fire a bootstrap query to resolve them — these UUIDs come from DeletedEventPropertyNames
+    // when cache is warm, but that query doesn't always fire. Bootstrap fetches the org tree.
+    // Amplitude uses persisted queries (?q=OpName). Body must NOT include "query" field.
+    // For bootstrap we try EventProperties with orgId+branchName only — if server resolves
+    // workspace from org context we get data; if not we get a GQL error showing what's needed.
+    log('bootstrap probe: firing EventProperties (orgId only, persisted-query format)');
+    var _bu=savedGqlMeta.url+'?q=EventProperties';
+    var _bh=Object.assign({},savedGqlMeta.headers||{},{'Content-Type':'application/json'});
+    delete _bh['content-length'];delete _bh['Content-Length'];delete _bh['content-type'];
+    originalFetch(_bu,{method:'POST',headers:_bh,
+      body:JSON.stringify({operationName:'EventProperties',
+        variables:{orgId:apiIds.orgId,workspaceId:'',branchId:'',versionId:'',branchName:apiIds.branchName,environmentId:null}}),
+      credentials:'include'
+    }).then(function(r){
+      log('bootstrap HTTP '+r.status);
+      log('bootstrap probe HTTP '+r.status);
+      r.text().then(function(txt){
+        log('bootstrap probe resp: '+txt.slice(0,500));
+        try{
+          var _bd=JSON.parse(txt);
+          if(_bd&&_bd.data){
+            // Server returned data from EP with just orgId — extract properties directly
+            log('bootstrap probe returned data - extracting EP directly');
+            extractInto(epC,seenEp,_bd.data||_bd);
+            log('EP from probe: '+epC.length+' names');
+            // Now fire UP with same approach
+            var _bu2=savedGqlMeta.url+'?q=UserProperties';
+            var _bh2=Object.assign({},savedGqlMeta.headers||{},{'Content-Type':'application/json'});
+            delete _bh2['content-length'];delete _bh2['Content-Length'];delete _bh2['content-type'];
+            originalFetch(_bu2,{method:'POST',headers:_bh2,
+              body:JSON.stringify({operationName:'UserProperties',
+                variables:{orgId:apiIds.orgId,workspaceId:'',branchId:'',versionId:'',branchName:apiIds.branchName,environmentId:null}}),
+              credentials:'include'
+            }).then(function(r2){
+              log('UP probe HTTP '+r2.status);
+              r2.text().then(function(t2){
+                log('UP probe resp: '+t2.slice(0,400));
+                try{var b2=JSON.parse(t2);if(b2&&b2.data){extractInto(upC,seenUp,b2.data||b2);log('UP from probe: '+upC.length);}}catch(e2){}
+                epDone=true;upDone=true;if(!finished)finish();
+              }).catch(function(e){log('UP probe text err: '+e);if(!finished)finish();});
+            }).catch(function(e){log('UP probe fetch err: '+e);if(!finished)finish();});
+          }else if(_bd&&_bd.errors){
+            log('bootstrap probe GQL errors: '+JSON.stringify(_bd.errors).slice(0,400));
+            log('Need workspace/branch/version IDs. Check errors above for variable names required.');
+            doNavFallback();
+          }else{
+            log('bootstrap probe: unexpected response format');
+            doNavFallback();
+          }
+        }catch(e){
+          log('bootstrap probe parse err: '+e+' raw: '+txt.slice(0,200));
+          doNavFallback();
+        }
+      }).catch(function(e){log('bootstrap probe text err: '+e);doNavFallback();});
+    }).catch(function(e){log('bootstrap fetch err: '+e);doNavFallback();});
+  }else{
+    // No orgId at all, or no savedGqlMeta to fire authenticated requests
+    log('no apiIds or no gql meta — nav fallback');
+    doNavFallback();
+  }
+  // Hard fallback: give up after 20 s regardless of path taken
+  clearPropsTimer=setTimeout(function(){if(!finished)finish();},20000);
+}
+
+var giveUpTimer=setTimeout(function(){if(!finished)finish();},25000);
+
 if(D){
   try{
     var path=D.replace('https://app.amplitude.com','');
@@ -2412,22 +2902,370 @@ if(D){
     },80);
   }catch(e){window.location.href=D;}
 }else{
-  toast('#0069FF','\u23f3 Waiting for GraphQL responses\u2026<br><span style="font-weight:400;font-size:11px;opacity:.8">Navigate to your Data tab now</span>');
+  toast('#0069FF','⏳ Waiting for GraphQL responses…<br><span style="font-weight:400;font-size:11px;opacity:.8">Navigate to your Data tab now</span>');
 }
 })()`;
 
   const link = document.getElementById('bookmarklet-link');
   if (link) link.href = 'javascript:' + encodeURIComponent(code);
+
+  buildPropsDebugBookmarklet(dataTabUrl);
 }
 
-// Reads events passed back from the bookmarklet via URL hash
+// Debug-only bookmarklet: monitors ALL /graphql queries while navigating the properties pages
+// so we can see exact query names and response shapes without the full production flow.
+function buildPropsDebugBookmarklet(dataTabUrl) {
+  const dataTabUrlStr = dataTabUrl || '';
+  const debugCode = `(function(){
+var D=${JSON.stringify(dataTabUrlStr)};
+
+// ── Log overlay ──────────────────────────────────────────────────
+var LOG=document.createElement('pre');
+LOG.setAttribute('style','position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#0d1117;color:#7fff7f;padding:12px 110px 12px 16px;font:11px/1.7 monospace;max-height:55vh;overflow:auto;border-bottom:2px solid #238636;user-select:text;cursor:text;');
+document.body.appendChild(LOG);
+var origFetch=window.fetch;
+function log(msg){LOG.textContent+=(new Date()).toLocaleTimeString()+' '+msg+'\\n';LOG.scrollTop=9999;}
+var copyBtn=document.createElement('button');
+copyBtn.textContent='Copy log';
+copyBtn.setAttribute('style','position:fixed;top:6px;right:70px;z-index:2147483648;background:#1f6feb;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font:bold 11px sans-serif');
+copyBtn.onclick=function(){try{navigator.clipboard.writeText(LOG.textContent);}catch(e){var ta=document.createElement('textarea');ta.value=LOG.textContent;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}copyBtn.textContent='Copied!';setTimeout(function(){copyBtn.textContent='Copy log';},1500);};
+document.body.appendChild(copyBtn);
+var closeBtn=document.createElement('button');
+closeBtn.textContent='Close';
+closeBtn.setAttribute('style','position:fixed;top:6px;right:8px;z-index:2147483648;background:#6e7681;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font:bold 11px sans-serif');
+closeBtn.onclick=function(){window.fetch=origFetch;if(LOG.parentNode)LOG.parentNode.removeChild(LOG);copyBtn.remove();closeBtn.remove();};
+document.body.appendChild(closeBtn);
+
+log('=== DEBUG BOOKMARKLET v2 ===');
+log('D='+D.slice(0,100));
+
+// ── Query constants ──────────────────────────────────────────────
+var _PROP_FRAG='fragment SharedObservablePropertyWithObserveData on ObservableProperty{id versionId kind name dateCreated displayName description category required type schema example isHidden isOfficial origin isShared overridePropertyRevisionId isBlocked isPlanned isQueryable classifications cartPropertyConfig{parentProperties childProperties isSplit __typename} seenStats{firstSeen lastSeen __typename} __typename}';
+var _PROP_Q='query __OP__($orgId:ID!,$workspaceId:ID!,$branchId:ID!,$versionId:ID!,$environmentId:ID,$branchName:String!){orgs(id:$orgId){id workspaces(id:$workspaceId){id branches(id:$branchId){id versions(id:$versionId,environmentId:$environmentId,branchName:$branchName){id properties(kinds:[__KINDS__],statuses:[live,planned,blocked,unexpected]){...SharedObservablePropertyWithObserveData __typename} __typename} __typename} __typename} __typename}} '+_PROP_FRAG;
+var _EP_Q=_PROP_Q.replace('__OP__','EventProperties').replace('__KINDS__','event');
+var _UP_Q=_PROP_Q.replace('__OP__','UserProperties').replace('__KINDS__','user');
+var apiIds=null;
+
+// ── extractInto ──────────────────────────────────────────────────
+var BLOCKLIST=['apiKey','timeZoneId','secretKey','instrumentationCounts','dynamicScriptKey','retailCalendar','score'];
+function extractInto(dest,seenMap,data){
+  if(!data||typeof data!=='object')return;
+  (function scan(v,depth){
+    if(!v||typeof v!=='object'||depth>12)return;
+    if(Array.isArray(v)){
+      if(v.length>2&&v[0]&&typeof v[0]==='object'){
+        var sk=Object.keys(v[0]);
+        if(sk.indexOf('node')!==-1&&v[0].node&&typeof v[0].node==='object'){
+          scan(v.map(function(i){return i.node;}).filter(Boolean),depth+1);return;
+        }
+        if(BLOCKLIST.some(function(k){return sk.indexOf(k)!==-1;}))return;
+        var n0=v[0].name||v[0].event_type||v[0].eventType||v[0].outputEventName||v[0].displayName||v[0].display;
+        if(n0&&typeof n0==='string'&&n0.length>0&&n0.length<200){
+          v.forEach(function(item){
+            var n=item&&(item.name||item.event_type||item.eventType||item.outputEventName||item.displayName||item.display);
+            if(n&&typeof n==='string'&&!seenMap[n]){seenMap[n]=true;dest.push(n);}
+          });return;
+        }
+      }
+      v.forEach(function(i){scan(i,depth+1);});
+    }else{Object.values(v).forEach(function(i){scan(i,depth+1);});}
+  })(data,0);
+}
+
+// ── Capture buckets ──────────────────────────────────────────────
+var evC=[],epC=[],upC=[],seenEv={},seenEp={},seenUp={};
+var getEventsDone=false,propsDone=false,propsPhase=0;
+var savedGqlMeta=null; // {url, headers} from first intercepted graphql request
+
+// ── Parse base path from URL ─────────────────────────────────────
+var dp=D.replace('https://app.amplitude.com','').split('?')[0];
+var pathParts=dp.split('/');
+// /data/{orgSlug}/{wsSlug}/events/... → base = /data/{orgSlug}/{wsSlug}
+var evIdx=pathParts.indexOf('events');
+var prIdx=pathParts.indexOf('properties');
+var cutIdx=evIdx>=0?evIdx:(prIdx>=0?prIdx:pathParts.length);
+var base=pathParts.slice(0,cutIdx).join('/');
+log('base='+base+' dp='+dp);
+
+// ── PHASE 1: intercept ALL graphql requests ──────────────────────
+// We watch every query to find which ones carry orgId/workspaceId/branchId.
+// These are the variables needed to fire EP+UP directly.
+window.fetch=function(url,opts){
+  var urlStr=typeof url==='string'?url:(url&&url.url)||'';
+  var isGQL=urlStr.indexOf('/graphql')!==-1;
+  var opName='';
+  if(isGQL){
+    var qm=urlStr.match(/[?&]q=([^&]+)/);
+    opName=qm?decodeURIComponent(qm[1]):'(no-q)';
+    var vars={};
+    var _parsedBody={};
+    if(opts&&opts.body&&typeof opts.body==='string'){
+      try{_parsedBody=JSON.parse(opts.body);vars=_parsedBody.variables||{};}catch(e){}
+    }
+    // Log body structure (shows if Amplitude uses persisted queries or full query strings)
+    var _bodyKeys=Object.keys(_parsedBody).join(',');
+    var _hasQuery=!!_parsedBody.query;
+    var _hasExt=!!(_parsedBody.extensions&&_parsedBody.extensions.persistedQuery);
+    var isGE=/^(Get|get)Events$/.test(opName);
+    var isEP=opName==='EventProperties';
+    var isUP=opName==='UserProperties';
+    // Log every unique op (suppress repeated GetEvents noise after first two)
+    if(isEP||isUP){
+      log('>>> NETWORK: '+opName+' bodyKeys='+_bodyKeys+' hasQuery='+_hasQuery+' hasAPQ='+_hasExt+' vars='+JSON.stringify(vars).slice(0,200));
+    }else if(isGE){
+      log('>>> GetEvents bodyKeys='+_bodyKeys+' hasQuery='+_hasQuery+' hasAPQ='+_hasExt+' vars='+JSON.stringify(vars));
+    }else if(opName==='DeletedEventPropertyNames'||opName==='SimpleObservedEvents'){
+      log('>>> '+opName+' bodyKeys='+_bodyKeys+' hasQuery='+_hasQuery+' vars='+JSON.stringify(vars).slice(0,300));
+    }else{
+      log('    op='+opName+' bodyKeys='+_bodyKeys+' hasQuery='+_hasQuery);
+    }
+    // Grab apiIds from ANY query that carries orgId
+    if(vars.orgId){
+      if(!apiIds){
+        apiIds={orgId:String(vars.orgId),workspaceId:String(vars.workspaceId||''),
+                branchId:String(vars.branchId||''),versionId:String(vars.versionId||''),
+                branchName:String(vars.branchName||'main'),environmentId:vars.environmentId||null};
+        log('*** apiIds from '+opName+': '+JSON.stringify(apiIds));
+      }else if(!apiIds.workspaceId||!apiIds.branchId||!apiIds.versionId){
+        // Update missing UUIDs - DeletedEventPropertyNames/SimpleObservedEvents fire with full UUIDs
+        if(vars.workspaceId)apiIds.workspaceId=String(vars.workspaceId);
+        if(vars.branchId)apiIds.branchId=String(vars.branchId);
+        if(vars.versionId)apiIds.versionId=String(vars.versionId);
+        if(vars.branchName)apiIds.branchName=String(vars.branchName);
+        if(vars.environmentId!=null)apiIds.environmentId=vars.environmentId;
+        log('*** apiIds updated from '+opName+': ws='+apiIds.workspaceId+' br='+apiIds.branchId+' ver='+apiIds.versionId);
+      }
+    }
+    // Capture graphql URL base + headers from first request (for auth header mirroring)
+    if(!savedGqlMeta){
+      try{
+        var _sh={};var _hh=opts&&opts.headers;
+        if(_hh){if(typeof _hh.forEach==='function'){_hh.forEach(function(v,k){_sh[k]=v;});}else{Object.assign(_sh,_hh);}}
+        savedGqlMeta={url:urlStr.split('?')[0],headers:_sh};
+        // Extract orgId from URL path (e.g. /t/graphql/org/110391) - avoids regex with backslash-slash in template literal
+        var _orgPart=(urlStr.split('/org/')[1]||'').split('/')[0].split('?')[0];
+        if(_orgPart&&!isNaN(Number(_orgPart))&&!apiIds){
+          apiIds={orgId:_orgPart,workspaceId:'',branchId:'',versionId:'',branchName:'main',environmentId:null};
+          log('orgId from URL: '+apiIds.orgId+' (still need workspaceId/branchId/versionId)');
+        }
+        log('gql meta: url='+savedGqlMeta.url+' headerKeys='+Object.keys(_sh).join(','));
+      }catch(e){}
+    }
+    // Strip AbortSignal from EP/UP - prevents navigation away from aborting their response
+    if((isEP||isUP)&&opts&&opts.signal){
+      opts=Object.assign({},opts);delete opts.signal;
+      log('    signal stripped from '+opName);
+    }
+  }
+  var result=origFetch.call(this,url,opts);
+  if(isGQL){
+    var isGE2=/^(Get|get)Events$/.test(opName);
+    var isEP2=opName==='EventProperties';
+    var isUP2=opName==='UserProperties';
+    result.then(function(resp){
+      resp.clone().json().then(function(body){
+        if(isGE2){
+          extractInto(evC,seenEv,body.data||body);
+          // Try to extract IDs from GE response structure
+          try{
+            var _gd=body.data;
+            if(_gd&&_gd.orgs&&_gd.orgs[0]){
+              var _go=_gd.orgs[0];var _gws=_go.workspaces&&_go.workspaces[0];
+              var _gbr=_gws&&_gws.branches&&_gws.branches[0];var _gvr=_gbr&&_gbr.versions&&_gbr.versions[0];
+              if(_gbr&&_gvr){
+                if(!apiIds)apiIds={orgId:'',workspaceId:'',branchId:'',versionId:'',branchName:'main',environmentId:null};
+                if(!apiIds.orgId)apiIds.orgId=String(_go.id||'');
+                if(!apiIds.workspaceId)apiIds.workspaceId=String(_gws.id||'');
+                if(!apiIds.branchId)apiIds.branchId=String(_gbr.id||'');
+                if(!apiIds.versionId)apiIds.versionId=String(_gvr.id||'');
+                log('apiIds from GE resp: '+JSON.stringify(apiIds));
+              }
+            }
+          }catch(e){}
+          log('GetEvents done: evC='+evC.length+' apiIds='+!!apiIds);
+          getEventsDone=true;
+        }else if(isEP2){
+          log('EventProperties NETWORK resp ('+resp.status+'): '+JSON.stringify(body).slice(0,300));
+          extractInto(epC,seenEp,body.data||body);
+          log('EP extracted: '+epC.length+' names'+(epC.length>0?' sample: '+epC.slice(0,3).join(', '):''));
+        }else if(isUP2){
+          log('UserProperties NETWORK resp ('+resp.status+'): '+JSON.stringify(body).slice(0,300));
+          extractInto(upC,seenUp,body.data||body);
+          log('UP extracted: '+upC.length+' names'+(upC.length>0?' sample: '+upC.slice(0,3).join(', '):''));
+        }else{
+          // Log ALL other query responses so we can find where workspaceId/branchId come from
+          var rStr=JSON.stringify(body).slice(0,400);
+          log('    RESP '+opName+': '+rStr);
+        }
+      }).catch(function(){});
+    }).catch(function(){});
+  }
+  return result;
+};
+
+// ── PHASE 2: navigate to events, then properties ─────────────────
+// Step 1: bounce to events page (triggers GetEvents)
+log('--- nav to events page ---');
+history.pushState(null,'','/');window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
+setTimeout(function(){
+  history.pushState(null,'',dp);window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
+},80);
+
+// Step 2: after events load, navigate to properties page
+// EP/UP will fire over network if not cached; if cached, we'll try direct API
+setTimeout(function(){
+  log('--- nav to properties page (testing EP/UP network fire) ---');
+  var propsPath=base+'/properties/main/latest/event';
+  log('propsPath='+propsPath);
+  history.pushState(null,'',propsPath);window.dispatchEvent(new PopStateEvent('popstate',{state:null}));
+},3000);
+
+// Step 3: after properties page, try direct API if we have apiIds but no EP/UP
+setTimeout(function(){
+  log('--- 8s checkpoint ---');
+  log('evC='+evC.length+' epC='+epC.length+' upC='+upC.length+' apiIds='+JSON.stringify(apiIds));
+  if(epC.length>0||upC.length>0){log('=== SUCCESS via navigation ===');return;}
+  if(!apiIds||!apiIds.orgId){
+    log('ERROR: no apiIds - no query with orgId fired. Cannot bootstrap.');
+    log('Check the op list above - none of the queries had orgId in variables.');
+    return;
+  }
+  if(propsPhase>0)return;propsPhase=1;
+
+  var pending=2;
+  function onDone(){
+    if(--pending===0){
+      log('=== COMPLETE: ep='+epC.length+' up='+upC.length+' ===');
+      if(epC.length>0)log('EP sample: '+epC.slice(0,5).join(', '));
+      if(upC.length>0)log('UP sample: '+upC.slice(0,5).join(', '));
+      if(epC.length===0&&upC.length===0)log('>>> ZERO PROPS - see GQL errors above <<<');
+    }
+  }
+  function fireEPUP(){
+    var vars={orgId:apiIds.orgId,workspaceId:apiIds.workspaceId,branchId:apiIds.branchId,
+              versionId:apiIds.versionId,branchName:apiIds.branchName,environmentId:apiIds.environmentId};
+    log('firing EP/UP vars: '+JSON.stringify(vars));
+    // CRITICAL: Amplitude uses persisted/pre-registered queries identified by ?q=OpName.
+    // The body must be {operationName, variables} WITHOUT a "query" field.
+    // Including "query" causes: HttpError: Missing param "query".
+    function fireQ(opName,dest,seenMap){
+      var _url=((savedGqlMeta&&savedGqlMeta.url)||'/graphql')+'?q='+opName;
+      var _hdrs=Object.assign({},savedGqlMeta&&savedGqlMeta.headers||{},{'Content-Type':'application/json'});
+      delete _hdrs['content-length'];delete _hdrs['Content-Length'];delete _hdrs['content-type'];
+      log(opName+' firing (persisted-query format) url='+_url);
+      origFetch(_url,{method:'POST',headers:_hdrs,
+        body:JSON.stringify({operationName:opName,variables:vars}),
+        credentials:'include'
+      }).then(function(r){
+        log(opName+' HTTP '+r.status);
+        r.text().then(function(t){
+          log(opName+' resp: '+t.slice(0,500));
+          try{
+            var b=JSON.parse(t);
+            if(b&&b.errors)log(opName+' GQL errors: '+JSON.stringify(b.errors).slice(0,400));
+            extractInto(dest,seenMap,b.data||b);
+            log(opName+' extracted: '+dest.length+' names');
+          }catch(e){log(opName+' parse err: '+e);}
+          onDone();
+        }).catch(function(e){log(opName+' text err: '+e);onDone();});
+      }).catch(function(e){log(opName+' fetch err: '+e);onDone();});
+    }
+    fireQ('EventProperties',epC,seenEp);
+    fireQ('UserProperties',upC,seenUp);
+  }
+
+  if(apiIds.workspaceId&&apiIds.branchId&&apiIds.versionId){
+    log('all IDs present - firing EP/UP (persisted-query format)');
+    fireEPUP();
+  }else{
+    // workspaceId/branchId/versionId empty.
+    // Strategy: fire EventProperties (a registered op) with orgId+branchName only,
+    // no "query" field. Log full response to learn if server resolves IDs from org context
+    // or returns a GraphQL error showing which IDs are needed.
+    log('probe: firing EventProperties with orgId only (no workspace IDs) to diagnose server behavior');
+    var _pu=savedGqlMeta.url+'?q=EventProperties';
+    var _ph=Object.assign({},savedGqlMeta.headers||{},{'Content-Type':'application/json'});
+    delete _ph['content-length'];delete _ph['Content-Length'];delete _ph['content-type'];
+    var _pv={orgId:apiIds.orgId,workspaceId:'',branchId:'',versionId:'',branchName:apiIds.branchName,environmentId:null};
+    origFetch(_pu,{method:'POST',headers:_ph,
+      body:JSON.stringify({operationName:'EventProperties',variables:_pv}),
+      credentials:'include'
+    }).then(function(r){
+      log('probe HTTP '+r.status);
+      r.text().then(function(t){
+        log('probe resp (full): '+t.slice(0,800));
+        // Parse and try to extract workspace IDs from a GraphQL error response
+        try{
+          var _pd=JSON.parse(t);
+          if(_pd&&_pd.data){
+            // Server returned data - maybe it resolved from orgId alone
+            log('probe returned data - extracting');
+            extractInto(epC,seenEp,_pd.data||_pd);
+            log('probe EP extracted: '+epC.length+' names');
+          }
+          if(_pd&&_pd.errors){
+            log('probe GQL errors: '+JSON.stringify(_pd.errors));
+          }
+        }catch(e){log('probe parse: '+e);}
+        // Always fire the real EP/UP too so we see both outcomes
+        var pending2=2;
+        function onDone2(){if(--pending2===0){
+          log('=== COMPLETE: ep='+epC.length+' up='+upC.length+' ===');
+          if(epC.length>0)log('EP sample: '+epC.slice(0,5).join(', '));
+          if(upC.length>0)log('UP sample: '+upC.slice(0,5).join(', '));
+          if(epC.length===0&&upC.length===0)log('>>> ZERO PROPS - see probe resp above for diagnosis <<<');
+        }}
+        function fire2(opName,dest,seenMap){
+          var _u=savedGqlMeta.url+'?q='+opName;
+          var _h=Object.assign({},savedGqlMeta.headers||{},{'Content-Type':'application/json'});
+          delete _h['content-length'];delete _h['Content-Length'];delete _h['content-type'];
+          var _v={orgId:apiIds.orgId,workspaceId:'',branchId:'',versionId:'',branchName:apiIds.branchName,environmentId:null};
+          origFetch(_u,{method:'POST',headers:_h,
+            body:JSON.stringify({operationName:opName,variables:_v}),
+            credentials:'include'
+          }).then(function(r){
+            log(opName+' HTTP '+r.status);
+            r.text().then(function(t2){
+              log(opName+' resp: '+t2.slice(0,500));
+              try{var b=JSON.parse(t2);if(b&&b.data){extractInto(dest,seenMap,b.data||b);log(opName+' extracted: '+dest.length);}}catch(e){}
+              onDone2();
+            }).catch(function(e){log(opName+' text err: '+e);onDone2();});
+          }).catch(function(e){log(opName+' fetch err: '+e);onDone2();});
+        }
+        fire2('EventProperties',epC,seenEp);
+        fire2('UserProperties',upC,seenUp);
+      }).catch(function(e){log('probe text err: '+e);});
+    }).catch(function(e){log('probe fetch err: '+e);});
+    // Return early - onDone is handled by inner fire2 callbacks
+    return;
+  }
+},8000);
+
+// 30s hard timeout
+setTimeout(function(){
+  log('=== 30s TIMEOUT: evC='+evC.length+' epC='+epC.length+' upC='+upC.length+' ===');
+},30000);
+})()`;
+
+  const dbgLink = document.getElementById('bookmarklet-debug-link');
+  if (dbgLink) dbgLink.href = 'javascript:' + encodeURIComponent(debugCode);
+}
+
+// Reads events+properties passed back from the bookmarklet via URL hash
 function checkHashForEvents() {
   if (!location.hash.startsWith('#amp-events=')) return;
   const encoded = location.hash.slice('#amp-events='.length);
   history.replaceState(null, '', location.pathname + location.search);
   try {
-    const names = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    if (Array.isArray(names) && names.length > 0) processLoadedNames(names, 'bookmarklet');
+    const payload = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    if (Array.isArray(payload)) {
+      // Legacy format: plain array of event names
+      if (payload.length > 0) processLoadedNames(payload, 'bookmarklet');
+    } else if (payload && payload.events) {
+      // New format: {events, eventProps, userProps}
+      if (payload.events.length > 0) processLoadedNames(payload.events, 'bookmarklet');
+      processLoadedProperties(payload.eventProps || [], payload.userProps || []);
+    }
   } catch (e) { console.warn('Could not parse events from URL hash:', e); }
 }
 
@@ -2451,11 +3289,93 @@ function processLoadedNames(names, source) {
   renderDetectionBanner(_detectedConvention, customNames);
 
   // Parse customer events into preview components
-  window._previewEvents = customNames.slice(0, 10).map(parseEventToComponents);
+  window._previewEvents = customNames.slice(0, 5).map(parseEventToComponents);
 
   // Auto-apply detected convention and switch to Taxonomy Design tab
   applyDetectedConvention();
   switchTab(4);
+}
+
+// Process property names returned by the bookmarklet (event props + user props)
+function processLoadedProperties(eventProps, userProps) {
+  console.log('[workshop] processLoadedProperties called — ep:', (eventProps||[]).length, 'up:', (userProps||[]).length);
+  const epFiltered = (eventProps || []).filter(n => n && typeof n === 'string' && n.length > 0 && n.length < 200 && !isDefaultProp(n));
+  const upFiltered = (userProps  || []).filter(n => n && typeof n === 'string' && n.length > 0 && n.length < 200 && !isDefaultProp(n));
+  if (!epFiltered.length && !upFiltered.length) return;
+
+  document.getElementById('prop-detection-count-ev').textContent = epFiltered.length;
+  document.getElementById('prop-detection-count-up').textContent = upFiltered.length;
+
+  const casingLabel = { snake: 'snake_case', title: 'Title Case', camel: 'camelCase', upper: 'UPPER_SNAKE' };
+
+  function renderPropSection(names, chipsId, samplesId) {
+    if (!names.length) {
+      document.getElementById(chipsId).innerHTML =
+        '<span style="color:var(--amp-gray-400);font-size:12px">No properties detected</span>';
+      return null;
+    }
+    const conv = detectPropCasing(names);
+    const propCasingLabel = { snake: 'snake_case', camel: 'camelCase', upper: 'UPPER_SNAKE', title: 'Title Case' };
+    const pctNote = conv.casingPct != null
+      ? `<span class="chip-pct">(${conv.casingPct}% of named props)</span>`
+      : `<span class="chip-pct">(inferred)</span>`;
+    document.getElementById(chipsId).innerHTML = `
+      <div class="detection-chip">
+        <span class="chip-label">Casing:</span>
+        <span class="chip-value">${propCasingLabel[conv.casing] || conv.casing}</span>
+        ${pctNote}
+      </div>`;
+    const sample = names.slice(0, 8);
+    document.getElementById(samplesId).innerHTML =
+      `<strong style="color:var(--amp-gray-700)">Samples:</strong> ` +
+      sample.map(p =>
+        `<code style="background:white;padding:1px 6px;border-radius:4px;font-size:11px;font-family:'DM Mono',monospace;border:1px solid #dde4ef">${p}</code>`
+      ).join(' ') +
+      (names.length > 8 ? `<span style="color:var(--amp-gray-400)"> + ${names.length - 8} more</span>` : '');
+    return conv;
+  }
+
+  const epConv = renderPropSection(epFiltered, 'event-prop-chips', 'event-prop-samples');
+  const upConv = renderPropSection(upFiltered, 'user-prop-chips', 'user-prop-samples');
+
+  // Store real props for live preview (sample up to 6 each for readability)
+  window._previewEventProps = epFiltered.slice(0, 4);
+  window._previewUserProps  = upFiltered.slice(0, 4);
+
+  // detectPropCasing returns 'snake' | 'camel' | 'upper'.
+  // The dropdowns have snake/camel/lower — map 'upper' to 'snake' (closest for a standard dropdown).
+  const toPropDropdown = c => c === 'camel' ? 'camel' : c === 'title' ? 'title' : 'snake';
+
+  // Auto-set event property casing dropdown from detected EP conventions
+  if (epConv) {
+    const epSel = document.getElementById('sg-prop-case');
+    if (epSel) epSel.value = toPropDropdown(epConv.casing);
+  }
+  // Auto-set user property casing dropdown from detected UP conventions
+  if (upConv) {
+    const upSel = document.getElementById('sg-up-case');
+    if (upSel) upSel.value = toPropDropdown(upConv.casing);
+  }
+  updatePreview();
+
+  // Flag a mismatch between event-prop and user-prop conventions
+  // Compare the resolved dropdown values (not raw casing) so 'upper' vs 'snake' doesn't false-fire
+  const mismatchEl = document.getElementById('prop-mismatch-note');
+  const propCasingLabel = { snake: 'snake_case', camel: 'camelCase', upper: 'UPPER_SNAKE' };
+  if (epConv && upConv && toPropDropdown(epConv.casing) !== toPropDropdown(upConv.casing)) {
+    mismatchEl.textContent =
+      `⚠️ Mismatch: event properties use ${propCasingLabel[epConv.casing] || epConv.casing} but user properties use ${propCasingLabel[upConv.casing] || upConv.casing} — consider aligning to one standard`;
+    mismatchEl.style.display = 'block';
+  } else {
+    mismatchEl.style.display = 'none';
+  }
+
+  document.getElementById('prop-detection-banner').style.display = 'block';
+
+  // If events didn't load (e.g. bookmarklet was on properties page), still switch to taxonomy tab
+  if (!document.getElementById('detection-banner').classList.contains('show')) {
+    switchTab(4);
+  }
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -2477,6 +3397,49 @@ function isDefaultEvent(name) {
     if (name.startsWith(p)) return true;
   }
   return AMP_DEFAULT_EXACT.has(lower);
+}
+
+// Amplitude built-in / system property prefixes and exact names to exclude from EP/UP analysis.
+// Covers: Amplitude default user props, Experiment SDK props, Guide/Survey (Engage) props,
+// Session Replay props, and common ingestion/SDK metadata fields.
+const AMP_DEFAULT_PROP_PREFIXES = [
+  '[Amplitude]',        // e.g. [Amplitude] Session Replay ID
+  'amplitude_',         // SDK internal props
+  '[Experiment]',       // Feature flags / experiment assignment
+  '[Guide',             // Amplitude Engage / Guides — catches [Guide], [Guides-Surveys], [Guides] etc.
+  '[Survey',            // Amplitude Surveys — catches [Survey], [Surveys], [Surveys-...] etc.
+  '[AppsFlyer]',        // AppsFlyer attribution props injected by Amplitude integrations
+  '[Braze]',            // Braze integration props
+  '$amplitude_',        // alternate SDK prefix
+  'guide_',             // Amplitude Engage guide props (e.g. guide_id, guide_name, guide_step_id)
+  'survey_',            // Amplitude survey props (e.g. survey_id, survey_name, survey_response)
+  'initial_',           // Amplitude default user props (e.g. initial_ttclid, initial_utm_source, initial_referrer)
+];
+const AMP_DEFAULT_PROP_EXACT = new Set([
+  // Standard Amplitude user properties
+  'platform','os_name','os_version','device_brand','device_manufacturer',
+  'device_model','device_type','carrier','country','region','city','dma',
+  'language','library','ip_address','idfa','idfv','adid','android_id',
+  'amplitude_id','user_creation_time','last_event_time','last_event_upload_time',
+  'event_id','session_id','insert_id',
+  // Common ingestion metadata
+  'insert_key','server_received_time','server_upload_time',
+  'event_time','app_version','version_name',
+  // Session Replay
+  'session_replay_id',
+]);
+
+const AMP_EXPERIMENT_PROP_SUFFIXES = ['.expKey', '.variant', '.details'];
+
+function isDefaultProp(name) {
+  if (!name || typeof name !== 'string') return true;
+  for (const p of AMP_DEFAULT_PROP_PREFIXES) {
+    if (name.startsWith(p)) return true;
+  }
+  for (const s of AMP_EXPERIMENT_PROP_SUFFIXES) {
+    if (name.endsWith(s)) return true;
+  }
+  return AMP_DEFAULT_PROP_EXACT.has(name.toLowerCase());
 }
 
 // Action verbs used for order + tense detection
@@ -2575,6 +3538,29 @@ function detectConventions(names) {
   return { casing, casingPct, order, orderPct, tense, tensePct, prefix, propCase, total: n, actionTotal };
 }
 
+// Dedicated casing detector for property names.
+// Key insight: single-word all-lowercase names (e.g. "platform", "revenue") are
+// ambiguous — they're valid in both snake_case and camelCase conventions.
+// We only classify multi-word names (underscore = snake, leadingLower+uppercase = camel,
+// ALL_UPPER_UNDERSCORE = upper_snake). Then pick whichever pattern wins.
+function detectPropCasing(names) {
+  let snake = 0, camel = 0, upper = 0, title = 0;
+  for (const name of names) {
+    if (!name || typeof name !== 'string') continue;
+    if (/^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$/.test(name)) { upper++; continue; }
+    if (name.includes('_'))                            { snake++; continue; }
+    if (/^[a-z]/.test(name) && /[A-Z]/.test(name))   { camel++; continue; }
+    if (/^[A-Z]/.test(name) && name.includes(' '))    { title++; continue; }
+    // single-word all-lowercase (e.g. "platform") → neutral, skip
+  }
+  const total = snake + camel + upper + title;
+  if (total === 0) return { casing: 'snake', casingPct: null }; // all single-word, default to snake
+  const counts = [['snake', snake], ['camel', camel], ['upper', upper], ['title', title]];
+  const [winner, count] = counts.sort((a, b) => b[1] - a[1])[0];
+  const pct = count > 0 ? Math.round(count / total * 100) : null;
+  return { casing: winner, casingPct: pct };
+}
+
 let _detectedConvention = null;
 
 function renderDetectionBanner(conv, names) {
@@ -2589,7 +3575,6 @@ function renderDetectionBanner(conv, names) {
     { label: 'Event casing',  value: casingLabel[conv.casing],  pct: conv.casingPct },
     conv.actionTotal > 4 ? { label: 'Verb tense',   value: tenseLabel[conv.tense],    pct: conv.tensePct } : null,
     conv.actionTotal > 4 ? { label: 'Word order',   value: orderLabel[conv.order],    pct: conv.orderPct } : null,
-    { label: 'Properties',   value: propLabel[conv.propCase],   pct: null },
     conv.prefix !== 'none' ? { label: 'Prefix',     value: conv.prefix === 'page' ? 'Page: prefix' : 'Screen: prefix', pct: null } : null,
   ].filter(Boolean);
 
@@ -2686,11 +3671,17 @@ function applyDetectedConvention() {
     updateDropdownExamples(window._previewEvents[0]);
   }
 
-  document.getElementById('sg-case').value      = c.casing;
-  document.getElementById('sg-tense').value     = c.tense;
-  document.getElementById('sg-order').value     = c.order;
-  document.getElementById('sg-prop-case').value = c.propCase;
-  document.getElementById('sg-screen').value    = c.prefix;
+  document.getElementById('sg-case').value  = c.casing;
+  document.getElementById('sg-tense').value = c.tense;
+  document.getElementById('sg-order').value = c.order;
+  document.getElementById('sg-screen').value = c.prefix;
+  // Only set prop casing from event inference if real property data hasn't arrived yet.
+  // processLoadedProperties will override these with actual detected values once EP/UP load.
+  if (!window._previewEventProps) {
+    document.getElementById('sg-prop-case').value = c.propCase;
+  }
+  const _upCaseEl = document.getElementById('sg-up-case');
+  if (_upCaseEl && !window._previewUserProps) _upCaseEl.value = c.propCase;
 
   updatePreview();
 
@@ -2703,11 +3694,13 @@ function applyDetectedConvention() {
 }
 
 function updatePreview() {
+  const upCaseEl = document.getElementById('sg-up-case');
   const cfg = {
     evCase: document.getElementById('sg-case').value,
     tense: document.getElementById('sg-tense').value,
     order: document.getElementById('sg-order').value,
     propCase: document.getElementById('sg-prop-case').value,
+    upCase: upCaseEl ? upCaseEl.value : document.getElementById('sg-prop-case').value,
     screen: document.getElementById('sg-screen').value,
   };
   const evSrc = (window._previewEvents && window._previewEvents.length) ? window._previewEvents : EXAMPLE_EVENTS_RAW;
@@ -2715,10 +3708,27 @@ function updatePreview() {
     `<div class="preview-event"><span class="preview-event-name">${buildEventName(ev, cfg)}</span></div>`
   ).join('');
   document.getElementById('preview-events').innerHTML = evHtml;
-  const propHtml = EXAMPLE_PROPS_RAW.map(p =>
-    `<div style="color:#86EFAC;font-family:'DM Mono',monospace">${applyPropCase(p, cfg.propCase)}</div>`
+
+  // Event properties: show real names as-is (they represent the actual project convention).
+  // Only apply casing transform on generic fallback examples when no real data is loaded.
+  const hasRealEp = window._previewEventProps && window._previewEventProps.length;
+  const epSrc = hasRealEp ? window._previewEventProps : EXAMPLE_PROPS_RAW;
+  const epHtml = epSrc.map(p =>
+    `<div style="color:#86EFAC;font-family:'DM Mono',monospace">${hasRealEp ? p : applyPropCase(p, cfg.propCase)}</div>`
   ).join('');
-  document.getElementById('preview-props').innerHTML = propHtml;
+  document.getElementById('preview-props').innerHTML = epHtml;
+
+  // User properties: same — show real names as-is, transform only fallback examples
+  const upEl = document.getElementById('preview-user-props');
+  if (upEl) {
+    const hasRealUp = window._previewUserProps && window._previewUserProps.length;
+    const upSrc = hasRealUp ? window._previewUserProps : EXAMPLE_PROPS_RAW;
+    const upHtml = upSrc.map(p =>
+      `<div style="color:#93C5FD;font-family:'DM Mono',monospace">${hasRealUp ? p : applyPropCase(p, cfg.upCase)}</div>`
+    ).join('');
+    upEl.innerHTML = upHtml;
+  }
+
   validateEvent();
   window._styleCfg = cfg;
   // Keep abstraction spectrum in sync with style guide settings
@@ -2982,12 +3992,17 @@ updateAgentLink(document.getElementById('bm-data-url').value.trim());
 checkHashForEvents();
 window.addEventListener('hashchange', checkHashForEvents);
 
-// Receive events posted back from the bookmarklet via postMessage
+// Receive events + properties posted back from the bookmarklet via postMessage
 window.addEventListener('message', (e) => {
   if (!e.origin.includes('amplitude.com')) return;
   if (!e.data || e.data.type !== 'amp_gov_events') return;
-  const names = e.data.names;
+  console.log('[workshop] postMessage received — events:', (e.data.names||[]).length,
+    'eventProps:', (e.data.eventProps||[]).length, 'userProps:', (e.data.userProps||[]).length);
+  const names = e.data.names || [];
   if (Array.isArray(names) && names.length > 0) processLoadedNames(names, 'bookmarklet');
+  if (e.data.eventProps || e.data.userProps) {
+    processLoadedProperties(e.data.eventProps || [], e.data.userProps || []);
+  }
 });
 
 // ══ PRESENTER MODE ════════════════════════════════════════════
